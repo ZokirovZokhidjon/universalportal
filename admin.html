@@ -6,92 +6,130 @@
     <title>Universal Portal - Контрол Панел</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; display: flex; justify-content: center; padding: 40px; }
-        .admin-card { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .admin-card h1 { text-align: center; color: #2c3e50; margin-bottom: 25px; font-size: 24px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #444; }
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #3498db; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        /* Логин ойнаси стили */
+        #login-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        #login-section h2 { color: #2c3e50; margin-bottom: 25px; }
+        
+        /* Асосий панел стили */
+        #admin-main-content { background: white; width: 100%; max-width: 700px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 20px; display: none; }
+        
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #3498db; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: 0.3s; font-weight: bold; }
         button:hover { background: #2980b9; }
-        .status { text-align: center; color: green; font-weight: bold; display: none; }
+        
+        .logout-btn { background: #e74c3c; padding: 10px 20px; width: auto; font-size: 14px; float: right; }
+        .logout-btn:hover { background: #c0392b; }
+        .status { text-align: center; color: #27ae60; font-weight: bold; display: none; margin-top: 15px; }
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #f4f4f4; padding-bottom: 15px; }
     </style>
 </head>
 <body>
 
-<div class="admin-card">
-    <h1><i class="fas fa-tools"></i> Мақола Юбориш</h1>
-    
-    <label>Саҳифани танланг:</label>
-    <select id="category">
-        <option value="cock">Кулинария (cock.html)</option>
-        <option value="med">Табобат (med.html)</option>
-        <option value="yumor">Ҳангомалар (yumor.html)</option>
-        <option value="news">Янгиликлар (news.html)</option>
-    </select>
+    <!-- 1. КИРИШ ОЙНАСИ -->
+    <div id="login-section">
+        <i class="fas fa-user-shield" style="font-size: 50px; color: #3498db; margin-bottom: 20px;"></i>
+        <h2>Тизимга кириш</h2>
+        <input type="email" id="adminEmail" placeholder="Email (почта)">
+        <input type="password" id="adminPass" placeholder="Парол">
+        <button onclick="login()">КИРИШ</button>
+    </div>
 
-    <label>Мақола сарлавҳаси:</label>
-    <input type="text" id="title" placeholder="Сарлавҳани киритинг...">
+    <!-- 2. АСОСИЙ БОШҚАРУВ ПАНЕЛИ -->
+    <div id="admin-main-content">
+        <div class="header-area">
+            <h2 style="margin:0;"><i class="fas fa-edit"></i> Янги мақола</h2>
+            <button class="logout-btn" onclick="logout()">Чиқиш <i class="fas fa-sign-out-alt"></i></button>
+        </div>
+        
+        <label>Саҳифани танланг:</label>
+        <select id="category">
+            <option value="news">Янгиликлар (news.html)</option>
+            <option value="hlp">Маслаҳатлар (hlp.html)</option>
+            <option value="med">Табобат (med.html)</option>
+            <option value="cock">Ошхона (cock.html)</option>
+            <option value="yumor">Ҳангомалар (yumor.html)</option>
+        </select>
 
-    <label>Расм линки (URL):</label>
-    <input type="text" id="image" placeholder="https://example.com/image.jpg">
+        <input type="text" id="title" placeholder="Мақола сарлавҳаси...">
+        <input type="text" id="image" placeholder="Расм URL линки (https://...)">
+        <textarea id="content" rows="8" placeholder="Мақола матнини шу ерга ёзинг..."></textarea>
+        <input type="text" id="video" placeholder='Видео код (Iframe: <iframe... ></iframe>)'>
 
-    <label>Асосий матн:</label>
-    <textarea id="content" rows="6" placeholder="Мақола матнини шу ерга ёзинг..."></textarea>
+        <button onclick="publishPost()">НАШР ҚИЛИШ <i class="fas fa-paper-plane"></i></button>
+        <p id="statusMsg" class="status">✅ Муваффақиятли юборилди!</p>
+    </div>
 
-    <label>Видео (Iframe код):</label>
-    <input type="text" id="video" placeholder='<iframe... ></iframe>'>
+    <!-- FIREBASE СКРИПТЛАРИ -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <button onclick="publishPost()">Нашр қилиш 🚀</button>
-    <p id="statusMsg" class="status">Муваффақиятли юборилди!</p>
-</div>
-<script type="module" src="bridge.js"></script>
-<!-- Firebase SDK кутубхоналари -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        // Firebase Конфигурацияси
+        const firebaseConfig = {
+            apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+            authDomain: "universal-portal-108b7.firebaseapp.com",
+            databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "universal-portal-108b7",
+            storageBucket: "universal-portal-108b7.firebasestorage.app",
+            messagingSenderId: "183555008981",
+            appId: "1:183555008981:web:b38e59baef1d6861b6b55c"
+        };
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
-    authDomain: "universal-portal-108b7.firebaseapp.com",
-    databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "universal-portal-108b7",
-    storageBucket: "universal-portal-108b7.firebasestorage.app",
-    messagingSenderId: "183555008981",
-    appId: "1:183555008981:web:b38e59baef1d6861b6b55c"
-  };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
 
-  // Firebase-ни ишга тушириш
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+        // 1. Кириш функцияси
+        window.login = function() {
+            const email = document.getElementById('adminEmail').value;
+            const pass = document.getElementById('adminPass').value;
+            signInWithEmailAndPassword(auth, email, pass)
+                .catch(err => alert("Хато: " + err.message));
+        };
 
-  // Юбориш функциясини глобал қилиш
-  window.publishPost = function() {
-    const category = document.getElementById('category').value;
-    const title = document.getElementById('title').value;
-    const image = document.getElementById('image').value;
-    const content = document.getElementById('content').value;
-    const video = document.getElementById('video').value;
+        // 2. Чиқиш функцияси
+        window.logout = function() {
+            signOut(auth).then(() => { location.reload(); });
+        };
 
-    if(!title || !content) { alert("Сарлавҳа ва матнни ёзинг!"); return; }
+        // 3. Авторизацияни текшириш
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-main-content').style.display = 'block';
+                document.body.style.alignItems = 'flex-start';
+                document.body.style.padding = '40px 0';
+            } else {
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('admin-main-content').style.display = 'none';
+            }
+        });
 
-    const postsRef = ref(db, 'all_posts');
-    const newPostRef = push(postsRef);
+        // 4. Мақола юбориш
+        window.publishPost = function() {
+            const postData = {
+                category: document.getElementById('category').value,
+                title: document.getElementById('title').value,
+                image: document.getElementById('image').value,
+                content: document.getElementById('content').value,
+                video: document.getElementById('video').value,
+                time: new Date().toLocaleString('uz-UZ')
+            };
 
-    set(newPostRef, {
-      category: category,
-      title: title,
-      image: image,
-      content: content,
-      video: video,
-      time: new Date().toLocaleString('uz-UZ')
-    }).then(() => {
-      document.getElementById('statusMsg').style.display = 'block';
-      setTimeout(() => { location.reload(); }, 1500);
-    }).catch((error) => {
-      alert("Хатолик: " + error.message);
-    });
-  }
-</script>
+            if(!postData.title || !postData.content) {
+                alert("Илтимос, сарлавҳа ва матнни тўлдиринг!");
+                return;
+            }
 
+            const newPostRef = push(ref(db, 'all_posts'));
+            set(newPostRef, postData).then(() => {
+                document.getElementById('statusMsg').style.display = 'block';
+                setTimeout(() => { location.reload(); }, 1500);
+            }).catch(err => alert("Хатолик: " + err.message));
+        };
+    </script>
 </body>
 </html>
