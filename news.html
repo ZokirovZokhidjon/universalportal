@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юртимиз Янгиликлари - Universal Portal</title>
+    <!-- Глобус ва бошқа иконкалар учун -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 1. Умумий дизайн */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        /* 2. Шапка ва Лого */
+        header {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            text-decoration: none;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .logo i { color: #3498db; }
+
+        /* 3. Меню */
+        nav {
+            background: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        nav a:hover, nav a.active {
+            background: #34495e;
+            color: #3498db;
+        }
+
+        /* 4. Контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        /* 5. Янгиликлар лентаси */
+        .news-feed h1 {
+            border-left: 5px solid #e74c3c;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        /* Мақола карточкаси (Скрипт орқали тўлади) */
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            transition: 0.3s;
+        }
+        .post-card:hover { transform: translateY(-5px); }
+        .post-card img { width: 100%; height: 350px; object-fit: cover; }
+        .post-body { padding: 25px; }
+        .post-body h2 { margin: 0 0 15px; color: #2c3e50; line-height: 1.3; }
+        .post-body p { line-height: 1.7; color: #555; font-size: 17px; }
+        
+        .video-box { margin-top: 20px; border-radius: 10px; overflow: hidden; background: #000; }
+        .video-box iframe { width: 100%; height: 350px; border: none; }
+
+        /* 6. Sidebar (Ўнг томон) */
+        .sidebar-widget {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 80px;
+        }
+        .sidebar-widget h3 {
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            color: #e74c3c;
+        }
+        .link-list { list-style: none; padding: 0; }
+        .link-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .link-list a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+        .link-list a:hover { color: #3498db; }
+
+        /* Мобил адаптация */
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            nav { overflow-x: auto; justify-content: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <i class="fas fa-globe-asia"></i> ЮРТИМИЗ ЯНГИЛИКЛАРИ
+        </a>
+    </header>
+
+    <nav>
+        <a href="index.html">Бош саҳифа</a>
+        <a href="cock.html">Кулинария</a>
+        <a href="med.html">Табобат</a>
+        <a href="yumor.html">Ҳангомалар</a>
+        <a href="news.html" class="active">Янгиликлар</a>
+    </nav>
+
+    <div class="container">
+        <!-- Асосий янгиликлар чиқадиган жой -->
+        <main class="news-feed" id="post-display-area">
+            <h1>Сўнгги хабарлар</h1>
+            <!-- Хабарлар админ панелдан келиб шу ерга тушади -->
+        </main>
+
+        <!-- Ўнг томон: Тезкор линклар -->
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3><i class="fas fa-bolt"></i> Тезкор сарлавҳалар</h3>
+                <ul class="link-list" id="sidebar-links">
+                    <!-- Линклар скрипт орқали чиқади -->
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- КЎПРИК: Сизга берган bridge.js файлини шу ерга улайсиз -->
+     <script type="module" src="bridge.js"></script>
+    <script src="bridge.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Portal - Контрол Панел</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; display: flex; justify-content: center; padding: 40px; }
+        .admin-card { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .admin-card h1 { text-align: center; color: #2c3e50; margin-bottom: 25px; font-size: 24px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #444; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #3498db; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #2980b9; }
+        .status { text-align: center; color: green; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="admin-card">
+    <h1><i class="fas fa-tools"></i> Мақола Юбориш</h1>
+    
+    <label>Саҳифани танланг:</label>
+    <select id="category">
+        <option value="cock">Кулинария (cock.html)</option>
+        <option value="med">Табобат (med.html)</option>
+        <option value="yumor">Ҳангомалар (yumor.html)</option>
+        <option value="news">Янгиликлар (news.html)</option>
+    </select>
+
+    <label>Мақола сарлавҳаси:</label>
+    <input type="text" id="title" placeholder="Сарлавҳани киритинг...">
+
+    <label>Расм линки (URL):</label>
+    <input type="text" id="image" placeholder="https://example.com/image.jpg">
+
+    <label>Асосий матн:</label>
+    <textarea id="content" rows="6" placeholder="Мақола матнини шу ерга ёзинг..."></textarea>
+
+    <label>Видео (Iframe код):</label>
+    <input type="text" id="video" placeholder='<iframe... ></iframe>'>
+
+    <button onclick="publishPost()">Нашр қилиш 🚀</button>
+    <p id="statusMsg" class="status">Муваффақиятли юборилди!</p>
+</div>
+<script type="module" src="bridge.js"></script>
+<!-- Firebase SDK кутубхоналари -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+    authDomain: "universal-portal-108b7.firebaseapp.com",
+    databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "universal-portal-108b7",
+    storageBucket: "universal-portal-108b7.firebasestorage.app",
+    messagingSenderId: "183555008981",
+    appId: "1:183555008981:web:b38e59baef1d6861b6b55c"
+  };
+
+  // Firebase-ни ишга тушириш
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Юбориш функциясини глобал қилиш
+  window.publishPost = function() {
+    const category = document.getElementById('category').value;
+    const title = document.getElementById('title').value;
+    const image = document.getElementById('image').value;
+    const content = document.getElementById('content').value;
+    const video = document.getElementById('video').value;
+
+    if(!title || !content) { alert("Сарлавҳа ва матнни ёзинг!"); return; }
+
+    const postsRef = ref(db, 'all_posts');
+    const newPostRef = push(postsRef);
+
+    set(newPostRef, {
+      category: category,
+      title: title,
+      image: image,
+      content: content,
+      video: video,
+      time: new Date().toLocaleString('uz-UZ')
+    }).then(() => {
+      document.getElementById('statusMsg').style.display = 'block';
+      setTimeout(() => { location.reload(); }, 1500);
+    }).catch((error) => {
+      alert("Хатолик: " + error.message);
+    });
+  }
+</script>
+
+</body>
+</html>
