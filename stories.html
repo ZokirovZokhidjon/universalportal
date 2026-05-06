@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ижод олами - Universal Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --dark: #1a1a1a;
+            --gold: #d4af37;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body { 
+            font-family: 'Times New Roman', serif; 
+            background: #121212; 
+            color: #e0e0e0; 
+            margin: 0; 
+        }
+
+        /* Навигация */
+        nav { 
+            background: #000; 
+            padding: 20px; 
+            text-align: center; 
+            border-bottom: 1px solid var(--gold);
+        }
+        nav a { 
+            color: var(--gold); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            font-size: 14px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 { font-size: 45px; color: var(--gold); margin-bottom: 10px; }
+        .hero p { font-style: italic; font-size: 18px; color: #ccc; }
+
+        .content { max-width: 1100px; margin: -50px auto 50px; padding: 0 20px; }
+
+        /* Ҳикоя карточкалари */
+        .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+        .story-item {
+            background: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.4s;
+        }
+
+        .story-item:hover { border-color: var(--gold); transform: scale(1.02); }
+
+        .story-thumb {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .story-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: #000;
+            padding: 5px 15px;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius: 5px;
+        }
+
+        .story-info { padding: 25px; }
+        .story-info h3 { color: var(--gold); font-size: 24px; margin-top: 0; }
+        .story-info p { line-height: 1.6; color: #bbb; height: 80px; overflow: hidden; }
+
+        .btn-read {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--gold);
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-read:hover { background: var(--gold); color: #000; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 30px; }
+            .story-thumb { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Бош саҳифа</a>
+        <a href="stories.html">Ижодий ишлар</a>
+        <a href="contact.html">Админга ёзиш</a>
+    </nav>
+
+    <div class="hero">
+        <h1>Зоҳиджон Зокиров ижоди</h1>
+        <p>"Ҳар бир ҳикоя — бир тақдир, ҳар бир тақдир — бир жумбоқ..."</p>
+    </div>
+
+    <div class="content">
+        <div class="story-grid">
+            
+            <!-- 1. Уруш Куни -->
+            <div class="story-item">
+                <div class="story-thumb" style="background-image: url('https://images.unsplash.com/photo-1533230408708-8f9f91d12344?q=80&w=1974&auto=format&fit=crop');">
+                    <span class="story-badge">ТРИЛЛЕР</span>
+                </div>
+                <div class="story-info">
+                    <h3>Уруш куни (Day of War)</h3>
+                    <p>Патрикнинг ҳаёти бир кечада ўзгариб кетди. Қора шарпалар ва номаълум хавф остида қолган шаҳарнинг сирли воқеалари.</p>
+                    <a href="#" class="btn-read">Мутолаа қилиш</a>
+                </div>
+            </div>
+
+            <!-- 2. Юракдаги Армоним -->
+            <div class="story-item">
+                <div class="story-thumb" style="background-image: url('https://images.unsplash.com/photo-1518060453914-4339279758c6?q=80&w=2062&auto=format&fit=crop');">
+                    <span class="story-badge">ДРАМА</span>
+                </div>
+                <div class="story-info">
+                    <h3>Юракдаги армоним</h3>
+                    <p>Йиллар ўтса ҳам сўнмаган муҳаббат ва тақдирнинг аччиқ ҳақиқатлари ҳақида таъсирли қисса.</p>
+                    <a href="#" class="btn-read">Мутолаа қилиш</a>
+                </div>
+            </div>
+
+            <!-- 3. 7 Wars -->
+            <div class="story-item">
+                <div class="story-thumb" style="background-image: url('https://images.unsplash.com/photo-1506466010722-395aa2bef877?q=80&w=2021&auto=format&fit=crop');">
+                    <span class="story-badge">ДЕТЕКТИВ</span>
+                </div>
+                <div class="story-info">
+                    <h3>7 Wars</h3>
+                    <p>Еттита уруш, еттита синов. Инсониятнинг энг оғир дамларида сақланиб қолган ирода ва жасорат тарихи.</p>
+                    <a href="#" class="btn-read">Мутолаа қилиш</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
