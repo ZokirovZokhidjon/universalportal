@@ -6,6 +6,44 @@
     <title>Universal Portal - Контрол Панел</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* ТЕЛЕФОНЛАР УЧУН МАХСУС СОЗЛАМА */
+@media (max-width: 768px) {
+    /* 1. Контейнерни кенгайтирамиз */
+    .container {
+        flex-direction: column; /* Sidebar-ни пастга туширади */
+        padding: 10px;
+    }
+
+    /* 2. Асосий мазмун ва Sidebar 100% кенгликда бўлади */
+    .main-content, .sidebar {
+        width: 100% !important;
+        flex: none;
+    }
+
+    /* 3. Расмларни мослаштириш */
+    .post-card img {
+        height: auto; /* Расм сиқилиб қолмайди */
+    }
+
+    /* 4. Навигация (Меню) - Тугмаларни каттароқ қилиш */
+    nav {
+        flex-wrap: wrap; /* Меню сиғмаса пастга тушади */
+    }
+    nav a {
+        flex: 1 1 45%; /* Битта қаторда 2 тадан меню тугмаси */
+        text-align: center;
+        font-size: 14px;
+        padding: 10px 5px;
+    }
+
+    /* 5. Матнларни ўқишга қулай қилиш */
+    .post-info h2 {
+        font-size: 20px;
+    }
+    .post-info p {
+        font-size: 16px;
+    }
+}
         body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         
         /* Логин ойнаси стили */
