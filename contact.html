@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Биз билан боғланиш - Universal Portal</title>
+    
+    <!-- Иконкалар -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- EmailJS кутубхонаси -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #f4f7f6; 
+            margin: 0; 
+            color: #333; 
+        }
+
+        /* Навигация */
+        nav { 
+            background: #2c3e50; 
+            padding: 15px; 
+            text-align: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        nav a:hover { color: #27ae60; }
+
+        /* Контейнер */
+        .contact-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 30px;
+        }
+
+        .contact-info { flex: 1; border-right: 1px solid #eee; padding-right: 20px; }
+        .contact-form { flex: 1.5; }
+
+        h2 { color: #2c3e50; margin-top: 0; }
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .info-item i { color: #27ae60; font-size: 20px; }
+
+        /* Форма стиллари */
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background: #219150; }
+
+        #status-msg {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+
+        /* 📱 МОБИЛ МОСЛАШУВ */
+        @media (max-width: 768px) {
+            .contact-container { 
+                flex-direction: column; 
+                margin: 20px; 
+                padding: 20px;
+            }
+            .contact-info { border-right: none; border-bottom: 1px solid #eee; padding-bottom: 20px; padding-right: 0; }
+            nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+            nav a { margin: 5px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Асосий</a>
+        <a href="hlp.html">Маслаҳатлар</a>
+        <a href="cock.html">Ошхона</a>
+        <a href="med.html">Табобат</a>
+        <a href="news.html">Янгиликлар</a>
+    </nav>
+
+    <div class="contact-container">
+        <!-- Чап томон: Маълумотлар -->
+        <div class="contact-info">
+            <h2>Алоқа</h2>
+            <p>Савол ва таклифларингизни йўлланг. Биз тез орада жавоб берамиз.</p>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>info@universal-portal.uz</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Наманган шаҳри</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>24/7 Хизматда</span>
+            </div>
+        </div>
+
+        <!-- Ўнг томон: Форма -->
+        <div class="contact-form">
+            <form id="contact-form">
+                <input type="text" name="user_name" id="from_name" placeholder="Исм-шарифингиз" required>
+                <input type="email" name="user_email" id="user_email" placeholder="Электрон почтангиз" required>
+                <textarea name="message" id="message" rows="5" placeholder="Хабарингиз матни..." required></textarea>
+                <button type="submit">ЮБОРИШ <i class="fas fa-paper-plane"></i></button>
+            </form>
+            <p id="status-msg"></p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        (function() {
+            // ДИҚҚАТ: Бу ерга EmailJS дан олган "Public Key" ни қўйишингиз керак
+            emailjs.init("YOUR_PUBLIC_KEY"); 
+        })();
+
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const btn = this.querySelector('button');
+            const status = document.getElementById('status-msg');
+
+            btn.disabled = true;
+            btn.innerHTML = "Юборилмоқда...";
+
+            // EmailJS орқали юбориш
+            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+                .then(function() {
+                    status.style.display = "block";
+                    status.style.color = "#27ae60";
+                    status.innerHTML = "✅ Хабарингиз муваффақиятли юборилди!";
+                    document.getElementById('contact-form').reset();
+                    btn.disabled = false;
+                    btn.innerHTML = "ЮБОРИШ <i class='fas fa-paper-plane'></i>";
+                }, function(error) {
+                    status.style.display = "block";
+                    status.style.color = "#e74c3c";
+                    status.innerHTML = "❌ Хатолик юз берди: " + JSON.stringify(error);
+                    btn.disabled = false;
+                    btn.innerHTML = "ЮБОРИШ <i class='fas fa-paper-plane'></i>";
+                });
+        });
+    </script>
+
+</body>
+</html>
