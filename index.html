@@ -1,230 +1,241 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<!-- Google ва Yandex учун асосий теглар -->
-<meta name="description" content="Наманган ва Ўзбекистон янгиликлари, фойдали маслаҳатлар, табобат ва кулинария портали.">
-<meta name="keywords" content="янгиликлар, табобат, маслаҳатлар, латифалар, Наманган, Universal Portal">
-<meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <!-- ЭНГ МУҲИМ ТЕГ: Мобил қурилмаларда тўғри кўриниш учун -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Ижтимоий тармоқларда чиройли кўриниши учун (Telegram, Facebook) -->
-<meta property="og:title" content="Universal Portal - Сиз учун фойдали маълумотлар">
-<meta property="og:description" content="Энг қизиқарли мақолалар ва янгиликлар бизнинг порталда.">
-<meta property="og:image" content="https://сизнинг-сайтингиз.уз/logo.jpg">
-<!-- Иконкалар учун FontAwesome кутубхонаси (Глобус учун) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-  /* 1. Умумий созламалар */
-  body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f2f5;
-    margin: 0;
-    padding: 0;
-    color: #333;
-  }
+    <title>Universal Portal - Сиз учун фойдали маълумотлар</title>
 
-  /* 2. Шапка (Header) ва Логотип */
-  header {
-    background: #fff;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid #ddd;
-  }
+    <!-- Google ва Yandex учун асосий теглар -->
+    <meta name="description" content="Наманган ва Ўзбекистон янгиликлари, фойдали маслаҳатлар, табобат ва кулинария портали.">
+    <meta name="keywords" content="янгиликлар, табобат, маслаҳатлар, латифалар, Наманган, Universal Portal">
+    <meta name="robots" content="index, follow">
 
-  .logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #2c3e50;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
+    <!-- Ижтимоий тармоқларда чиройли кўриниши учун -->
+    <meta property="og:title" content="Universal Portal - Сиз учун фойдали маълумотлар">
+    <meta property="og:description" content="Энг қизиқарли мақолалар ва янгиликлар бизнинг порталда.">
+    <meta property="og:image" content="https://сизнинг-сайтингиз.уз/logo.jpg">
 
-  .logo i { color: #3498db; } /* Глобус ранги */
+    <!-- Иконкалар учун FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-  /* 3. Эконом Меню (Navigation) */
-  nav {
-    background-color: #2c3e50;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
+    <style>
+        /* 1. Умумий созламалар */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden; /* Мобилда ортиқча сурилишни олдини олади */
+        }
 
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
+        /* 2. Шапка (Header) */
+        header {
+            background: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #ddd;
+        }
 
-  nav li { position: relative; }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo i { color: #3498db; }
 
-  nav a {
-    display: block;
-    padding: 15px 25px;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
-  }
+        /* 3. Эконом Меню (Navigation) */
+        nav {
+            background-color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-  nav a:hover { background-color: #34495e; }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Мобилда сиғмаса пастга тушади */
+        }
 
-  /* 4. Dropdown (Очилувчи меню) созламаси */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    border-radius: 0 0 5px 5px;
-  }
+        nav li { position: relative; }
 
-  .dropdown-content a {
-    color: #333;
-    padding: 12px 20px;
-    border-bottom: 1px solid #eee;
-  }
+        nav a {
+            display: block;
+            padding: 15px 18px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 15px;
+        }
 
-  .dropdown-content a:hover { background-color: #f1f1f1; color: #3498db; }
+        nav a:hover { background-color: #34495e; }
 
-  .dropdown:hover .dropdown-content { display: block; }
+        /* 4. Dropdown (Очилувчи меню) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 0 0 5px 5px;
+            border-top: 3px solid #3498db;
+        }
 
-  /* 5. Асосий Контейнер */
-  .main-container {
-    max-width: 1150px;
-    margin: 30px auto;
-    display: flex;
-    gap: 25px;
-    padding: 0 15px;
-  }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+        }
 
-  .main-content { flex: 7; }
-  .sidebar { flex: 3; }
+        .dropdown-content a:hover { background-color: #f1f1f1; color: #3498db; }
+        .dropdown:hover .dropdown-content { display: block; }
 
-  /* 6. Мақолалар Карточкаси */
-  .post-card {
-    background: white;
-    margin-bottom: 25px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  }
+        /* 5. Асосий Контейнер */
+        .main-container {
+            max-width: 1150px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+            padding: 0 15px;
+        }
 
-  .post-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-  }
+        .main-content { flex: 7; width: 100%; }
+        .sidebar { flex: 3; width: 100%; }
 
-  .post-info { padding: 20px; }
-  .post-info h2 { margin: 0 0 10px; font-size: 24px; color: #2c3e50; }
-  .post-info p { line-height: 1.6; color: #666; }
+        /* 6. Мақолалар Карточкаси */
+        .post-card {
+            background: white;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
 
-  .btn-more {
-    display: inline-block;
-    padding: 8px 18px;
-    background: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    margin-top: 10px;
-  }
+        .post-card img {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: cover;
+        }
 
-  /* 7. Ўнг томон (Силлкалар) */
-  .widget {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  }
+        .post-info { padding: 20px; }
+        .post-info h2 { margin: 0 0 12px; font-size: 22px; color: #2c3e50; line-height: 1.3; }
+        .post-info p { line-height: 1.6; color: #555; font-size: 16px; }
 
-  .widget h3 { border-left: 4px solid #3498db; padding-left: 10px; margin-top: 0; }
-  
-  .link-list { list-style: none; padding: 0; }
-  .link-list li { padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
-  .link-list a { text-decoration: none; color: #444; transition: 0.2s; }
-  .link-list a:hover { color: #3498db; padding-left: 5px; }
+        .btn-more {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
 
-  /* Мобил қурилмалар учун */
-  @media (max-width: 768px) {
-    .main-container { flex-direction: column; }
-    nav ul { flex-wrap: wrap; }
-  }
-</style>
+        /* 7. Ўнг томон (Силлкалар) */
+        .widget {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .widget h3 { border-left: 4px solid #3498db; padding-left: 10px; margin-top: 0; font-size: 18px; }
+        
+        .link-list { list-style: none; padding: 0; }
+        .link-list li { padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+        .link-list a { text-decoration: none; color: #444; transition: 0.2s; font-size: 15px; display: block; }
+        .link-list a:hover { color: #3498db; padding-left: 5px; }
+
+        /* 📱 МОБИЛ ҚУРИЛМАЛАР УЧУН (Responsive) */
+        @media (max-width: 850px) {
+            .main-container { flex-direction: column; margin-top: 10px; }
+            
+            nav a { padding: 12px 10px; font-size: 14px; text-align: center; }
+            nav ul { justify-content: space-around; }
+            
+            .dropdown-content { position: static; width: 100%; box-shadow: none; display: none; background: #34495e; }
+            .dropdown-content a { color: white; padding-left: 30px; }
+            .dropdown:hover .dropdown-content { display: block; }
+
+            .post-info h2 { font-size: 19px; }
+            
+            /* Силлкалар пастга тушганда ҳам чиройли кўриниши учун */
+            .sidebar { order: 2; }
+            .main-content { order: 1; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Логотип қисми -->
-  <header>
-    <a href="#" class="logo">
-      <i class="fas fa-globe"></i> UNIVERSAL PORTAL
-    </a>
-  </header>
+    <header>
+        <a href="index.html" class="logo">
+            <i class="fas fa-globe"></i> UNIVERSAL PORTAL
+        </a>
+    </header>
 
-  <!-- Меню -->
-  <nav>
-    <ul>
-      <li><a href="index.html">Асосий саҳифа</a></li>
-      <li class="dropdown">
-        <a href="hlp.html">Фойдали маслаҳатлар <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
-        <div class="dropdown-content">
-          <a href="cock.html">Кулинария</a>
-          <a href="med.html">Табобат</a>
-          <a href="yumor.html">Ҳангомалар</a>
-          <a href="admin.html">Шахсий кабиент</a>
-        </div>
-      </li>
-      <li><a href="news.html">Юртимиз янгиликлари</a></li>
-      <li><a href="#">Алоқа</a></li>
-    </ul>
-  </nav>
-
-  <!-- Асосий қисм -->
-  <div class="main-container">
-    
-    <!-- Чап томон: Мақолалар -->
-    <div class="main-content">
-      
-      <article class="post-card">
-        <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Боғбонлик">
-        <div class="post-info">
-          <h2>Боғбонлик сирлари: Дарахтларни тўғри парваришлаш</h2>
-          <p>Баҳор ойларида боғдаги дарахтларга қандай қараш керак? Меваси мўл бўлиши учун мутахассис маслаҳатлари...</p>
-          <a href="#" class="btn-more">Батафсил</a>
-        </div>
-      </article>
-
-      <article class="post-card">
-        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Кулинария">
-        <div class="post-info">
-          <h2>Тез ва мазали кечки овқат тайёрлаш</h2>
-          <p>Атиги 20 дақиқа вақт сарфлаб, бутун оилани хурсанд қиладиган мазали таом рецепти...</p>
-          <a href="#" class="btn-more">Рецептни кўриш</a>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Ўнг томон: Силлкалар рўйхати -->
-    <div class="sidebar">
-      <div class="widget">
-        <h3>Сўнгги хабарлар</h3>
-        <ul class="link-list">
-          <li><a href="#">➔ Янги китоб тақдимоти яқинлашмоқда</a></li>
-          <li><a href="#">➔ Саломатлик учун 5 та олтин қоида</a></li>
-          <li><a href="#">➔ Наманган гуллар фестивали таассуротлари</a></li>
-          <li><a href="#">➔ Детектив ҳикоя: "12-вагондаги қотиллик"</a></li>
-          <li><a href="#">➔ Энг қизиқарли латифалар тўплами</a></li>
+    <nav>
+        <ul>
+            <li><a href="index.html">Асосий саҳифа</a></li>
+            <li class="dropdown">
+                <a href="#">Бўлимлар <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a>
+                <div class="dropdown-content">
+                    <a href="hlp.html">Фойдали маслаҳатлар</a>
+                    <a href="cock.html">Кулинария</a>
+                    <a href="med.html">Табобат</a>
+                    <a href="yumor.html">Ҳангомалар</a>
+                    <a href="admin.html">Шахсий кабинет</a>
+                </div>
+            </li>
+            <li><a href="news.html">Янгиликлар</a></li>
+            <li><a href="#">Алоқа</a></li>
         </ul>
-      </div>
+    </nav>
+
+    <div class="main-container">
+        
+        <main class="main-content" id="post-display-area">
+            <!-- Бу ерга мақолалар Firebase-дан чиқади -->
+            
+            <!-- Намуна учун статик мақола -->
+            <article class="post-card">
+                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80" alt="Боғбонлик">
+                <div class="post-info">
+                    <h2>Боғбонлик сирлари: Дарахтларни тўғри парваришлаш</h2>
+                    <p>Баҳор ойларида боғдаги дарахтларга қандай қараш керак? Мутахассис маслаҳатлари...</p>
+                    <a href="#" class="btn-more">Батафсил</a>
+                </div>
+            </article>
+        </main>
+
+        <aside class="sidebar">
+            <div class="widget">
+                <h3>Сўнгги хабарлар</h3>
+                <ul class="link-list" id="sidebar-links">
+                    <li><a href="#">➔ Янги китоб тақдимоти яқинлашмоқда</a></li>
+                    <li><a href="#">➔ Саломатлик учун 5 та олтин қоида</a></li>
+                    <li><a href="#">➔ Наманган гуллар фестивали таассуротлари</a></li>
+                </ul>
+            </div>
+        </aside>
+
     </div>
 
-  </div>
-<script type="module" src="bridge.js"></script>
+    <!-- Firebase билан боғловчи файл -->
+    <script type="module" src="bridge.js"></script>
 </body>
 </html>

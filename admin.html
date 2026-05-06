@@ -4,63 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Portal - Контрол Панел</title>
+    
+    <!-- Иконкалар -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* ТЕЛЕФОНЛАР УЧУН МАХСУС СОЗЛАМА */
-@media (max-width: 768px) {
-    /* 1. Контейнерни кенгайтирамиз */
-    .container {
-        flex-direction: column; /* Sidebar-ни пастга туширади */
-        padding: 10px;
-    }
-
-    /* 2. Асосий мазмун ва Sidebar 100% кенгликда бўлади */
-    .main-content, .sidebar {
-        width: 100% !important;
-        flex: none;
-    }
-
-    /* 3. Расмларни мослаштириш */
-    .post-card img {
-        height: auto; /* Расм сиқилиб қолмайди */
-    }
-
-    /* 4. Навигация (Меню) - Тугмаларни каттароқ қилиш */
-    nav {
-        flex-wrap: wrap; /* Меню сиғмаса пастга тушади */
-    }
-    nav a {
-        flex: 1 1 45%; /* Битта қаторда 2 тадан меню тугмаси */
-        text-align: center;
-        font-size: 14px;
-        padding: 10px 5px;
-    }
-
-    /* 5. Матнларни ўқишга қулай қилиш */
-    .post-info h2 {
-        font-size: 20px;
-    }
-    .post-info p {
-        font-size: 16px;
-    }
-}
-        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        /* 1. АСОСИЙ СТИЛЛАР */
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #eef2f3; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            transition: 0.3s;
+        }
         
-        /* Логин ойнаси стили */
-        #login-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        /* Логин ойнаси */
+        #login-section { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 350px; 
+            text-align: center; 
+        }
         #login-section h2 { color: #2c3e50; margin-bottom: 25px; }
         
-        /* Асосий панел стили */
-        #admin-main-content { background: white; width: 100%; max-width: 700px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 20px; display: none; }
+        /* Асосий бошқарув панели */
+        #admin-main-content { 
+            background: white; 
+            width: 95%; 
+            max-width: 700px; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            margin: 20px; 
+            display: none; 
+            box-sizing: border-box;
+        }
         
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #3498db; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+        .header-area { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 25px; 
+            border-bottom: 2px solid #f4f4f4; 
+            padding-bottom: 15px; 
+        }
+
+        input, textarea, select { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            box-sizing: border-box; 
+            outline: none;
+        }
+        input:focus, textarea:focus { border-color: #3498db; }
+
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            background: #3498db; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 18px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-weight: bold; 
+        }
         button:hover { background: #2980b9; }
         
-        .logout-btn { background: #e74c3c; padding: 10px 20px; width: auto; font-size: 14px; float: right; }
+        .logout-btn { 
+            background: #e74c3c; 
+            padding: 10px 20px; 
+            width: auto; 
+            font-size: 14px; 
+        }
         .logout-btn:hover { background: #c0392b; }
-        .status { text-align: center; color: #27ae60; font-weight: bold; display: none; margin-top: 15px; }
-        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #f4f4f4; padding-bottom: 15px; }
+
+        .status { 
+            text-align: center; 
+            color: #27ae60; 
+            font-weight: bold; 
+            display: none; 
+            margin-top: 15px; 
+        }
+
+        /* 📱 МОБИЛ МОСЛАШУВ (Энг пастда) */
+        @media (max-width: 768px) {
+            body { align-items: flex-start; padding-top: 20px; }
+            
+            #login-section { padding: 25px; }
+            
+            #admin-main-content { 
+                padding: 20px; 
+                margin: 10px;
+            }
+
+            .header-area { 
+                flex-direction: column; 
+                gap: 15px; 
+                text-align: center; 
+            }
+            
+            .header-area h2 { font-size: 20px; }
+            
+            button { font-size: 16px; padding: 12px; }
+            
+            input, textarea, select { font-size: 14px; padding: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -71,7 +130,7 @@
         <h2>Тизимга кириш</h2>
         <input type="email" id="adminEmail" placeholder="Email (почта)">
         <input type="password" id="adminPass" placeholder="Парол">
-        <button onclick="login()">КИРИШ</button>
+        <button onclick="login()">КИРИШ <i class="fas fa-sign-in-alt"></i></button>
     </div>
 
     <!-- 2. АСОСИЙ БОШҚАРУВ ПАНЕЛИ -->
@@ -81,7 +140,7 @@
             <button class="logout-btn" onclick="logout()">Чиқиш <i class="fas fa-sign-out-alt"></i></button>
         </div>
         
-        <label>Саҳифани танланг:</label>
+        <label><b>Саҳифани танланг:</b></label>
         <select id="category">
             <option value="news">Янгиликлар (news.html)</option>
             <option value="hlp">Маслаҳатлар (hlp.html)</option>
@@ -93,19 +152,19 @@
         <input type="text" id="title" placeholder="Мақола сарлавҳаси...">
         <input type="text" id="image" placeholder="Расм URL линки (https://...)">
         <textarea id="content" rows="8" placeholder="Мақола матнини шу ерга ёзинг..."></textarea>
-        <input type="text" id="video" placeholder='Видео код (Iframe: <iframe... ></iframe>)'>
+        <input type="text" id="video" placeholder='Видео код (Iframe код ёки линк)'>
 
         <button onclick="publishPost()">НАШР ҚИЛИШ <i class="fas fa-paper-plane"></i></button>
         <p id="statusMsg" class="status">✅ Муваффақиятли юборилди!</p>
     </div>
 
-    <!-- FIREBASE СКРИПТЛАРИ -->
+    <!-- FIREBASE МОДУЛЛАРИ -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Firebase Конфигурацияси
+        // Конфигурация
         const firebaseConfig = {
             apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
             authDomain: "universal-portal-108b7.firebaseapp.com",
@@ -120,34 +179,36 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // 1. Кириш функцияси
+        // Кириш
         window.login = function() {
             const email = document.getElementById('adminEmail').value;
             const pass = document.getElementById('adminPass').value;
-            signInWithEmailAndPassword(auth, email, pass)
-                .catch(err => alert("Хато: " + err.message));
+            if(!email || !pass) { alert("Маълумотларни тўлдиринг!"); return; }
+            signInWithEmailAndPassword(auth, email, pass).catch(err => alert("Хато: " + err.message));
         };
 
-        // 2. Чиқиш функцияси
+        // Чиқиш
         window.logout = function() {
             signOut(auth).then(() => { location.reload(); });
         };
 
-        // 3. Авторизацияни текшириш
+        // Ҳолатни текшириш
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-main-content').style.display = 'block';
                 document.body.style.alignItems = 'flex-start';
-                document.body.style.padding = '40px 0';
+                document.body.style.padding = '20px 0';
             } else {
                 document.getElementById('login-section').style.display = 'block';
                 document.getElementById('admin-main-content').style.display = 'none';
+                document.body.style.alignItems = 'center';
             }
         });
 
-        // 4. Мақола юбориш
+        // Нашр қилиш
         window.publishPost = function() {
+            const btn = event.target;
             const postData = {
                 category: document.getElementById('category').value,
                 title: document.getElementById('title').value,
@@ -162,11 +223,18 @@
                 return;
             }
 
+            btn.disabled = true;
+            btn.innerHTML = "Юборилмоқда...";
+
             const newPostRef = push(ref(db, 'all_posts'));
             set(newPostRef, postData).then(() => {
                 document.getElementById('statusMsg').style.display = 'block';
                 setTimeout(() => { location.reload(); }, 1500);
-            }).catch(err => alert("Хатолик: " + err.message));
+            }).catch(err => {
+                alert("Хатолик: " + err.message);
+                btn.disabled = false;
+                btn.innerHTML = "НАШР ҚИЛИШ";
+            });
         };
     </script>
 </body>

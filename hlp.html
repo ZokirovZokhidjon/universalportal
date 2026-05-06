@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Фойдали маслаҳатлар - Universal Portal</title>
+    
     <!-- Иконкалар учун -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* 1. Умумий дизайн */
+        /* 1. УМУМИЙ ДИЗАЙН (Асосий созламалар) */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f7f6;
             color: #34495e;
+            overflow-x: hidden; /* Мобилда ёнга сурилишни олдини олади */
         }
 
-        /* 2. Шапка ва Лого */
+        /* 2. ШАПКА ВА ЛОГО */
         header {
             background: white;
             padding: 15px;
@@ -24,7 +27,7 @@
             border-bottom: 4px solid #27ae60;
         }
         .logo {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
             text-decoration: none;
             color: #2c3e50;
@@ -35,7 +38,7 @@
         }
         .logo i { color: #27ae60; }
 
-        /* 3. Навигация (Эконом ва Dropdown билан) */
+        /* 3. НАВИГАЦИЯ (Меню) */
         nav {
             background: #2c3e50;
             position: sticky;
@@ -50,13 +53,14 @@
             text-decoration: none;
             font-weight: 500;
             transition: 0.3s;
+            font-size: 15px;
         }
         nav a:hover, nav a.active {
             background: #1a252f;
             color: #27ae60;
         }
 
-        /* 4. Контейнер */
+        /* 4. КОНТЕЙНЕР */
         .container {
             max-width: 1100px;
             margin: 30px auto;
@@ -68,7 +72,7 @@
         .main-content { flex: 7; }
         .sidebar { flex: 3; }
 
-        /* 5. Маслаҳат карточкаси */
+        /* 5. МАСЛАҲАТ КАРТОЧКАСИ */
         .post-card {
             background: white;
             border-radius: 15px;
@@ -82,16 +86,17 @@
         .post-info h2 { 
             margin: 0 0 15px; 
             color: #2c3e50; 
-            font-size: 24px;
+            font-size: 22px;
             border-left: 5px solid #27ae60;
             padding-left: 15px;
+            line-height: 1.3;
         }
         .post-info p { line-height: 1.8; font-size: 16px; color: #555; }
 
         .video-box { margin-top: 20px; border-radius: 10px; overflow: hidden; }
         .video-box iframe { width: 100%; height: 350px; border: none; }
 
-        /* 6. Sidebar Виджет */
+        /* 6. SIDEBAR ВИДЖЕТ */
         .widget {
             background: white;
             padding: 20px;
@@ -109,13 +114,38 @@
         }
         .link-list { list-style: none; padding: 0; }
         .link-list li { padding: 12px 0; border-bottom: 1px solid #f9f9f9; }
-        .link-list a { text-decoration: none; color: #444; font-size: 15px; transition: 0.2s; }
+        .link-list a { text-decoration: none; color: #444; font-size: 15px; transition: 0.2s; display: block; }
         .link-list a:hover { color: #27ae60; padding-left: 5px; }
 
-        /* Мобил адаптация */
-        @media (max-width: 850px) {
-            .container { flex-direction: column; }
+        /* 📱 МОБИЛ АДАПТАЦИЯ (Фақат битта бўлиши керак ва энг пастда) */
+        @media (max-width: 768px) {
+            .container { 
+                flex-direction: column; 
+                margin: 15px auto; 
+            }
+            
+            .main-content, .sidebar { 
+                width: 100% !important; 
+                flex: none; 
+            }
+
+            header { padding: 10px; }
+            .logo { font-size: 22px; }
+
             nav { flex-wrap: wrap; }
+            nav a {
+                flex: 1 1 45%; /* Битта қаторда 2 тадан меню */
+                padding: 10px 5px;
+                font-size: 13px;
+                text-align: center;
+                border: 1px solid #34495e;
+            }
+
+            .post-card img { height: 200px; }
+            .post-info { padding: 15px; }
+            .post-info h2 { font-size: 18px; }
+            
+            .widget { position: static; margin-top: 20px; }
         }
     </style>
 </head>

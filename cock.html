@@ -2,20 +2,118 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Бўлим саҳифаси</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бўлим саҳифаси - Universal Portal</title>
+    
+    <!-- Иконкалар учун -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* Сизга аввал берган чиройли дизайним стилларини шу ерга қўйинг */
-        body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
-        .main-container { max-width: 1100px; margin: 20px auto; display: flex; gap: 20px; padding: 20px; }
+        /* 1. АСОСИЙ ДИЗАЙН */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f0f2f5; 
+            margin: 0; 
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Навигация (Меню) */
+        nav { 
+            background: #2c3e50; 
+            padding: 15px; 
+            text-align: center; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a { 
+            color: white; 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-weight: bold; 
+            transition: 0.3s;
+        }
+        nav a:hover { color: #27ae60; }
+
+        /* Асосий Контейнер */
+        .main-container { 
+            max-width: 1150px; 
+            margin: 25px auto; 
+            display: flex; 
+            gap: 25px; 
+            padding: 0 20px; 
+        }
+
         .content { flex: 7; }
-        .sidebar { flex: 3; background: white; padding: 20px; border-radius: 10px; height: fit-content; }
-        .post-card { background: white; margin-bottom: 25px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .post-card img { width: 100%; height: auto; }
+        
+        .sidebar { 
+            flex: 3; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            height: fit-content; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 80px;
+        }
+
+        /* Мақолалар Карточкаси */
+        .post-card { 
+            background: white; 
+            margin-bottom: 25px; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            border: 1px solid #e0e0e0;
+        }
+        .post-card img { width: 100%; height: auto; max-height: 400px; object-fit: cover; }
         .post-info { padding: 20px; }
-        .video-box iframe { width: 100%; height: 300px; border: none; border-radius: 8px; }
-        nav { background: #2c3e50; padding: 15px; text-align: center; }
-        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        .post-info h2 { color: #2c3e50; margin-top: 0; border-left: 5px solid #27ae60; padding-left: 15px; }
+        .post-info p { line-height: 1.6; color: #555; }
+
+        /* Видео учун созлама */
+        .video-box iframe { 
+            width: 100%; 
+            height: 350px; 
+            border: none; 
+            border-radius: 8px; 
+            margin-top: 15px;
+        }
+
+        /* 📱 МОБИЛ АДАПТАЦИЯ (Энг пастда туриши шарт!) */
+        @media (max-width: 768px) {
+            .main-container { 
+                flex-direction: column; 
+                padding: 10px;
+                margin-top: 10px;
+            }
+
+            .content, .sidebar { 
+                width: 100%; 
+                flex: none; 
+            }
+
+            nav { 
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                padding: 10px;
+            }
+            nav a { 
+                margin: 5px; 
+                font-size: 14px;
+                flex: 1 1 40%; /* 2 тадан меню */
+                background: #34495e;
+                padding: 8px;
+                border-radius: 5px;
+            }
+
+            .post-info h2 { font-size: 19px; }
+            .sidebar { position: static; order: 2; }
+            .content { order: 1; }
+        }
     </style>
 </head>
 <body>
@@ -30,17 +128,20 @@
 
     <div class="main-container">
         <!-- Мақолалар шу ерга тушади -->
-        <div class="content" id="post-display-area"></div>
+        <main class="content" id="post-display-area"></main>
 
         <!-- Ўнг томон -->
-        <div class="sidebar">
-            <h3>Бўлимдаги хабарлар</h3>
-            <ul id="sidebar-links" style="list-style:none; padding:0;"></ul>
-        </div>
+        <aside class="sidebar">
+            <h3 style="border-bottom: 2px solid #f0f0f0; padding-bottom: 10px;">
+                <i class="fas fa-list-ul"></i> Бўлимдаги хабарлар
+            </h3>
+            <ul id="sidebar-links" style="list-style:none; padding:0;">
+                <!-- Силлкалар автоматик пайдо бўлади -->
+            </ul>
+        </aside>
     </div>
 
-    <!-- Кўприк скриптини улаймиз -->
-     <script type="module" src="bridge.js"></script>
-    <script src="bridge.js"></script>
+    <!-- Кўприк скрипти (Фақат бир марта чақирилади) -->
+    <script type="module" src="bridge.js"></script>
 </body>
 </html>

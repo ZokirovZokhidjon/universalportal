@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ҳангомалар ва Латифалар - 🤣🤣🤣🤣</title>
+    
+    <!-- Иконкалар учун -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* 1. Умумий дизайн (Қувноқ ва иссиқ ранглар) */
+        /* 1. УМУМИЙ ДИЗАЙН (Қувноқ ва иссиқ ранглар) */
         body {
-            font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Тизимли шрифт яхшироқ ишлайди */
             margin: 0;
             padding: 0;
             background-color: #fff9e6; /* Енгил сариқ фонда */
             color: #444;
+            overflow-x: hidden;
         }
 
-        /* 2. Шапка ва Смайликлар */
+        /* 2. ШАПКА ВА СМАЙЛИКЛАР */
         header {
             background: #f1c40f;
             padding: 25px;
@@ -23,18 +27,19 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .humor-logo {
-            font-size: 35px;
+            font-size: 30px;
             font-weight: bold;
             color: #2c3e50;
             text-decoration: none;
+            display: block;
         }
         .emoji-bar {
-            font-size: 40px;
+            font-size: 35px;
             margin-top: 10px;
             display: block;
         }
 
-        /* 3. Меню */
+        /* 3. НАВИГАЦИЯ (МЕНЮ) */
         nav {
             background: #e67e22;
             display: flex;
@@ -54,7 +59,7 @@
             background: #d35400;
         }
 
-        /* 4. Асосий қисм */
+        /* 4. АСОСИЙ ҚИСМ */
         .main-wrapper {
             max-width: 1000px;
             margin: 30px auto;
@@ -66,7 +71,7 @@
         .humor-posts { flex: 7; }
         .sidebar { flex: 3; }
 
-        /* 5. Ҳангома карточкаси */
+        /* 5. ҲАНГОМА КАРТОЧКАСИ */
         .post-card {
             background: white;
             border-radius: 20px;
@@ -77,6 +82,7 @@
         }
         .post-card img {
             width: 100%;
+            height: auto;
             max-height: 400px;
             object-fit: cover;
         }
@@ -84,7 +90,7 @@
         .post-content h2 {
             color: #d35400;
             margin-top: 0;
-            font-size: 26px;
+            font-size: 24px;
         }
         .post-content p {
             font-size: 18px;
@@ -92,6 +98,7 @@
             white-space: pre-line; /* Матндаги қатор ташлашларни сақлайди */
         }
 
+        /* Видео учун */
         .video-container {
             background: #000;
             margin-top: 15px;
@@ -100,36 +107,55 @@
         }
         .video-container iframe { width: 100%; height: 350px; border: none; }
 
-        /* 6. Ўнг томондаги рўйхат */
+        /* 6. SIDEBAR ВИДЖЕТ */
         .joke-list-widget {
             background: white;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 80px;
         }
         .joke-list-widget h3 {
             color: #c0392b;
             text-align: center;
             border-bottom: 2px dashed #f1c40f;
             padding-bottom: 10px;
+            margin-top: 0;
         }
         .link-list { list-style: none; padding: 0; }
-        .link-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .link-list a {
-            text-decoration: none;
-            color: #555;
-            font-size: 16px;
-            font-weight: 500;
-        }
+        .link-list li { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .link-list a { text-decoration: none; color: #555; font-size: 16px; font-weight: 500; display: block; }
         .link-list a:hover { color: #e67e22; padding-left: 5px; transition: 0.2s; }
 
-        /* Мобил версия */
+        /* 📱 МОБИЛ ВЕРСИЯ (ЭНГ ПАСТДА) */
         @media (max-width: 768px) {
-            .main-wrapper { flex-direction: column; }
-            .emoji-bar { font-size: 30px; }
+            .main-wrapper { 
+                flex-direction: column; 
+                margin-top: 15px;
+            }
+
+            .humor-posts, .sidebar { 
+                width: 100% !important; 
+                flex: none; 
+            }
+
+            .emoji-bar { font-size: 28px; }
+            .humor-logo { font-size: 24px; }
+
+            nav { flex-wrap: wrap; }
+            nav a {
+                flex: 1 1 45%;
+                text-align: center;
+                font-size: 14px;
+                padding: 10px 5px;
+                border: 0.5px solid #d35400;
+            }
+
+            .post-content h2 { font-size: 20px; }
+            .post-content p { font-size: 16px; }
+            
+            .joke-list-widget { position: static; margin-top: 20px; }
         }
     </style>
 </head>
@@ -155,7 +181,7 @@
         
         <!-- Латифалар лентаси -->
         <main class="humor-posts" id="post-display-area">
-            <!-- Хабарлар шу ерга тушади -->
+            <!-- Хабарлар bridge.js орқали шу ерга тушади -->
         </main>
 
         <!-- Ўнг томон -->
@@ -163,16 +189,15 @@
             <div class="joke-list-widget">
                 <h3><i class="fas fa-laugh-squint"></i> Кулги соати</h3>
                 <ul class="link-list" id="sidebar-links">
-                    <!-- Линклар скрипт орқали чиқади -->
+                    <!-- Линклар автоматик чиқади -->
                 </ul>
             </div>
         </aside>
         
     </div>
 
-    <!-- Кўприк скрипти -->
-     <script type="module" src="bridge.js"></script>
-    <script src="bridge.js"></script>
+    <!-- Кўприк скрипти (Фақат битта бўлиши шарт) -->
+    <script type="module" src="bridge.js"></script>
 
 </body>
 </html>
