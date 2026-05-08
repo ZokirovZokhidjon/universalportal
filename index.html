@@ -6,26 +6,95 @@
     <title>Universal Portal - Асосий Саҳифа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --blue: #3498db; --dark: #2c3e50; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        header { background: var(--dark); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
+        :root { --blue: #3498db; --dark: #2c3e50; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; }
+
+        header { background: #fff; padding: 15px; border-bottom: 2px solid var(--blue); text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        header h1 { margin: 0; color: var(--dark); font-size: 24px; letter-spacing: 1px; }
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
+
+        /* КАРТОЧКАЛАР ТИЗИМИ (GRID) */
+        .news-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .card { 
+            background: #fff; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            transition: 0.3s; 
+            display: flex; 
+            flex-direction: column;
+            border: 1px solid #eee;
+        }
+        .card:hover { transform: translateY(-7px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+
+        /* Расмни бир хил форматга солиш */
+        .card-img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         
-        .main-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        
-        /* КАРТОЧКА ФОРМАТИ */
-        .post-card { background: white; border-radius: 15px; overflow: hidden; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; }
-        .post-card:hover { transform: translateY(-5px); }
-        .post-img { width: 100%; height: 350px; object-fit: cover; }
-        
-        .post-body { padding: 25px; }
-        .category-tag { background: var(--blue); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; text-transform: uppercase; }
-        .post-title { font-size: 26px; color: var(--dark); margin: 15px 0; line-height: 1.3; }
-        .post-excerpt { color: #666; line-height: 1.6; margin-bottom: 20px; font-size: 16px; }
-        
-        .read-more-btn { display: inline-block; background: var(--blue); color: white; text-decoration: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; transition: 0.3s; }
-        .read-more-btn:hover { background: #2980b9; box-shadow: 0 5px 15px rgba(52,152,219,0.3); }
-        
-        .post-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; color: #999; font-size: 14px; }
+        .card-tag { 
+            font-size: 11px; 
+            background: var(--blue); 
+            color: #fff; 
+            padding: 3px 10px; 
+            border-radius: 5px; 
+            text-transform: uppercase; 
+            width: fit-content;
+        }
+
+        .card-title { 
+            font-size: 19px; 
+            color: var(--dark); 
+            margin: 12px 0; 
+            font-weight: 700;
+            line-height: 1.4;
+            /* Сарлавҳани 2 қатор билан чеклаш */
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .card-desc { 
+            font-size: 14px; 
+            color: #666; 
+            line-height: 1.6; 
+            margin-bottom: 15px;
+            /* Матнни 3 қатор билан чеклаш */
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .read-more { 
+            margin-top: auto; 
+            color: var(--blue); 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
+        .read-more:hover { text-decoration: underline; }
+
+        .card-footer { 
+            padding: 15px 20px; 
+            background: #fafafa; 
+            border-top: 1px solid #f0f0f0; 
+            font-size: 12px; 
+            color: #999; 
+            display: flex; 
+            justify-content: space-between; 
+        }
+
+        @media (max-width: 600px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -34,8 +103,9 @@
     <h1>UNIVERSAL PORTAL</h1>
 </header>
 
-<div class="main-container" id="posts-wrapper">
-    <div style="text-align:center; padding:50px;"><i class="fas fa-spinner fa-spin fa-3x" style="color:var(--blue)"></i></div>
+<div class="container">
+    <div class="news-grid" id="newsWrapper">
+        </div>
 </div>
 
 <script type="module">
@@ -44,7 +114,6 @@
 
     const firebaseConfig = {
         apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
-        authDomain: "universal-portal-108b7.firebaseapp.com",
         databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
         projectId: "universal-portal-108b7"
     };
@@ -52,37 +121,31 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    const postsWrapper = document.getElementById('posts-wrapper');
-
     onValue(ref(db, 'all_posts'), (snapshot) => {
+        const wrapper = document.getElementById('newsWrapper');
+        wrapper.innerHTML = "";
         const data = snapshot.val();
-        postsWrapper.innerHTML = "";
         
         if (data) {
             Object.keys(data).reverse().forEach(id => {
-                const post = data[id];
-                // Матнни қисқартириш (180 та белги)
-                const excerpt = post.content ? post.content.substring(0, 180) + "..." : "";
-                
+                const p = data[id];
                 const card = document.createElement('div');
-                card.className = 'post-card';
+                card.className = 'card';
                 card.innerHTML = `
-                    ${post.image ? `<img src="${post.image}" class="post-img" alt="image">` : ''}
-                    <div class="post-body">
-                        <span class="category-tag">${post.category}</span>
-                        <h2 class="post-title">${post.title}</h2>
-                        <p class="post-excerpt">${excerpt}</p>
-                        <a href="post.html?id=${id}" class="read-more-btn">Батафсил ўқиш</a>
-                        <div class="post-meta">
-                            <span><i class="far fa-calendar-alt"></i> ${post.time}</span>
-                            <span><i class="far fa-user"></i> Администратор</span>
-                        </div>
+                    <img src="${p.image || 'https://via.placeholder.com/400x200?text=No+Image'}" class="card-img">
+                    <div class="card-body">
+                        <span class="card-tag">${p.category}</span>
+                        <h2 class="card-title">${p.title}</h2>
+                        <p class="card-desc">${p.content}</p>
+                        <a href="post.html?id=${id}" class="read-more">Батафсил ўқиш <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="card-footer">
+                        <span><i class="far fa-calendar"></i> ${p.time}</span>
+                        <span><i class="far fa-eye"></i> Кўриш</span>
                     </div>
                 `;
-                postsWrapper.appendChild(card);
+                wrapper.appendChild(card);
             });
-        } else {
-            postsWrapper.innerHTML = "<h3>Ҳозирча мақолалар йўқ.</h3>";
         }
     });
 </script>
