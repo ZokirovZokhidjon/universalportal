@@ -14,18 +14,29 @@
         .profile-header { background: #3498db; color: white; padding: 20px; border-radius: 15px; display: flex; align-items: center; margin-bottom: 30px; }
         .avatar { width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin-right: 20px; border: 2px solid white; }
         
-        .notice-section { background: #fff4e5; border: 2px dashed #ff9800; padding: 20px; border-radius: 15px; margin-bottom: 30px; }
-        input, textarea, select { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; box-sizing: border-box; outline: none; }
+        .notice-section, .ad-section { background: #fff4e5; border: 2px dashed #ff9800; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
+        .ad-section { background: #e8f5e9; border-color: #4caf50; }
+
+        input, textarea, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; box-sizing: border-box; outline: none; }
         input:focus, textarea:focus { border-color: #3498db; }
         
         button { border: none; cursor: pointer; font-weight: bold; border-radius: 12px; transition: 0.3s; }
-        .btn-main { width: 100%; background: #3498db; color: white; padding: 15px; font-size: 18px; }
+        .btn-main { width: 100%; background: #3498db; color: white; padding: 15px; font-size: 18px; margin-top: 10px; }
         .btn-main:hover { background: #2980b9; }
+        .btn-update { background: #2ecc71 !important; } /* Таҳрирлаш вақтида яшил бўлади */
+
         .btn-notice { background: #ff9800; color: white; padding: 10px 20px; }
+        .btn-ad { background: #4caf50; color: white; padding: 10px 20px; }
         
         .post-item { background: #fcfcfc; border: 1px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-top { background: #2ecc71; color: white; text-decoration: none; padding: 10px 15px; border-radius: 8px; font-size: 14px; display: inline-block; }
+        .post-actions { display: flex; gap: 5px; }
+        
+        .btn-top { background: #2ecc71; color: white; text-decoration: none; padding: 10px 15px; border-radius: 8px; font-size: 14px; display: inline-block; margin-right: 5px; }
         .btn-delete { background: #e74c3c; color: white; padding: 8px 12px; font-size: 13px; }
+        .btn-edit { background: #f1c40f; color: white; padding: 8px 12px; font-size: 13px; }
+        
+        h3 { border-left: 5px solid #3498db; padding-left: 10px; color: #2c3e50; }
+        #cancelEdit { color: red; cursor: pointer; display: none; font-size: 14px; margin-left: 10px; }
     </style>
 </head>
 <body>
@@ -56,29 +67,42 @@
         </div>
 
         <div class="notice-section">
-            <label><b><i class="fas fa-bullhorn"></i> Тезкор эълон (Ҳамма саҳифаларда кўринади):</b></label>
+            <label><b><i class="fas fa-bullhorn"></i> Тезкор эълон (Матнли):</b></label>
             <div style="display:flex; gap:10px; margin-top:10px">
                 <input type="text" id="qNotice" style="margin:0" placeholder="Муҳим хабарни ёзинг...">
-                <button class="btn-notice" id="sendNBtn">ЮБОРИШ</button>
+                <button class="btn-notice" id="sendNBtn">САҚЛАШ</button>
                 <button class="btn-notice" style="background:#666" id="delNBtn">ЎЧИРИШ</button>
             </div>
         </div>
 
-        <h3><i class="fas fa-plus-circle"></i> Янги мақола қўшиш</h3>
+        <div class="ad-section">
+            <label><b><i class="fas fa-ad"></i> Реклама ва Эълонлар блоки (Расмли):</b></label>
+            <input type="text" id="adImg" placeholder="Реклама расми (URL)" style="margin-top:10px">
+            <input type="text" id="adLink" placeholder="Реклама линки (https://...)">
+            <div style="display:flex; gap:10px;">
+                <button class="btn-ad" id="saveAdBtn">РЕКЛАМАНИ ЖОЙЛАШ</button>
+                <button class="btn-ad" style="background:#666" id="delAdBtn">ЎЧИРИШ</button>
+            </div>
+        </div>
+
+        <h3 id="formTitle"><i class="fas fa-plus-circle"></i> Янги контент қўшиш <span id="cancelEdit" onclick="resetForm()">[Бекор қилиш]</span></h3>
         <select id="cat">
             <option value="news">Янгиликлар</option>
             <option value="med">Табобат</option>
+            <option value="cinema">Кинотеатр (Кинолар)</option>
+            <option value="clips">Мусиқий клиплар</option>
             <option value="stories">Ҳикоялар</option>
             <option value="yumor">Ҳангомалар</option>
             <option value="cook">Кулинария</option>
         </select>
-        <input type="text" id="title" placeholder="Мақола сарлавҳаси">
-        <input type="text" id="img" placeholder="Расм URL линки (ёки Firebase'дан олинган код)">
-        <textarea id="txt" rows="6" placeholder="Мақоланинг тўлиқ матни..."></textarea>
+        <input type="text" id="title" placeholder="Сарлавҳа">
+        <input type="text" id="img" placeholder="Асосий расм URL">
+        <textarea id="videoIframe" rows="3" placeholder="Видео Iframe коди"></textarea>
+        <textarea id="txt" rows="6" placeholder="Батафсил матн ёки таъриф..."></textarea>
         <button class="btn-main" id="pubBtn">НАШР ҚИЛИШ</button>
 
         <div style="margin-top:40px">
-            <h3><i class="fas fa-list"></i> Бошқариш (Мақолалар рўйхати)</h3>
+            <h3><i class="fas fa-list"></i> Барча контентлар рўйхати</h3>
             <div id="pContainer">Юкланмоқда...</div>
         </div>
     </div>
@@ -86,9 +110,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Сизнинг Firebase созламаларингиз
         const firebaseConfig = {
             apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
             authDomain: "universal-portal-108b7.firebaseapp.com",
@@ -100,14 +123,13 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // Кириш функцияси
+        let editId = null; // Таҳрирланаётган мақола ID си
+
+        // Login
         document.getElementById('loginBtn').onclick = () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Хато: " + e.message));
+            signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value).catch(e => alert("Киришда хатолик!"));
         };
 
-        // Сессияни текшириш
         onAuthStateChanged(auth, u => {
             if(u) {
                 document.getElementById('login-section').style.display='none';
@@ -119,51 +141,35 @@
             }
         });
 
-        // Чиқиш
         document.getElementById('logoutBtn').onclick = () => signOut(auth);
 
-        // Тезкор эълонни юбориш
-        document.getElementById('sendNBtn').onclick = async () => {
-            const text = document.getElementById('qNotice').value;
-            if(!text) return alert("Эълон матнини ёзинг!");
-            await set(ref(db, 'site_notice'), { text: text });
-            alert("Эълон асосий саҳифага чиқарилди!");
-        };
-
-        // Эълонни ўчириш
-        document.getElementById('delNBtn').onclick = async () => {
-            await set(ref(db, 'site_notice'), { text: "" });
-            document.getElementById('qNotice').value = "";
-            alert("Эълон ўчирилди.");
-        };
-
-        // Мақола нашр қилиш
+        // Нашр қилиш ёки Янгилаш
         document.getElementById('pubBtn').onclick = async () => {
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('txt').value;
-            const category = document.getElementById('cat').value;
-            const image = document.getElementById('img').value;
-
-            if(!title || !content) return alert("Сарлавҳа ва матнни тўлдиринг!");
-
             const data = {
-                title: title,
-                content: content,
-                category: category,
-                image: image || "https://via.placeholder.com/400x200",
-                time: new Date().toLocaleString('uz-UZ')
+                title: title.value,
+                content: txt.value,
+                category: cat.value,
+                image: img.value || "https://via.placeholder.com/400x200",
+                video: videoIframe.value,
+                time: editId ? document.getElementById('pubBtn').dataset.time : new Date().toLocaleString('uz-UZ')
             };
 
-            await push(ref(db, 'all_posts'), data);
-            alert("Мақола муваффақиятли қўшилди!");
-            
-            // Формани тозалаш
-            document.getElementById('title').value = "";
-            document.getElementById('txt').value = "";
-            document.getElementById('img').value = "";
+            if(!title.value) return alert("Сарлавҳа киритинг!");
+
+            if(editId) {
+                // Таҳрирлаш (Update)
+                await update(ref(db, 'all_posts/' + editId), data);
+                alert("Маълумот янгиланди!");
+                resetForm();
+            } else {
+                // Янги қўшиш (Push)
+                await push(ref(db, 'all_posts'), data);
+                alert("Муваффақиятли нашр этилди!");
+                resetForm();
+            }
         };
 
-        // Мақолаларни юклаш
+        // Рўйхатни юклаш
         function loadPosts() {
             onValue(ref(db, 'all_posts'), s => {
                 const pContainer = document.getElementById('pContainer');
@@ -176,33 +182,64 @@
                         div.innerHTML = `
                             <div>
                                 <strong>${d[id].title}</strong> <br>
-                                <small style="color:#3498db">${d[id].category}</small>
+                                <small style="color:#3498db">${d[id].category} | ${d[id].time}</small>
                             </div>
-                            <button class="btn-delete" data-id="${id}"><i class="fas fa-trash"></i> Ўчириш</button>
+                            <div class="post-actions">
+                                <button class="btn-edit" onclick="editPost('${id}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn-delete" onclick="deletePost('${id}')"><i class="fas fa-trash"></i></button>
+                            </div>
                         `;
                         pContainer.appendChild(div);
                     });
-
-                    // Ўчириш тугмаларига ҳодиса қўшиш
-                    document.querySelectorAll('.btn-delete').forEach(btn => {
-                        btn.onclick = (e) => {
-                            const postId = e.currentTarget.getAttribute('data-id');
-                            deleteP(postId);
-                        };
-                    });
-                } else {
-                    pContainer.innerHTML = "<p>Мақолалар мавжуд эмас.</p>";
                 }
             });
         }
 
-        // Ўчириш функцияси
-        async function deleteP(id) {
-            if(confirm("Бу мақолани ростдан ҳам ўчирмоқчимисиз?")) {
-                await remove(ref(db, 'all_posts/' + id));
-                alert("Мақола ўчирилди.");
-            }
-        }
+        // Таҳрирлаш учун формага олиб келиш
+        window.editPost = (id) => {
+            onValue(ref(db, 'all_posts/' + id), s => {
+                const data = s.val();
+                if(data) {
+                    editId = id;
+                    title.value = data.title;
+                    txt.value = data.content;
+                    cat.value = data.category;
+                    img.value = data.image;
+                    videoIframe.value = data.video || "";
+                    
+                    // Тугма кўринишини ўзгартириш
+                    const btn = document.getElementById('pubBtn');
+                    btn.innerText = "ЎЗГАРТИРИШНИ САҚЛАШ";
+                    btn.classList.add('btn-update');
+                    btn.dataset.time = data.time;
+                    
+                    document.getElementById('formTitle').firstChild.textContent = " Контентни таҳрирлаш ";
+                    document.getElementById('cancelEdit').style.display = "inline";
+                    window.scrollTo(0, 200); // Формага чиқариш
+                }
+            }, { onlyOnce: true });
+        };
+
+        // Формани тозалаш
+        window.resetForm = () => {
+            editId = null;
+            title.value = ""; txt.value = ""; img.value = ""; videoIframe.value = "";
+            const btn = document.getElementById('pubBtn');
+            btn.innerText = "НАШР ҚИЛИШ";
+            btn.classList.remove('btn-update');
+            document.getElementById('formTitle').firstChild.textContent = " Янги контент қўшиш ";
+            document.getElementById('cancelEdit').style.display = "none";
+        };
+
+        window.deletePost = (id) => {
+            if(confirm("Ростдан ўчирмоқчимисиз?")) remove(ref(db, 'all_posts/'+id));
+        };
+
+        // Тезкор эълон ва Реклама учун функциялар аввалгидек қолади...
+        document.getElementById('sendNBtn').onclick = () => set(ref(db, 'site_notice'), { text: qNotice.value });
+        document.getElementById('delNBtn').onclick = () => { set(ref(db, 'site_notice'), { text: "" }); qNotice.value = ""; };
+        document.getElementById('saveAdBtn').onclick = () => set(ref(db, 'ads_banner'), { image: adImg.value, link: adLink.value });
+        document.getElementById('delAdBtn').onclick = () => { set(ref(db, 'ads_banner'), null); adImg.value = ""; adLink.value = ""; };
     </script>
 </body>
 </html>
