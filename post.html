@@ -3,152 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Portal - Блог</title>
+    <title>Блог - Universal Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --blue: #3498db; --dark: #2c3e50; --bg: #f2f4f7; }
-        body { font-family: 'Arial', sans-serif; background: var(--bg); margin: 0; color: #333; }
-
-        /* Тест режими хабари */
-        .test-banner { background: #e74c3c; color: white; text-align: center; padding: 5px 0; font-size: 14px; font-weight: bold; }
-
-        header { background: #fff; padding: 15px; border-bottom: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
+        header { background: #fff; padding: 15px; border-bottom: 1px solid #ddd; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; }
+        .home-btn { background: var(--blue); color: white; text-decoration: none; padding: 8px 20px; border-radius: 20px; font-weight: bold; }
         
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-area img { border-radius: 50%; border: 2px solid var(--blue); }
-        .logo-area h1 { margin: 0; font-size: 20px; color: var(--dark); text-transform: uppercase; }
-
-        .home-btn { background: var(--blue); color: white; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; font-size: 14px; transition: 0.3s; }
-        .home-btn:hover { background: var(--dark); transform: translateY(-2px); }
-
-        .main-wrapper { max-width: 1200px; margin: 20px auto; display: flex; gap: 20px; padding: 0 15px; }
-
-        /* Чап томон - Асосий мақола */
-        .content-area { flex: 3; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .post-image { width: 100%; max-height: 450px; object-fit: cover; border-radius: 5px; margin-bottom: 20px; display: none; }
-        .post-title { font-size: 28px; margin-bottom: 15px; color: var(--dark); line-height: 1.3; }
-        .post-meta { font-size: 13px; color: #888; margin-bottom: 20px; border-bottom: 1px dotted #ccc; padding-bottom: 10px; }
-        .post-body { font-size: 18px; line-height: 1.8; white-space: pre-wrap; color: #444; }
-
-        /* Ўнг томон - Sidebar */
-        .sidebar { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-        .side-card { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 20px; }
-        .side-card h3 { font-size: 16px; margin-top: 0; border-bottom: 2px solid var(--blue); padding-bottom: 5px; color: var(--dark); }
+        .main-wrapper { max-width: 900px; margin: 30px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .post-image { width: 100%; max-height: 500px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
         
-        .side-item { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .side-item a { text-decoration: none; color: var(--dark); font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px; line-height: 1.2; }
-        .side-item a:hover { color: var(--blue); }
-        .side-item p { font-size: 12px; color: #666; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-        @media (max-width: 900px) {
-            .main-wrapper { flex-direction: column; }
-            .sidebar { order: 2; }
-            .side-card { position: static; }
-        }
+        /* Мақола ичидаги видео стили */
+        .post-video-container { margin: 25px 0; background: #000; border-radius: 10px; overflow: hidden; width: 100%; }
+        .post-video-container iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        
+        .post-title { font-size: 32px; color: var(--dark); margin-bottom: 10px; }
+        .post-meta { color: #888; font-size: 14px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .post-body { font-size: 18px; line-height: 1.8; color: #333; white-space: pre-wrap; }
     </style>
 </head>
 <body>
 
-    <div class="test-banner"><i class="fas fa-exclamation-triangle"></i> САЙТ ТЕСТ РЕЖИМИДА ИШЛАМОҚДА!</div>
-
-    <header>
-        <div class="nav-container">
-            <div class="logo-area">
-                <img src="logo.jpg" alt="Logo" width="50" height="50">
-                <h1>UNIVERSAL PORTAL</h1>
-            </div>
-            <a href="index.html" class="home-btn"><i class="fas fa-home"></i> АСОСИЙ САҲИФА</a>
-        </div>
-    </header>
-
-    <div class="main-wrapper">
-        <main class="content-area">
-            <div id="loader" style="text-align:center; padding: 40px;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Юкланмоқда...</div>
-            
-            <article id="mainPost" style="display:none;">
-                <img id="postImg" src="" class="post-image">
-                <h2 id="postTitle" class="post-title"></h2>
-                <div class="post-meta">
-                    <i class="far fa-calendar-alt"></i> <span id="postTime"></span> | 
-                    <i class="far fa-folder"></i> <span id="postCat"></span>
-                </div>
-                <div id="postBody" class="post-body"></div>
-            </article>
-        </main>
-
-        <aside class="sidebar">
-            <div class="side-card">
-                <h3>Сўнгги мақолалар</h3>
-                <div id="sideList">Юкланмоқда...</div>
-            </div>
-        </aside>
+<header>
+    <div class="nav-container">
+        <h1>UNIVERSAL PORTAL</h1>
+        <a href="index.html" class="home-btn"><i class="fas fa-home"></i> АСОСИЙ САҲИФА</a>
     </div>
+</header>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, limitToLast, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+<div class="main-wrapper">
+    <div id="loader" style="text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+    
+    <article id="mainPost" style="display:none;">
+        <img id="postImg" class="post-image" style="display:none;">
+        <h2 id="postTitle" class="post-title"></h2>
+        <div class="post-meta">
+            <i class="far fa-calendar-alt"></i> <span id="postTime"></span> | 
+            <i class="far fa-folder"></i> <span id="postCat"></span>
+        </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
-            databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "universal-portal-108b7"
-        };
+        <div id="videoContainer" class="post-video-container" style="display:none;"></div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        <div id="postBody" class="post-body"></div>
+    </article>
+</div>
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('id');
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // 1. Асосий мақолани юклаш
-        if (postId) {
-            onValue(ref(db, 'all_posts/' + postId), (s) => {
-                const data = s.val();
-                if (data) {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('mainPost').style.display = 'block';
-                    document.getElementById('postTitle').innerText = data.title;
-                    document.getElementById('postBody').innerText = data.content;
-                    document.getElementById('postCat').innerText = data.category;
-                    document.getElementById('postTime').innerText = data.time;
-                    const img = document.getElementById('postImg');
-                    if(data.image) {
-                        img.src = data.image;
-                        img.style.display = 'block';
-                    } else {
-                        img.style.display = 'none';
-                    }
-                    // Саҳифа номини мақола номига ўзгартириш
-                    document.title = data.title + " - Universal Portal";
-                }
-            });
-        } else {
-            // Агар ID бўлмаса, бош саҳифага юбориш
-            window.location.href = "index.html";
-        }
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+        databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "universal-portal-108b7"
+    };
 
-        // 2. Sidebar учун рўйхатни юклаш
-        const recentQuery = query(ref(db, 'all_posts'), limitToLast(12));
-        onValue(recentQuery, (s) => {
-            const listDiv = document.getElementById('sideList');
-            listDiv.innerHTML = "";
-            const data = s.val();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    if (postId) {
+        onValue(ref(db, 'all_posts/' + postId), (snapshot) => {
+            const data = snapshot.val();
             if (data) {
-                Object.keys(data).reverse().forEach(id => {
-                    const item = data[id];
-                    const div = document.createElement('div');
-                    div.className = 'side-item';
-                    div.innerHTML = `
-                        <a href="post.html?id=${id}">${item.title}</a>
-                        <p>${item.content.substring(0, 80)}...</p>
-                    `;
-                    listDiv.appendChild(div);
-                });
-            } else {
-                listDiv.innerHTML = "Мақолалар йўқ.";
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('mainPost').style.display = 'block';
+                
+                document.getElementById('postTitle').innerText = data.title;
+                document.getElementById('postBody').innerText = data.content;
+                document.getElementById('postCat').innerText = data.category;
+                document.getElementById('postTime').innerText = data.time;
+
+                // Расм бўлса чиқарамиз
+                if (data.image) {
+                    const img = document.getElementById('postImg');
+                    img.src = data.image;
+                    img.style.display = 'block';
+                }
+
+                // Видео бўлса чиқарамиз
+                if (data.video) {
+                    const videoDiv = document.getElementById('videoContainer');
+                    videoDiv.innerHTML = data.video;
+                    videoDiv.style.display = 'block';
+                }
+
+                document.title = data.title;
             }
         });
-    </script>
+    } else {
+        window.location.href = "index.html";
+    }
+</script>
 </body>
 </html>

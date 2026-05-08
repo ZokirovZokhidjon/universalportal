@@ -2,71 +2,42 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="lf0h1OWqEzgE9H9Y4Kmp4Ij-EJRjDyLsZtpH0H87ihs" />
-    <meta name="google-site-verification" content="9yXjTj06Z8c6wJEbALESMl3rkwqpWsPTxkaRIXUP0dE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Portal - Асосий Саҳифа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --blue: #3498db; --dark: #2c3e50; --bg: #f8f9fa; --orange: #ff9800; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; }
-
         header { background: #fff; padding: 20px; border-bottom: 2px solid var(--blue); text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative; }
-        header h1 { margin: 0 0 15px 0; color: var(--dark); font-size: 28px; letter-spacing: 1px; }
-        header img { border-radius: 150px; border: 3px groove red; box-shadow: 3px 5px 8px rgba(0,0,0,0.3); object-fit: cover; }
-
-        /* Қидирув блоки стили */
-        .search-container { max-width: 600px; margin: 15px auto; padding: 0 15px; }
-        .ya-site-form { margin-top: 10px; }
-
-        .admin-link { position: absolute; top: 20px; right: 20px; color: var(--blue); font-size: 24px; text-decoration: none; }
-        #topNotice { background: var(--orange); color: white; padding: 10px; text-align: center; font-weight: bold; display: none; }
-
-        .menu-bar { background: white; padding: 15px; text-align: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .menu-btn { 
-            background: #fff; border: 1px solid var(--blue); color: var(--blue); 
-            padding: 8px 18px; border-radius: 20px; cursor: pointer; margin: 5px; 
-            transition: 0.3s; font-weight: 500; text-decoration: none; display: inline-block;
-        }
-        .menu-btn:hover, .menu-btn.active { background: var(--blue); color: white; }
+        header h1 { margin: 0 0 15px 0; color: var(--dark); font-size: 28px; }
+        header img { border-radius: 50%; border: 3px groove red; object-fit: cover; }
+        
+        .menu-bar { background: white; padding: 15px; text-align: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+        .menu-btn { background: #fff; border: 1px solid var(--blue); color: var(--blue); padding: 8px 18px; border-radius: 20px; cursor: pointer; margin: 5px; transition: 0.3s; }
+        .menu-btn.active { background: var(--blue); color: white; }
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
 
-        .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; display: flex; flex-direction: column; border: 1px solid #eee; }
-        .card:hover { transform: translateY(-7px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; border: 1px solid #eee; }
         .card-img { width: 100%; height: 200px; object-fit: cover; }
         .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         .card-tag { font-size: 11px; background: var(--blue); color: #fff; padding: 3px 10px; border-radius: 5px; text-transform: uppercase; width: fit-content; }
-        .card-title { font-size: 19px; color: var(--dark); margin: 12px 0; font-weight: 700; line-height: 1.4; }
-        .card-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .read-more { margin-top: auto; color: var(--blue); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-        .card-footer { padding: 15px 20px; background: #fafafa; border-top: 1px solid #f0f0f0; font-size: 12px; color: #999; display: flex; justify-content: space-between; }
+        .card-title { font-size: 19px; color: var(--dark); margin: 12px 0; font-weight: 700; }
+        
+        /* Видео контейнери */
+        .video-wrapper { position: relative; width: 100%; margin: 10px 0; background: #000; border-radius: 8px; overflow: hidden; }
+        .video-wrapper iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
 
-        @media (max-width: 600px) { .news-grid { grid-template-columns: 1fr; } .menu-bar { overflow-x: auto; white-space: nowrap; padding: 10px 5px; } }
+        .card-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 15px; }
+        .read-more { color: var(--blue); text-decoration: none; font-weight: 600; margin-top: auto; }
     </style>
 </head>
 <body>
 
-<div id="topNotice"></div>
-
 <header>
-    <a href="admin.html" class="admin-link" title="Шахсий кабинет"><i class="fas fa-user-circle"></i></a>
     <h1>UNIVERSAL PORTAL</h1>
-    <img src="logo.jpg" alt="logo" width="150" height="150">
-    
-    <div class="search-container">
-        <div class="ya-site-form ya-site-form_inited_no" id="ya-site-form1">
-            <form action="https://yandex.uz/search/site/" method="get" target="_self" accept-charset="utf-8">
-                <input type="hidden" name="searchid" value="2450417"/>
-                <input type="hidden" name="l10n" value="uz"/>
-                <input type="hidden" name="reqenc" value=""/>
-                <input type="search" name="text" value="" placeholder="Сайтдан қидириш..."/>
-                <input type="submit" value="Қидириш"/>
-            </form>
-        </div>
-        <style type="text/css">.ya-site-form__form .ya-site-form__input{padding:10px !important; border-radius:10px 0 0 10px !important; border:1px solid #ccc !important; width:70% !important;}.ya-site-form__form .ya-site-form__submit{padding:10px 15px !important; background: #3498db !important; color:#fff !important; border:none !important; border-radius:0 10px 10px 0 !important; cursor:pointer !important;}</style>
-    </div>
+    <img src="logo.jpg" alt="logo" width="120" height="120">
 </header>
 
 <nav class="menu-bar">
@@ -76,22 +47,11 @@
     <button class="menu-btn" onclick="filterCat('cinema')">Кинотеатр</button>
     <button class="menu-btn" onclick="filterCat('clips')">Клиплар</button>
     <button class="menu-btn" onclick="filterCat('stories')">Ҳикоялар</button>
-    <button class="menu-btn" onclick="filterCat('yumor')">Ҳангомалар</button>
 </nav>
 
 <div class="container">
     <div class="news-grid" id="newsWrapper">Юкланмоқда...</div>
 </div>
-
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109118931', 'ym');
-    ym(109118931, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -105,18 +65,6 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-
-    // Тезкор эълон
-    onValue(ref(db, 'site_notice'), (snapshot) => {
-        const notice = snapshot.val();
-        const noticeDiv = document.getElementById('topNotice');
-        if (notice && notice.text) {
-            noticeDiv.innerText = "📢 " + notice.text;
-            noticeDiv.style.display = 'block';
-        } else {
-            noticeDiv.style.display = 'none';
-        }
-    });
 
     let allPosts = {};
 
@@ -140,23 +88,24 @@
             if (category === 'all' || p.category === category) {
                 const card = document.createElement('div');
                 card.className = 'card';
+                
+                const imgPart = p.image ? `<img src="${p.image}" class="card-img">` : '';
+                const videoPart = p.video ? `<div class="video-wrapper">${p.video}</div>` : '';
+
                 card.innerHTML = `
-                    <img src="${p.image || 'https://via.placeholder.com/400x200'}" class="card-img">
+                    ${imgPart}
                     <div class="card-body">
                         <span class="card-tag">${p.category}</span>
                         <h2 class="card-title">${p.title}</h2>
-                        <p class="card-desc">${p.content.substring(0, 150)}...</p>
-                        <a href="post.html?id=${id}" class="read-more">Батафсил ўқиш <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="card-footer">
-                        <span><i class="far fa-calendar"></i> ${p.time}</span>
+                        ${videoPart}
+                        <p class="card-desc">${p.content ? p.content.substring(0, 100) : ''}...</p>
+                        <a href="post.html?id=${id}" class="read-more">Батафсил...</a>
                     </div>
                 `;
                 wrapper.appendChild(card);
             }
         });
     }
-    
 </script>
 </body>
 </html>
