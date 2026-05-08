@@ -17,7 +17,7 @@
         
         .notice-section { background: #fff4e5; border: 2px dashed #ff9800; padding: 20px; border-radius: 15px; margin-bottom: 30px; }
         
-        input, textarea, select { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; outline: none; }
+        input, textarea, select { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; outline: none; box-sizing: border-box; }
         input:focus { border-color: #3498db; box-shadow: 0 0 10px rgba(52,152,219,0.1); }
         
         button { border: none; cursor: pointer; font-weight: bold; border-radius: 12px; transition: 0.3s; }
@@ -25,6 +25,10 @@
         .btn-main:hover { background: #2980b9; }
         .btn-notice { background: #ff9800; color: white; padding: 10px 20px; }
         
+        .upload-area { border: 2px dashed #3498db; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; background: #f9f9f9; cursor: pointer; }
+        .upload-area:hover { background: #f0f7ff; }
+        #img-preview { max-width: 150px; border-radius: 8px; margin-top: 10px; display: none; margin-left: auto; margin-right: auto; }
+
         .post-item { background: #fcfcfc; border: 1px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         .btn-edit { background: #f1c40f; color: white; padding: 8px 12px; margin-right: 5px; }
         .btn-delete { background: #e74c3c; color: white; padding: 8px 12px; }
@@ -70,6 +74,7 @@
 
         <h3 id="form-title">Янги мақола қўшиш</h3>
         <input type="hidden" id="edit-id">
+        
         <select id="cat">
             <option value="home">Асосий саҳифа</option>
             <option value="news">Янгиликлар</option>
@@ -77,8 +82,18 @@
             <option value="stories">Ҳикоялар</option>
             <option value="yumor">Ҳангомалар</option>
         </select>
+
         <input type="text" id="title" placeholder="Сарлавҳа">
-        <input type="text" id="img" placeholder="Расм линки (URL)">
+
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 30px; color: #3498db;"></i>
+            <p style="margin: 5px 0; font-size: 14px; color: #666;">Компьютердан расм юклаш учун босинг</p>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <img id="img-preview" alt="Превью">
+        </div>
+        
+        <input type="text" id="img" placeholder="Ёки расм линкини (URL) киритинг">
+        
         <textarea id="txt" rows="6" placeholder="Мақола матни..."></textarea>
         <input type="text" id="vid" placeholder="Видео Iframe (ихтиёрий)">
         <button class="btn-main" id="pubBtn">НАШР ҚИЛИШ</button>
@@ -94,7 +109,6 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Сизнинг Firebase созламаларингиз
         const firebaseConfig = {
             apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
             authDomain: "universal-portal-108b7.firebaseapp.com",
@@ -106,15 +120,27 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // Логин
+        // Расмни компьютердан танлаганда уни ўқиш
+        document.getElementById('fileInput').onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('img').value = event.target.result; // Расмни базага юбориш учун матнга айлантириш
+                    const preview = document.getElementById('img-preview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
         document.getElementById('loginBtn').onclick = () => {
             signInWithEmailAndPassword(auth, email.value, pass.value).catch(e => alert("Хато: " + e.message));
         };
 
-        // Чиқиш
         document.getElementById('logoutBtn').onclick = () => signOut(auth).then(() => location.reload());
 
-        // Авторизация ҳолатини текшириш
         onAuthStateChanged(auth, u => {
             if(u) {
                 document.getElementById('login-section').style.display='none';
@@ -123,21 +149,19 @@
             }
         });
 
-        // Тезкор эълон юбориш
         document.getElementById('sendNBtn').onclick = async () => {
             await set(ref(db, 'site_notice'), { text: qNotice.value });
             alert("Эълон янгиланди!");
         };
 
-        // Мақола юбориш ва Таҳрирлаш
         document.getElementById('pubBtn').onclick = async () => {
             const id = document.getElementById('edit-id').value;
             const data = {
                 title: title.value, 
-                content: txt.value,       // index.html 'content' деб ўқийди
+                content: txt.value,
                 category: cat.value, 
                 image: img.value, 
-                video: vid.value,         // index.html 'video' деб ўқийди
+                video: vid.value,
                 time: new Date().toLocaleString()
             };
 
@@ -153,7 +177,6 @@
             resetForm();
         };
 
-        // Мақолаларни рўйхатини чиқариш
         function loadP() {
             onValue(ref(db, 'all_posts'), s => {
                 const c = document.getElementById('pContainer'); 
@@ -177,14 +200,12 @@
             });
         }
 
-        // Ўчириш функцияси
         window.delP = async (id) => { 
             if(confirm("Ростан ҳам ўчирилсинми?")) {
                 await remove(ref(db, 'all_posts/'+id)); 
             }
         };
 
-        // Таҳрирлаш учун формага қайтариш
         window.editP = (id) => {
             onValue(ref(db, 'all_posts/'+id), s => {
                 const p = s.val();
@@ -197,18 +218,24 @@
                     document.getElementById('vid').value = p.video || "";
                     document.getElementById('form-title').innerText = "Мақолани таҳрирлаш";
                     document.getElementById('pubBtn').innerText = "САҚЛАШ";
+                    
+                    if(p.image && p.image.startsWith('data:image')) {
+                        const preview = document.getElementById('img-preview');
+                        preview.src = p.image;
+                        preview.style.display = 'block';
+                    }
                     window.scrollTo({top: 0, behavior: 'smooth'});
                 }
             }, {onlyOnce: true});
         };
 
-        // Формани тозалаш
         function resetForm() {
             document.getElementById('edit-id').value = "";
             document.getElementById('title').value = "";
             document.getElementById('txt').value = "";
             document.getElementById('img').value = "";
             document.getElementById('vid').value = "";
+            document.getElementById('img-preview').style.display = 'none';
             document.getElementById('form-title').innerText = "Янги мақола қўшиш";
             document.getElementById('pubBtn').innerText = "НАШР ҚИЛИШ";
         }
