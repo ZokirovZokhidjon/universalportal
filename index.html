@@ -3,179 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Portal - Асосий саҳифа</title>
+    <title>Universal Portal - Асосий Саҳифа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #3498db; --accent: #e67e22; --bg: #f0f2f5; --dark: #2c3e50; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; color: var(--dark); }
+        :root { --blue: #3498db; --dark: #2c3e50; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        header { background: var(--dark); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
         
-        /* Тезкор эълон блоки */
-        #top-notice { display: none; background: linear-gradient(90deg, #f1c40f, #f39c12); color: white; padding: 12px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        header { background: white; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 30px; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 3px; }
-
-        nav { background: white; padding: 10px 0; border-top: 1px solid #eee; text-align: center; overflow-x: auto; white-space: nowrap; }
-        nav button { background: #fff; border: 2px solid var(--primary); color: var(--primary); padding: 8px 20px; margin: 5px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        nav button.active, nav button:hover { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3); }
-
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .main-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
         
-        /* Мақола карточкаси */
-        .post-card { background: white; border-radius: 20px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.3s; animation: fadeInUp 0.5s ease; }
-        .post-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
-        .post-img { width: 100%; height: 450px; object-fit: cover; border-bottom: 4px solid var(--primary); }
-        .post-content { padding: 30px; }
-        .category-tag { background: var(--primary); color: white; padding: 5px 15px; border-radius: 50px; font-size: 13px; text-transform: uppercase; }
-        .post-title { font-size: 28px; margin: 15px 0; color: var(--dark); line-height: 1.3; }
-        .post-text { font-size: 17px; line-height: 1.8; color: #555; white-space: pre-wrap; }
+        /* КАРТОЧКА ФОРМАТИ */
+        .post-card { background: white; border-radius: 15px; overflow: hidden; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; }
+        .post-card:hover { transform: translateY(-5px); }
+        .post-img { width: 100%; height: 350px; object-fit: cover; }
         
-        .video-wrapper { margin-top: 20px; border-radius: 15px; overflow: hidden; position: relative; padding-bottom: 56.25%; height: 0; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .post-body { padding: 25px; }
+        .category-tag { background: var(--blue); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; text-transform: uppercase; }
+        .post-title { font-size: 26px; color: var(--dark); margin: 15px 0; line-height: 1.3; }
+        .post-excerpt { color: #666; line-height: 1.6; margin-bottom: 20px; font-size: 16px; }
         
-        .footer-meta { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-between; color: #999; font-size: 14px; }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    /* Footer учун стил */
-footer {
-    background: var(--dark);
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
-    margin-top: 50px;
-}
-
-.admin-link {
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 5px 15px;
-    border-radius: 20px;
-}
-
-.admin-link:hover {
-    color: white;
-    border-color: var(--primary);
-    background: var(--primary);
-}
-
-/* Header-даги кичкина тугмача */
-.login-icon {
-    position: absolute;
-    right: 20px;
-    top: 25px;
-    color: var(--primary);
-    font-size: 20px;
-    cursor: pointer;
-    text-decoration: none;
-}
+        .read-more-btn { display: inline-block; background: var(--blue); color: white; text-decoration: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; transition: 0.3s; }
+        .read-more-btn:hover { background: #2980b9; box-shadow: 0 5px 15px rgba(52,152,219,0.3); }
+        
+        .post-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; color: #999; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <div id="top-notice"><i class="fas fa-bullhorn"></i> <span id="noticeText"></span></div>
-
-  <header>
-    <div class="logo">Universal Portal</div>
-    <a href="admin.html" class="login-icon" title="Кабинетга кириш">
-        <i class="fas fa-user-circle"></i>
-    </a>
+<header>
+    <h1>UNIVERSAL PORTAL</h1>
 </header>
 
-<footer>
-    <p>© 2026 Universal Portal. Барча ҳуқуқлар ҳимояланган.</p>
-    <a href="admin.html" class="admin-link">
-        <i class="fas fa-lock"></i> Шахсий кабинет
-    </a>
-</footer>
+<div class="main-container" id="posts-wrapper">
+    <div style="text-align:center; padding:50px;"><i class="fas fa-spinner fa-spin fa-3x" style="color:var(--blue)"></i></div>
+</div>
 
-    <nav id="categoryMenu">
-        <button class="active" onclick="filterPosts('all')">Ҳаммаси</button>
-        <button onclick="filterPosts('home')">Асосий</button>
-        <button onclick="filterPosts('news')">Янгиликлар</button>
-        <button onclick="filterPosts('med')">Табобат</button>
-        <button onclick="filterPosts('stories')">Ҳикоялар</button>
-        <button onclick="filterPosts('yumor')">Ҳангомалар</button>
-    </nav>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <div class="container" id="mainWrapper">
-        <div style="text-align:center; padding: 100px;"><i class="fas fa-spinner fa-spin fa-3x" style="color:var(--primary)"></i></div>
-    </div>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+        authDomain: "universal-portal-108b7.firebaseapp.com",
+        databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "universal-portal-108b7"
+    };
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
-            authDomain: "universal-portal-108b7.firebaseapp.com",
-            databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "universal-portal-108b7"
-        };
+    const postsWrapper = document.getElementById('posts-wrapper');
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        let allPosts = [];
-
-        // Тезкор эълонни олиш
-        onValue(ref(db, 'site_notice'), (snapshot) => {
-            const data = snapshot.val();
-            const box = document.getElementById('top-notice');
-            if(data && data.text) {
-                box.style.display = 'block';
-                document.getElementById('noticeText').innerText = data.text;
-            }
-        });
-
-        // Мақолаларни олиш
-        onValue(ref(db, 'all_posts'), (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                allPosts = Object.keys(data).map(id => ({ id, ...data[id] })).reverse();
-                renderPosts(allPosts);
-            } else {
-                document.getElementById('mainWrapper').innerHTML = "Мақолалар мавжуд эмас.";
-            }
-        });
-
-        function renderPosts(posts) {
-            const wrapper = document.getElementById('mainWrapper');
-            wrapper.innerHTML = "";
-            posts.forEach(post => {
-                const div = document.createElement('div');
-                div.className = 'post-card';
-                const img = post.image ? `<img src="${post.image}" class="post-img">` : "";
-                const vid = post.video ? `<div class="video-wrapper">${post.video}</div>` : "";
+    onValue(ref(db, 'all_posts'), (snapshot) => {
+        const data = snapshot.val();
+        postsWrapper.innerHTML = "";
+        
+        if (data) {
+            Object.keys(data).reverse().forEach(id => {
+                const post = data[id];
+                // Матнни қисқартириш (180 та белги)
+                const excerpt = post.content ? post.content.substring(0, 180) + "..." : "";
                 
-                div.innerHTML = `
-                    ${img}
-                    <div class="post-content">
-                        <span class="category-tag">${getCatName(post.category)}</span>
+                const card = document.createElement('div');
+                card.className = 'post-card';
+                card.innerHTML = `
+                    ${post.image ? `<img src="${post.image}" class="post-img" alt="image">` : ''}
+                    <div class="post-body">
+                        <span class="category-tag">${post.category}</span>
                         <h2 class="post-title">${post.title}</h2>
-                        <div class="post-text">${post.content}</div>
-                        ${vid}
-                        <div class="footer-meta">
+                        <p class="post-excerpt">${excerpt}</p>
+                        <a href="post.html?id=${id}" class="read-more-btn">Батафсил ўқиш</a>
+                        <div class="post-meta">
                             <span><i class="far fa-calendar-alt"></i> ${post.time}</span>
-                            <span><i class="fas fa-share-alt"></i> Улашиш</span>
+                            <span><i class="far fa-user"></i> Администратор</span>
                         </div>
                     </div>
                 `;
-                wrapper.appendChild(div);
+                postsWrapper.appendChild(card);
             });
+        } else {
+            postsWrapper.innerHTML = "<h3>Ҳозирча мақолалар йўқ.</h3>";
         }
-
-        function getCatName(c) {
-            const m = {'home':'Асосий', 'news':'Янгиликлар', 'med':'Табобат', 'stories':'Ҳикоялар', 'hlp':'Маслаҳатлар', 'yumor':'Ҳангомалар', 'cock':'Ошхона'};
-            return m[c] || 'Бошқа';
-        }
-
-        window.filterPosts = (category) => {
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            category === 'all' ? renderPosts(allPosts) : renderPosts(allPosts.filter(p => p.category === category));
-        };
-    </script>
+    });
+</script>
 </body>
 </html>
