@@ -6,37 +6,27 @@
     <title>Админ Панел - Universal Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; }
-        #login-section { height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 350px; text-align: center; }
-        #admin-main-content { display: none; max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
-        .profile-header { background: #3498db; color: white; padding: 20px; border-radius: 15px; display: flex; align-items: center; margin-bottom: 30px; }
-        .avatar { width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin-right: 20px; border: 2px solid white; }
-        .notice-section, .ad-section { background: #fff4e5; border: 2px dashed #ff9800; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .ad-section { background: #e8f5e9; border-color: #4caf50; }
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; box-sizing: border-box; outline: none; }
-        input:focus, textarea:focus { border-color: #3498db; }
-        button { border: none; cursor: pointer; font-weight: bold; border-radius: 10px; transition: 0.3s; }
-        .btn-main { width: 100%; background: #3498db; color: white; padding: 15px; font-size: 18px; margin-top: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; padding: 20px; }
+        #login-section { height: 90vh; display: flex; justify-content: center; align-items: center; }
+        .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        #admin-main-content { display: none; max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .profile-header { background: #3498db; color: white; padding: 20px; border-radius: 15px; display: flex; align-items: center; margin-bottom: 25px; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; box-sizing: border-box; }
+        .btn-main { width: 100%; background: #3498db; color: white; padding: 15px; font-size: 18px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
         .btn-update { background: #2ecc71 !important; }
-        .post-item { background: #fcfcfc; border: 1px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-edit { background: #f1c40f; color: white; padding: 8px 12px; margin-right: 5px; }
-        .btn-delete { background: #e74c3c; color: white; padding: 8px 12px; }
-        h3 { border-left: 5px solid #3498db; padding-left: 10px; color: #2c3e50; }
-        /* Расм превьюси учун */
-        #imgPreview { width: 100px; height: 60px; object-fit: cover; border-radius: 5px; display: none; margin-bottom: 10px; border: 1px solid #ddd; }
+        .upload-area { background: #f9f9f9; border: 2px dashed #3498db; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 15px; }
+        #imgPreview { width: 100%; max-height: 200px; object-fit: contain; margin-top: 10px; display: none; border-radius: 10px; }
+        .post-item { background: #fff; border: 1px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-edit { background: #f1c40f; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
+        .btn-delete { background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/uz_UZ/sdk.js#xfbml=1&version=v19.0"></script>
-
     <div id="login-section">
         <div class="login-card">
-            <i class="fas fa-shield-alt" style="font-size: 60px; color: #3498db; margin-bottom: 20px;"></i>
             <h2>Админ Кириш</h2>
-            <input type="email" id="email" placeholder="Электрон почта">
+            <input type="email" id="email" placeholder="Email">
             <input type="password" id="pass" placeholder="Парол">
             <button class="btn-main" id="loginBtn">КИРИШ</button>
         </div>
@@ -44,15 +34,14 @@
 
     <div id="admin-main-content">
         <div class="profile-header">
-            <div class="avatar"><i class="fas fa-user-tie"></i></div>
+            <div style="font-size: 40px; margin-right: 15px;"><i class="fas fa-user-circle"></i></div>
             <div>
-                <h2 style="margin:0">Зоҳиджон Носирович</h2>
-                <small>Бош Администратор | Universal Portal</small>
+                <h3 style="margin:0">Зоҳиджон Носирович</h3>
+                <small>Бош Администратор</small>
             </div>
         </div>
 
-        <h3 id="formTitle"><i class="fas fa-plus-circle"></i> Янги контент қўшиш</h3>
-        
+        <h3 id="formTitle">Янги мақола қўшиш</h3>
         <select id="cat">
             <option value="news">Янгиликлар</option>
             <option value="med">Табобат</option>
@@ -60,34 +49,33 @@
             <option value="clips">Мусиқий клиплар</option>
             <option value="stories">Ҳикоялар</option>
         </select>
-
+        
         <input type="text" id="title" placeholder="Сарлавҳа">
-
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 15px;">
-            <label><b><i class="fas fa-image"></i> Расм танлаш:</b></label><br><br>
+        
+        <div class="upload-area">
+            <input type="file" id="fileInput" accept="image/*">
             <img id="imgPreview">
-            <input type="file" id="fileInput" accept="image/*" style="margin-bottom: 5px;">
-            <input type="text" id="imgUrl" placeholder="Ёки расм URL манзилини киритинг">
+            <input type="text" id="imgUrl" placeholder="Ёки расм URL манзили" style="margin-top:10px">
         </div>
 
-        <textarea id="videoIframe" rows="3" placeholder="Видео Iframe коди (YouTube ёки Facebook)"></textarea>
-        <textarea id="txt" rows="6" placeholder="Батафсил матн ёки таъриф..."></textarea>
+        <textarea id="videoIframe" rows="3" placeholder="Видео коди (iframe)"></textarea>
+        <textarea id="txt" rows="5" placeholder="Матн..."></textarea>
         
         <button class="btn-main" id="pubBtn">НАШР ҚИЛИШ</button>
-        <button id="cancelBtn" style="display:none; width:100%; background:#95a5a6; color:white; padding:10px; margin-top:5px;">БЕКОР ҚИЛИШ</button>
+        <button id="cancelBtn" style="display:none; width:100%; margin-top:5px; background:#aaa; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer;">БЕКОР ҚИЛИШ</button>
 
-        <div style="margin-top:40px">
-            <h3><i class="fas fa-list"></i> Контентлар рўйхати</h3>
+        <div style="margin-top:30px">
+            <h3>Мақолалар рўйхати</h3>
             <div id="pContainer">Юкланмоқда...</div>
         </div>
-        
-        <button id="logoutBtn" style="margin-top:20px; background:#e74c3c; color:white; padding:10px 20px;">ЧИҚИШ</button>
+
+        <button id="logoutBtn" style="background:#e74c3c; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; margin-top:20px;">ЧИҚИШ</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
@@ -101,25 +89,23 @@
         const db = getDatabase(app);
 
         let editId = null;
-        let uploadedImgBase64 = "";
+        let base64Image = "";
 
-        // Расмни танлаганда уни ўқиш
-        document.getElementById('fileInput').onchange = function(e) {
+        // Расмни танлаш
+        document.getElementById('fileInput').onchange = (e) => {
             const file = e.target.files[0];
             const reader = new FileReader();
-            reader.onload = function() {
-                uploadedImgBase64 = reader.result;
-                const preview = document.getElementById('imgPreview');
-                preview.src = reader.result;
-                preview.style.display = "block";
-                document.getElementById('imgUrl').value = ""; // URL ни тозалаш
-            }
+            reader.onload = () => {
+                base64Image = reader.result;
+                document.getElementById('imgPreview').src = reader.result;
+                document.getElementById('imgPreview').style.display = "block";
+            };
             if(file) reader.readAsDataURL(file);
         };
 
-        // Login
+        // Кириш ва ҳолат
         document.getElementById('loginBtn').onclick = () => {
-            signInWithEmailAndPassword(auth, email.value, pass.value).catch(() => alert("Хатолик!"));
+            signInWithEmailAndPassword(auth, email.value, pass.value).catch(e => alert("Хато!"));
         };
 
         onAuthStateChanged(auth, u => {
@@ -130,92 +116,66 @@
 
         document.getElementById('logoutBtn').onclick = () => signOut(auth);
 
-        // Нашр қилиш
+        // Сақлаш
         document.getElementById('pubBtn').onclick = async () => {
             if(!title.value) return alert("Сарлавҳа ёзинг!");
-
-            const finalImg = uploadedImgBase64 || document.getElementById('imgUrl').value || "https://via.placeholder.com/400x200";
-            
             const data = {
                 title: title.value,
                 content: txt.value,
                 category: cat.value,
-                image: finalImg,
+                image: base64Image || imgUrl.value || "https://via.placeholder.com/400x200",
                 video: videoIframe.value,
-                time: editId ? document.getElementById('pubBtn').dataset.time : new Date().toLocaleString('uz-UZ')
+                time: editId ? document.getElementById('pubBtn').dataset.time : new Date().toLocaleString()
             };
-
-            if(editId) {
-                await update(ref(db, 'all_posts/' + editId), data);
-                alert("Янгиланди!");
-            } else {
-                await push(ref(db, 'all_posts'), data);
-                alert("Нашр қилинди!");
-            }
+            if(editId) await update(ref(db, 'all_posts/'+editId), data);
+            else await push(ref(db, 'all_posts'), data);
+            alert("Сақланди!");
             resetForm();
         };
 
         function loadPosts() {
             onValue(ref(db, 'all_posts'), s => {
-                const pContainer = document.getElementById('pContainer');
-                pContainer.innerHTML = "";
+                const container = document.getElementById('pContainer');
+                container.innerHTML = "";
                 const d = s.val();
-                if(d) {
-                    Object.keys(d).reverse().forEach(id => {
-                        const div = document.createElement('div');
-                        div.className = 'post-item';
-                        div.innerHTML = `
-                            <div><strong>${d[id].title}</strong></div>
-                            <div class="post-actions">
-                                <button class="btn-edit" onclick="editPost('${id}')"><i class="fas fa-edit"></i></button>
-                                <button class="btn-delete" onclick="deletePost('${id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        `;
-                        pContainer.appendChild(div);
-                    });
-                }
+                if(d) Object.keys(d).reverse().forEach(id => {
+                    const div = document.createElement('div');
+                    div.className = 'post-item';
+                    div.innerHTML = `<div>${d[id].title}</div><div>
+                        <button class="btn-edit" onclick="editPost('${id}')">✏️</button>
+                        <button class="btn-delete" onclick="deletePost('${id}')">🗑️</button>
+                    </div>`;
+                    container.appendChild(div);
+                });
             });
         }
 
         window.editPost = (id) => {
-            onValue(ref(db, 'all_posts/' + id), s => {
-                const data = s.val();
-                if(data) {
-                    editId = id;
-                    title.value = data.title;
-                    txt.value = data.content;
-                    cat.value = data.category;
-                    videoIframe.value = data.video || "";
-                    if(data.image.startsWith('data:image')) {
-                        uploadedImgBase64 = data.image;
-                        document.getElementById('imgPreview').src = data.image;
-                        document.getElementById('imgPreview').style.display = "block";
-                    } else {
-                        document.getElementById('imgUrl').value = data.image;
-                    }
-                    document.getElementById('pubBtn').innerText = "ЯНГИЛАШ";
-                    document.getElementById('pubBtn').classList.add('btn-update');
-                    document.getElementById('cancelBtn').style.display = "block";
-                    window.scrollTo(0,0);
-                }
+            onValue(ref(db, 'all_posts/'+id), s => {
+                const p = s.val();
+                editId = id;
+                title.value = p.title; txt.value = p.content; cat.value = p.category;
+                videoIframe.value = p.video || "";
+                if(p.image.startsWith('data:')) {
+                    base64Image = p.image;
+                    document.getElementById('imgPreview').src = p.image;
+                    document.getElementById('imgPreview').style.display = "block";
+                } else { imgUrl.value = p.image; }
+                document.getElementById('pubBtn').innerText = "ЯНГИЛАШ";
+                document.getElementById('pubBtn').classList.add('btn-update');
+                document.getElementById('cancelBtn').style.display = "block";
+                window.scrollTo(0,0);
             }, {onlyOnce: true});
         };
 
-        window.deletePost = (id) => {
-            if(confirm("Ўчирилсинми?")) remove(ref(db, 'all_posts/' + id));
-        };
+        window.deletePost = (id) => { if(confirm("Ўчирилсинми?")) remove(ref(db, 'all_posts/'+id)); };
 
         window.resetForm = () => {
-            editId = null; uploadedImgBase64 = "";
-            title.value = ""; txt.value = ""; videoIframe.value = "";
-            document.getElementById('imgUrl').value = "";
-            document.getElementById('fileInput').value = "";
-            document.getElementById('imgPreview').style.display = "none";
-            document.getElementById('pubBtn').innerText = "НАШР ҚИЛИШ";
-            document.getElementById('pubBtn').classList.remove('btn-update');
-            document.getElementById('cancelBtn').style.display = "none";
+            editId = null; base64Image = ""; title.value = ""; txt.value = ""; videoIframe.value = "";
+            imgUrl.value = ""; fileInput.value = ""; imgPreview.style.display = "none";
+            pubBtn.innerText = "НАШР ҚИЛИШ"; pubBtn.classList.remove('btn-update');
+            cancelBtn.style.display = "none";
         };
-        
         document.getElementById('cancelBtn').onclick = resetForm;
     </script>
 </body>
