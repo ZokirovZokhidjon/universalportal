@@ -84,7 +84,7 @@
         <button class="btn-main" id="pubBtn">НАШР ҚИЛИШ</button>
 
         <div style="margin-top:40px">
-            <h3>Бошқариш</h3>
+            <h3>Бошқариш (Рўйхат)</h3>
             <div id="pContainer">Юкланмоқда...</div>
         </div>
     </div>
@@ -94,6 +94,7 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+        // Сизнинг Firebase созламаларингиз
         const firebaseConfig = {
             apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
             authDomain: "universal-portal-108b7.firebaseapp.com",
@@ -105,12 +106,15 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // Логин
         document.getElementById('loginBtn').onclick = () => {
-            signInWithEmailAndPassword(auth, email.value, pass.value).catch(e => alert(e.message));
+            signInWithEmailAndPassword(auth, email.value, pass.value).catch(e => alert("Хато: " + e.message));
         };
 
+        // Чиқиш
         document.getElementById('logoutBtn').onclick = () => signOut(auth).then(() => location.reload());
 
+        // Авторизация ҳолатини текшириш
         onAuthStateChanged(auth, u => {
             if(u) {
                 document.getElementById('login-section').style.display='none';
@@ -119,49 +123,95 @@
             }
         });
 
+        // Тезкор эълон юбориш
         document.getElementById('sendNBtn').onclick = async () => {
             await set(ref(db, 'site_notice'), { text: qNotice.value });
             alert("Эълон янгиланди!");
         };
 
+        // Мақола юбориш ва Таҳрирлаш
         document.getElementById('pubBtn').onclick = async () => {
+            const id = document.getElementById('edit-id').value;
             const data = {
-                title: title.value, content: txt.value,
-                category: cat.value, image: img.value, video: vid.value,
+                title: title.value, 
+                content: txt.value,       // index.html 'content' деб ўқийди
+                category: cat.value, 
+                image: img.value, 
+                video: vid.value,         // index.html 'video' деб ўқийди
                 time: new Date().toLocaleString()
             };
-            const id = document.getElementById('edit-id').value;
-            id ? await update(ref(db, 'all_posts/'+id), data) : await push(ref(db, 'all_posts'), data);
-            location.reload();
+
+            if(!data.title || !data.content) return alert("Сарлавҳа ва матнни ёзинг!");
+
+            if(id) {
+                await update(ref(db, 'all_posts/'+id), data);
+                alert("Мақола янгиланди!");
+            } else {
+                await push(ref(db, 'all_posts'), data);
+                alert("Мақола асосий саҳифага юборилди!");
+            }
+            resetForm();
         };
 
+        // Мақолаларни рўйхатини чиқариш
         function loadP() {
             onValue(ref(db, 'all_posts'), s => {
-                const c = document.getElementById('pContainer'); c.innerHTML = "";
+                const c = document.getElementById('pContainer'); 
+                c.innerHTML = "";
                 const d = s.val();
-                if(d) Object.keys(d).reverse().forEach(id => {
-                    const div = document.createElement('div'); div.className='post-item';
-                    div.innerHTML = `<div><b>${d[id].title}</b></div>
-                    <div>
-                        <button class="btn-edit" onclick="editP('${id}')"><i class="fas fa-edit"></i></button>
-                        <button class="btn-delete" onclick="delP('${id}')"><i class="fas fa-trash"></i></button>
-                    </div>`;
-                    c.appendChild(div);
-                });
+                if(d) {
+                    Object.keys(d).reverse().forEach(id => {
+                        const div = document.createElement('div'); 
+                        div.className = 'post-item';
+                        div.innerHTML = `
+                            <div><b>${d[id].title}</b> <small style="color:#999">(${d[id].category})</small></div>
+                            <div>
+                                <button class="btn-edit" onclick="editP('${id}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn-delete" onclick="delP('${id}')"><i class="fas fa-trash"></i></button>
+                            </div>`;
+                        c.appendChild(div);
+                    });
+                } else {
+                    c.innerHTML = "Мақолалар йўқ.";
+                }
             });
         }
 
-        window.delP = async (id) => { if(confirm("Ўчирилсинми?")) await remove(ref(db, 'all_posts/'+id)); };
+        // Ўчириш функцияси
+        window.delP = async (id) => { 
+            if(confirm("Ростан ҳам ўчирилсинми?")) {
+                await remove(ref(db, 'all_posts/'+id)); 
+            }
+        };
+
+        // Таҳрирлаш учун формага қайтариш
         window.editP = (id) => {
             onValue(ref(db, 'all_posts/'+id), s => {
                 const p = s.val();
-                document.getElementById('edit-id').value = id;
-                title.value = p.title; txt.value = p.content;
-                cat.value = p.category; img.value = p.image; vid.value = p.video;
-                document.getElementById('form-title').innerText = "Таҳрирлаш";
-                window.scrollTo(0,0);
+                if(p) {
+                    document.getElementById('edit-id').value = id;
+                    document.getElementById('title').value = p.title; 
+                    document.getElementById('txt').value = p.content;
+                    document.getElementById('cat').value = p.category; 
+                    document.getElementById('img').value = p.image || ""; 
+                    document.getElementById('vid').value = p.video || "";
+                    document.getElementById('form-title').innerText = "Мақолани таҳрирлаш";
+                    document.getElementById('pubBtn').innerText = "САҚЛАШ";
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }
             }, {onlyOnce: true});
         };
+
+        // Формани тозалаш
+        function resetForm() {
+            document.getElementById('edit-id').value = "";
+            document.getElementById('title').value = "";
+            document.getElementById('txt').value = "";
+            document.getElementById('img').value = "";
+            document.getElementById('vid').value = "";
+            document.getElementById('form-title').innerText = "Янги мақола қўшиш";
+            document.getElementById('pubBtn').innerText = "НАШР ҚИЛИШ";
+        }
     </script>
 </body>
 </html>
