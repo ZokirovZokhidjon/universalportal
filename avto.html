@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -40,8 +41,6 @@
         .action-btns { display: flex; gap: 5px; }
         .btn-sm { padding: 6px 10px; border-radius: 6px; font-size: 12px; }
         .status-msg { font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 10px; display: none; }
-        /* Реклама расмлари мослашувчан бўлиши учун */
-        img { max-width: 100%; height: auto; }
     </style>
 </head>
 <body>
@@ -53,7 +52,7 @@
         <input type="email" id="email" placeholder="Email манзил">
         <input type="password" id="pass" placeholder="Парол">
         <button class="btn btn-blue" style="width:100%; justify-content: center;" id="loginBtn">КИРИШ</button>
-        <span style="display:block; margin-top:15px;"><a href="index.html" style="color:var(--primary); text-decoration:none;">Асосий саҳифа</a></span>
+        <span><a href="index.html">Асосий сахифа</a></span>
     </div>
 </div>
 
@@ -87,8 +86,6 @@
                 </select>
 
                 <input type="text" id="title" placeholder="Мақола сарлавҳаси">
-                
-                <input type="text" id="sourceUrl" placeholder="Манба ҳаволаси (URL)">
 
                 <div style="background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px dashed #ccc; margin-bottom: 15px;">
                     <label style="font-size:12px; font-weight: bold; display: block; margin-bottom: 10px;">КОМПЬЮТЕРДАН РАСМ ЮКЛАШ:</label>
@@ -155,7 +152,6 @@
     const passInput = document.getElementById('pass');
     const titleInput = document.getElementById('title');
     const catInput = document.getElementById('cat');
-    const sourceInput = document.getElementById('sourceUrl'); // Манба инпути олинди
     const imgInput = document.getElementById('img');
     const videoInput = document.getElementById('videoIframe');
     const txtInput = document.getElementById('txt');
@@ -199,7 +195,6 @@
         const id = postIdInput.value;
         const data = {
             title: titleInput.value,
-            source: sourceInput.value, // Манба базага сақланади
             image: imgInput.value,
             video: videoInput.value,
             category: catInput.value,
@@ -264,7 +259,6 @@
             if(post) {
                 postIdInput.value = id;
                 titleInput.value = post.title;
-                sourceInput.value = post.source || ""; // Манба формага қайтарилади
                 imgInput.value = post.image || "";
                 catInput.value = post.category;
                 txtInput.value = post.content;
@@ -288,7 +282,6 @@
     function resetForm() {
         postIdInput.value = "";
         titleInput.value = "";
-        sourceInput.value = ""; // Тозалашда манба ҳам бўшатилади
         imgInput.value = "";
         txtInput.value = "";
         videoInput.value = "";
