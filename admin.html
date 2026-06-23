@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -6,7 +7,14 @@
     <title>Dashboard - Universal Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #4361ee; --secondary: #3f37c9; --success: #4cc9f0; --danger: #f72585; --dark: #212529; --bg: #f8f9fa; }
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --dark: #212529;
+            --bg: #f8f9fa;
+        }
         body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         #login-section { height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, var(--primary), var(--secondary)); }
         .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 100%; max-width: 350px; text-align: center; }
@@ -88,7 +96,6 @@
                 <input type="text" id="img" placeholder="Расм URL манзили">
                 <textarea id="videoIframe" rows="2" placeholder="Видео Iframe коди (YouTube embed код)"></textarea>
                 <textarea id="txt" rows="6" placeholder="Мақола матни..."></textarea>
-                <textarea id="source" rows="2" placeholder="Қайси манбадан олинди?"></textarea>
 
                 <div style="display:flex; gap:10px;">
                     <button class="btn btn-blue" style="flex:2; justify-content: center;" id="pubBtn">
@@ -97,7 +104,7 @@
                     <button class="btn btn-outline" id="cancelEdit" style="display:none;">Бекор қилиш</button>
                 </div>
             </div>
-            
+
             <div class="card" style="border-left: 5px solid var(--success);">
                 <div class="card-title"><i class="fas fa-ad"></i> Тезкор реклама</div>
                 <input type="text" id="adImgUrl" placeholder="Реклама расм URL">
@@ -148,9 +155,9 @@
     const imgInput = document.getElementById('img');
     const videoInput = document.getElementById('videoIframe');
     const txtInput = document.getElementById('txt');
-    const sourceInput = document.getElementById('source'); // Янги майдон
     const postIdInput = document.getElementById('postId');
 
+    // КИРИШ
     document.getElementById('loginBtn').onclick = () => {
         signInWithEmailAndPassword(auth, emailInput.value, passInput.value).catch(e => alert("Логин ёки парол хато!"));
     };
@@ -163,6 +170,7 @@
 
     document.getElementById('logoutBtn').onclick = () => signOut(auth);
 
+    // РАСМ ЮКЛАШ (Storage)
     document.getElementById('postFile').onchange = async (e) => {
         const file = e.target.files[0];
         if(!file) return;
@@ -175,9 +183,14 @@
             const url = await getDownloadURL(snap.ref);
             imgInput.value = url;
             status.innerText = "✅ Расм юкланди!";
-        } catch(e) { console.error(e); status.innerText = "❌ Хатолик!"; }
+        } catch(e) {
+             console.error(e);
+             alert("Юклашда хато! Storage Rules ни текширинг.");
+             status.innerText = "❌ Хатолик юз берди";
+        }
     };
 
+    // МАҚОЛАНИ САҚЛАШ ЁКИ ЯНГИЛАШ
     document.getElementById('pubBtn').onclick = () => {
         const id = postIdInput.value;
         const data = {
@@ -186,14 +199,25 @@
             video: videoInput.value,
             category: catInput.value,
             content: txtInput.value,
-            source: sourceInput.value, // Базага сақлаш
             time: new Date().toLocaleString('uz-UZ')
         };
+
         if(!data.title || !data.content) return alert("Сарлавҳа ва матн шарт!");
-        if(id) { update(ref(db, 'all_posts/' + id), data).then(() => { alert("Янгиланди!"); resetForm(); }); } 
-        else { push(ref(db, 'all_posts'), data).then(() => { alert("Нашр қилинди!"); resetForm(); }); }
+
+        if(id) {
+            update(ref(db, 'all_posts/' + id), data).then(() => {
+                alert("Мақола янгиланди!");
+                resetForm();
+            });
+        } else {
+            push(ref(db, 'all_posts'), data).then(() => {
+                alert("Нашр қилинди!");
+                resetForm();
+            });
+        }
     };
 
+    // РЎЙХАТНИ ЮКЛАШ
     function loadPosts() {
         onValue(ref(db, 'all_posts'), (snapshot) => {
             const container = document.getElementById('postsContainer');
@@ -202,29 +226,44 @@
             if(data) {
                 Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
+                    // HTML ни ясаш
                     const item = document.createElement('div');
                     item.className = 'post-item';
                     item.innerHTML = `
-                        <div class="post-info"><h4>${post.title}</h4><small>${post.category} | ${post.time}</small></div>
+                        <div class="post-info">
+                            <h4>${post.title}</h4>
+                            <small>${post.category} | ${post.time}</small>
+                        </div>
                         <div class="action-btns">
-                            <button class="btn btn-blue btn-sm" onclick="editPost('${key}')"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-red btn-sm" onclick="deletePost('${key}')"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-blue btn-sm edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-red btn-sm delete-btn"><i class="fas fa-trash"></i></button>
                         </div>
                     `;
+                    
+                    // Тугмаларга функцияларни боғлаш (Модул ичида хавфсиз йўл)
+                    item.querySelector('.edit-btn').onclick = () => editPost(key);
+                    item.querySelector('.delete-btn').onclick = () => deletePost(key);
+                    
                     container.appendChild(item);
                 });
+            } else {
+                container.innerHTML = "<p style='text-align:center'>Мақолалар мавжуд эмас.</p>";
             }
         });
     }
 
-    window.editPost = (id) => {
+    // ТАҲРИРЛАШ ФУНКЦИЯСИ
+    async function editPost(id) {
         onValue(ref(db, 'all_posts/' + id), (snapshot) => {
             const post = snapshot.val();
             if(post) {
-                postIdInput.value = id; titleInput.value = post.title; imgInput.value = post.image || "";
-                catInput.value = post.category; txtInput.value = post.content; 
-                sourceInput.value = post.source || ""; // Манбани формага чиқариш
+                postIdInput.value = id;
+                titleInput.value = post.title;
+                imgInput.value = post.image || "";
+                catInput.value = post.category;
+                txtInput.value = post.content;
                 videoInput.value = post.video || "";
+                
                 document.getElementById('btnText').innerText = "ЎЗГАРТИРИШНИ САҚЛАШ";
                 document.getElementById('cancelEdit').style.display = "block";
                 window.scrollTo({top: 0, behavior: 'smooth'});
@@ -232,15 +271,41 @@
         }, {onlyOnce: true});
     }
 
-    window.deletePost = (id) => { if(confirm("Ўчирмоқчимисиз?")) remove(ref(db, 'all_posts/' + id)); }
+    // ЎЧИРИШ ФУНКЦИЯСИ
+    async function deletePost(id) {
+        if(confirm("Ростан ҳам ушбу мақолани ўчирмоқчимисиз?")) {
+            remove(ref(db, 'all_posts/' + id));
+        }
+    }
 
+    // ФОРМАНИ ТОЗАЛАШ
     function resetForm() {
-        postIdInput.value = ""; titleInput.value = ""; imgInput.value = ""; txtInput.value = ""; 
-        sourceInput.value = ""; videoInput.value = "";
+        postIdInput.value = "";
+        titleInput.value = "";
+        imgInput.value = "";
+        txtInput.value = "";
+        videoInput.value = "";
         document.getElementById('btnText').innerText = "НАШР ҚИЛИШ";
         document.getElementById('cancelEdit').style.display = "none";
+        document.getElementById('postStatus').style.display = "none";
+        document.getElementById('postFile').value = "";
     }
+
     document.getElementById('cancelEdit').onclick = resetForm;
+
+    // РЕКЛАМА ВА ХАБАРНОМА
+    document.getElementById('saveAd').onclick = () => {
+        set(ref(db, 'ads'), {
+            img: document.getElementById('adImgUrl').value, 
+            link: document.getElementById('adLinkUrl').value
+        }).then(() => alert("Реклама сақланди!"));
+    };
+    
+    document.getElementById('saveNotice').onclick = () => {
+        set(ref(db, 'site_notice'), {
+            text: document.getElementById('noticeText').value
+        }).then(() => alert("Хабар янгиланди!"));
+    };
 </script>
 </body>
 </html>
