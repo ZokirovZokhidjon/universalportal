@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <title>Universal Portal - Асосий Саҳифа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* image_1a83c4.jpg расмидагидек оригинал ранглар */
+        /* Оригинал ранглар */
         :root { 
             --blue: #c5c5be; 
             --dark: #26323d; 
@@ -32,11 +32,93 @@
         #adBlock { max-width: 1200px; margin: 15px auto; display: none; text-align: center; padding: 0 15px; }
         #adBlock img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-        /* Меню бар ва юмалоқ тугмалар */
-        .menu-bar { background: white; padding: 10px; text-align: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; overflow-x: auto; white-space: nowrap; }
-        .menu-btn { background: #d63f10; border: 1px solid var(--blue); color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; margin: 5px; font-weight: 500; transition: 0.2s; }
+        /* МЕНЮ БАР (overflow олиб ташланди, тугмалар сиғиши таъминланди) */
+        .menu-bar { background: white; padding: 10px; text-align: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; }
+        
+        /* Менюдаги оддий тугмалар */
+        .menu-btn { background: #d63f10; border: 1px solid var(--blue); color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: 500; transition: 0.2s; display: inline-block; vertical-align: middle; }
         .menu-btn.active { background: var(--blue); color: white; }
         
+        /* Дропдаун контейнери */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Очилувчи бош тугма */
+        .main-drop-btn {
+            background-color: #34495e;
+            color: white;
+        }
+
+        /* ОЧИЛУВЧИ БЛОК (Мутлақ кўриниши учун стиллар тўғриланди) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.2);
+            z-index: 9999;
+            border-radius: 8px;
+            margin-top: 8px;
+            right: 0; /* Ўнг томонга текисланди, ташқарига чиқиб кетмайди */
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        /* Дропдаун ичидаги тугмаларнинг стили */
+        .dropdown-content .menu-btn {
+            color: #26323d !important;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none !important;
+            border: none !important;
+            margin: 0;
+            border-radius: 0;
+            cursor: pointer;
+            box-sizing: border-box;
+            border-bottom: 1px solid #eee;
+            font-weight: normal;
+        }
+
+        .dropdown-content .menu-btn:last-child {
+            border-bottom: none;
+        }
+
+        /* Сичқонча устига келганда */
+        .dropdown-content .menu-btn:hover {
+            background-color: #f1f1f1 !important;
+            color: #d63f10 !important;
+        }
+
+        /* Ичидаги актив категория ранги */
+        .dropdown-content .menu-btn.active {
+            background-color: #19749e !important;
+            color: white !important;
+        }
+
+        /* Тв каналлар ҳаволаси */
+        .tv-link {
+            display: block !important;
+            color: wheat !important;
+            background-color: #2c3e50 !important;
+            text-align: center !important;
+            text-decoration: none;
+        }
+        
+        .tv-link:hover {
+            background-color: #34495e !important;
+        }
+
+        /* Менюни очиш класси */
+        .show {
+            display: block !important;
+        }
+        
+        /* Контент қисми */
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
         
@@ -68,24 +150,32 @@
     </div>
 </header>
 
-<!-- Реклама блоки қайтарилди -->
 <div id="adBlock">
     <a id="adLink" href="#" target="_blank">
         <img id="adImg" src="" alt="Реклама">
     </a>
 </div>
 
-<!-- Категориялар менюси тўлиқ қайтарилди -->
 <nav class="menu-bar">
     <button class="menu-btn active" onclick="filterCat('all', this)">Ҳаммаси</button>
     <button class="menu-btn" onclick="filterCat('Янгиликлар', this)">Янгиликлар</button>
-    <button class="menu-btn" onclick="filterCat('Tabobat', this)">Табобат</button>
     <button class="menu-btn" onclick="filterCat('Кинотеатр', this)">Кинотеатр</button>
     <button class="menu-btn" onclick="filterCat('Клиплар', this)">Клиплар</button>
-    <button class="menu-btn" onclick="filterCat('Ҳикоялар', this)">Ҳикоялар</button>
-    <button class="menu-btn" onclick="filterCat('Хангомалар', this)">Хангомалар</button>
-    <button class="menu-btn" onclick="filterCat('Кулинария', this)">Кулинария</button>
-    <button class="menu-btn" onclick="filterCat('Шеърият', this)">Шеърият</button>
+    
+    <div class="dropdown">
+        <button class="menu-btn main-drop-btn" id="mainDropBtn" onclick="toggleDropdown(event)">
+            Бошқалар <span class="arrow">▼</span>
+        </button>
+        
+        <div id="dropdownContent" class="dropdown-content">
+            <button class="menu-btn" onclick="filterCat('Tabobat', this)">Табобат</button>
+            <button class="menu-btn" onclick="filterCat('Ҳикоялар', this)">Ҳикоялар</button>
+            <button class="menu-btn" onclick="filterCat('Хангомалар', this)">Хангомалар</button>
+            <button class="menu-btn" onclick="filterCat('Кулинария', this)">Кулинария</button>
+            <button class="menu-btn" onclick="filterCat('Шеърият', this)">Шеърият</button>   
+            <a href="tv.html" class="menu-btn tv-link">Тв каналлар</a>
+        </div>
+    </div>
 </nav>
 
 <div class="container">
@@ -105,7 +195,25 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Рекламани Firebase дан юклаш тизими қайтарилди
+    // МЕНЮНИ ОЧИШ ВА ЁПИШ ФУНКЦИЯЛАРИ
+    window.toggleDropdown = function(event) {
+        event.stopPropagation(); // Босилганда дарров ёпилиб кетмаслиги учун
+        document.getElementById("dropdownContent").classList.toggle("show");
+    }
+
+    window.addEventListener('click', function(event) {
+        if (!event.target.matches('.main-drop-btn') && !event.target.matches('.arrow')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    });
+
+    // Рекламани Firebase дан юклаш
     onValue(ref(db, 'ads'), (s) => {
         const ad = s.val();
         if(ad && ad.img) {
@@ -123,11 +231,26 @@
         renderPosts('all');
     });
 
-    // Меню тугмалари босилганда ишлайдиган функция қайтарилди
+    // Категория танлаш функцияси
     window.filterCat = (category, btn) => {
-        document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+        // Ҳамма тугмалардан active классни олиб ташлаш
+        document.querySelectorAll('.menu-bar .menu-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        
+        // Агар яширин категория танланса, бош тугма матнини ўзгартириш
+        const mainBtn = document.getElementById('mainDropBtn');
+        const hiddenCats = ['Tabobat', 'Ҳикоялар', 'Хангомалар', 'Кулинария', 'Шеърият'];
+        
+        if(hiddenCats.includes(category)) {
+            mainBtn.innerHTML = `${category} <span class="arrow">▼</span>`;
+            mainBtn.classList.add('active'); // "Бошқалар" тугмасини ҳам актив қилиш
+        } else {
+            mainBtn.innerHTML = `Бошқалар <span class="arrow">▼</span>`;
+        }
+        
         renderPosts(category);
+        // Танлангандан кейин рўйхатни ёпиш
+        document.getElementById("dropdownContent").classList.remove("show");
     };
 
     // Қидириш тизими
