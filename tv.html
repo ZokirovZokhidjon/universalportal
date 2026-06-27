@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNMEDIA-TV Player</title>
-    <!-- Video.js СТИЛЛАРИ -->
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -36,9 +35,9 @@
         </div>
 
         <div class="search-box">
-            <input type="text" id="searchChannel" placeholder="Канал қидириш..." oninput="filterChannels()">
+            <input type="text" id="searchChannel" placeholder="Канал қидириш...">
         </div>
-        <div class="channel-list" id="channelList"></div>
+        <div class="channel-list" id="channelList">Юкланмоқда...</div>
     </div>
 
     <div class="main-content">
@@ -50,371 +49,103 @@
         </div>
     </div>
 
-    <!-- Video.js ва DASH (mpd) форматларни ўқиш учун скриптлар -->
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dashjs/4.7.4/dash.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-dash/5.1.1/videojs-contrib-dash.min.js"></script>
 
-    <script>
-        // Сиз юборган тўлиқ ва тўғриланган плейлист матни
-        const rawM3uData = `#EXTM3U url-tvg="http://epg.one/epg.xml; http://uztv.su/uploads/channelsarch/channels.xml; https://epg.iptvx.one/epg_noarch.xml; http://gabbarit.drm-play.com/epg_lite.xml.gz; http://epg.cdntv.online/lite.xml; http://epg.it999.ru/epg.xml; http://iptv-content.rv77.pw/guide-lite.xml" tvg-shift="+5" refresh="86400"
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/favicon.png" group-title="NEXO",NEXO
-#EXTVLCOPT:http-user-agent=TiviMate
-http://rafail1982.uz/nexo2.mp4
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/favicon.png" group-title="NEXO",NexoIPTV
-#EXTVLCOPT:http-user-agent=TiviMate
-http://rafail1982.uz/NexoIPTV.mp4
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",.Sci-Fi
-#EXTVLCOPT:http-user-agent=TiviMate
-http://178.124.179.122:8088/Sci-Fi/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Кино 1 International.png" group-title="Фильмовые",Кино 1 International
-#EXTVLCOPT:http-user-agent=TiviMate
-http://213.172.73.132:8081/nimble_live/kino_1_int/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Мир сериала
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15/Mir_Seriala/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Сити Эдем — Теленовелла
-#EXTVLCOPT:http-user-agent=TiviMate
-http://autopilot.catcast.tv/content/46209/index.m3u8?password=promolive
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Amedia Premium.png" group-title="Фильмовые",Amedia Premium
-#EXTVLCOPT:http-user-agent=TiviMate
-http://195.18.23.20:8000/play/3/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/FAN HD.png" group-title="Фильмовые",FAN HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15/Fan/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",KinoLiving HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://95.85.109.219:7000/play/a05x
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Red Premium HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://95.85.109.219:7000/play/a06e
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Red Thriller HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://95.85.109.219:7000/play/a06h
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Родное кино
-#EXTVLCOPT:http-user-agent=TiviMate
-http://185.161.224.211/dash/Rodnoe_Kino_SDqw45yu.ism/playlist.mpd
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",VIP Serial HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://185.161.224.211/dash/MGM_HDqwervbyu78.ism/playlist.mpd
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Русский иллюзион.png" group-title="Фильмовые",Русский иллюзион
-#EXTVLCOPT:http-user-agent=TiviMate
-https://sc.id-tv.kz:443/RusIlluzion_34_35.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Дом Кино.png" group-title="Фильмовые",Дом Кино
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15/Dom_Kino/tracks-v1a1/mono.m3u8?token=default
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Дом Кино Премиум HD.png" group-title="Фильмовые",Дом Кино Премиум HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15/Dom_Kino_Premium_HD/tracks-v1a1/mono.m3u8?token=default
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Еврокино.png" group-title="Фильмовые",Еврокино
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15/Evrokino/tracks-v1a1/mono.m3u8?token=default
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинопоказ
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15/Kinopokaz/tracks-v1a1/mono.m3u8?token=default
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",1FILMAX
-#EXTVLCOPT:http-user-agent=TiviMate
-http://195.9.195.3:8080/hls/204708.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",2FILMAX
-#EXTVLCOPT:http-user-agent=TiviMate
-http://195.9.195.3:8080/hls/204717.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Alpha Games
-#EXTVLCOPT:http-user-agent=TiviMate
-http://hls.goodgame.ru:8080/hls/205115.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",СТРК HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://sochinskayatrk.ru/hdtv/hls/CTPK_HD/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",SCR TV HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://hls.goodgame.ru/hls/61358.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",TDM TV - WWW
-#EXTVLCOPT:http-user-agent=TiviMate
-http://hls.goodgame.ru:8080/hls/192005.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Мультики и Сказки HD
-#EXTVLCOPT:http-user-agent=TiviMate
-http://hls.goodgame.ru/hls/198446.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Первый автомобильный
-#EXTVLCOPT:http-user-agent=TiviMate
-http://hls.goodgame.ru/hls/206355.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Star Media
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba4/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Документалка 1
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba28/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Документалка 2
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba29/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Документалка 3
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba38/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Retrovision
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rvision/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Retrovision Movies
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rvisionmovies/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Retrovision Classic
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rvisionclassic/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Retrovision Кинопанорама
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rvisionkinopanorama/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",SPOOPS
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba46/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 1
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba13/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 2
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba14/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 3
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba24/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 4
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba26/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 5
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-b/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 6
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-c/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 7
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-d/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 8
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-e/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 9
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-f/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 10
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-g/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 11
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-h/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 13
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-j/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 14
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-m/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 15
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-p/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 16
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-t/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 17
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-yz/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 18
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-n/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 19
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-qr/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 20
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-uv/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 21
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-o/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 22
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-s/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 23
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-films-w/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 24
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-0/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 25
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-a/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 27
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-c/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 28
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-d/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 29
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-e/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 30
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-g/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 31
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-i/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 32
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-k/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 33
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-p/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 34
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-v/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 35
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba-rfilrms-z/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 36
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba64/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Кинозалы 37
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba65/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Gameplay
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba31/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/kino2.png" group-title="Фильмовые",Gameplay трейлеры
-#EXTVLCOPT:http-user-agent=TiviMate
-http://fl1001.bozztv.com/ushba44/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Amedia 1.png" group-title="Фильмовые",Amedia 1
-#EXTVLCOPT:http-user-agent=TiviMate
-http://sc.id-tv.kz/A1.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Amedia 2.png" group-title="Фильмовые",Amedia 2
-#EXTVLCOPT:http-user-agent=TiviMate
-http://sc.id-tv.kz/A2.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Иллюзион+.png" group-title="Фильмовые",Иллюзион+
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15:80/Illusion_plus/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Кино ТВ.png" group-title="Фильмовые",Кино ТВ
-#EXTVLCOPT:http-user-agent=TiviMate
-http://vod.tuva.ru/kinotv/tracks-v1a1/mono.m3u8
-#EXTINF:-1 group-title="Фильмовые" tvg-logo="http://rafail1982.uz/logo/kino2.png",Кино 1 Int.
-#EXTVLCOPT:http-user-agent=TiviMate
-http://kino-1.catcast.tv/content/38617/index.m3u8
-#EXTINF:-1 group-title="Фильмовые" tvg-logo="http://rafail1982.uz/logo/kino2.png",Мир сериала
-#EXTVLCOPT:http-user-agent=TiviMate
-http://31.148.48.15:80/Mir_Seriala/index.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/НТВ Сериал.png" group-title="Фильмовые",НТВ Сериал
-#EXTVLCOPT:http-user-agent=TiviMate
-http://cdn2.ntv.ru/th_serial/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/НТВ Хит.png" group-title="Фильмовые",НТВ Хит
-#EXTVLCOPT:http-user-agent=TiviMate
-http://cdn2.ntv.ru/th_hit/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 1.png" group-title="Фильмовые",Зал 1
-#EXTVLCOPT:http-user-agent=TiviMate
-http://stream-msk-14.ott.tricolor.tv/dtv/id904_MSKSG-PVR-1--Kinozal_1/02/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdkMzA1NWMxNDRlNjhkYWU4YjY0OGM4ZDQiLCJ0b2tlbl90eXBlIjoiQ29udGVudEFjY2Vzc1Rva2VuIiwidHlwZSI6Ik1PWklMTEEifQ.KcnS7a2Hun9IzvzRuKF-URjY_58O8CG-x-a6AWHQ2FE
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 2.png" group-title="Фильмовые",Зал 2
-#EXTVLCOPT:http-user-agent=TiviMate
-http://stream-msk-16.ott.tricolor.tv/dtv/id929_MSKSG-PVR-1--Kinozal_2/03/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdkMzA1NWMxNDRlNjhkYWU4YjY0OGM4ZDQiLCJ0b2tlbl90eXBlIjoiQ29udGVudEFjY2Vzc1Rva2VuIiwidHlwZSI6Ik1PWklMTEEifQ.KcnS7a2Hun9IzvzRuKF-URjY_58O8CG-x-a6AWHQ2FE
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 3.png" group-title="Фильмовые",Зал 3
-#EXTVLCOPT:http-user-agent=TiviMate
-http://stream-msk-15.ott.tricolor.tv/dtv/id977_MSKSG-PVR-1--Kinozal_3/04/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdkMzA1NWMxNDRlNjhkYWU4YjY0OGM4ZDQiLCJ0b2tlbl90eXBlIjoiQ29udGVudEFjY2Vzc1Rva2VuIiwidHlwZSI6Ik1PWklMTEEifQ.KcnS7a2Hun9IzvzRuKF-URjY_58O8CG-x-a6AWHQ2FE
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 5.png" group-title="Фильмовые",Зал 5
-#EXTVLCOPT:http-user-agent=TiviMate
-http://stream-msk-16.ott.tricolor.tv/dtv/id925_MSKSG-PVR-1--Kinozal_5/04/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdkMzA1NWMxNDRlNjhkYWU4YjY0OGM4ZDQiLCJ0b2tlbl90eXBlIjoiQ29udGVudEFjY2Vzc1Rva2VuIiwidHlwZSI6Ik1PWklMTEEifQ.KcnS7a2Hun9IzvzRuKF-URjY_58O8CG-x-a6AWHQ2FE
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 6.png" group-title="Фильмовые",Зал 6
-#EXTVLCOPT:http-user-agent=TiviMate
-http://live-mirror-17.ott.tricolor.tv/dtv/id978_MSKSG-PVR-1--Kinozal_6/04/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdkMzA1NWMxNDRlNjhkYWU4YjY0OGM4ZDQiLCJ0b2tlbl90eXBlIjoiQ29udGVudEFjY2Vzc1Rva2VuIiwidHlwZSI6Ik1PWklMTEEifQ.KcnS7a2Hun9IzvzRuKF-URjY_58O8CG-x-a6AWHQ2FE
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 7.png" group-title="Фильмовые",Зал 7
-#EXTVLCOPT:http-user-agent=TiviMate
-http://stream-msk-15.ott.tricolor.tv/dtv/id928_MSKSG-PVR-1--Kinozal_7/04/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdkMzA1NWMxNDRlNjhkYWU4YjY0OGM4ZDQiLCJ0b2tlbl90eXBlIjoiQ29udGVudEFjY2Vzc1Rva2VuIiwidHlwZSI6Ik1PWklMTEEifQ.KcnS7a2Hun9IzvzRuKF-URjY_58O8CG-x-a6AWHQ2FE
-#EXTINF:-1 tvg-logo="http://rafail1982.uz/logo/Зал 8.png" group-title="Фильмовые",Зал 8
-#EXTVLCOPT:http-user-agent=TiviMate
-http://stream-msk-15.ott.tricolor.tv/dtv/id907_MSKSG-PVR-1--Kinozal_8/04/plst.m3u8?drmreq=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdHlwZSI6ImFwdHBfb3R0IiwiY2xhc3MiOiJCUk9XU0VSIiwiZHJlaWQiOiI0MzIxOTAwOTMzMTI2NyIsImV4cCI6MTc1NDg4MTg1MywiaHdpZCI6IjYwZmI5ZjQ2OTVjNWEzMTc4Mjc5ZmUyNzY3YTQxMzE4ODMwNTYwZjJiMTc4ODQ2ZmQ4NjAzNmQxMzMzMTdjYWYiLCJsYXN0X3JlcV9kYXRlIjoxNzU0Mjc3MDUzLCJzZXNzaW9uX2lkIjoiZDQ5NWJmMzdk)===`; // Тўсатдан узилган охирги сатр тозаланиб, тўғри ёпилди.
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        let channels = [];
-        let player;
+        const firebaseConfig = {
+            apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+            authDomain: "universal-portal-108b7.firebaseapp.com",
+            databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "universal-portal-108b7",
+            storageBucket: "universal-portal-108b7.appspot.com"
+        };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            player = videojs('videoPlayer');
-            parseM3U(rawM3uData);
-            renderChannels(channels);
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Глобал массив — қидирув тизими фойдаланиши учун
+        let globalChannels = [];
+
+        // 1. Плеерни рўйхатдан ўтказиш (Бу жуда муҳим!)
+        const player = videojs('videoPlayer');
+
+        // 2. Firebase базадан каналларни реал вақтда олиш
+        const playlistRef = ref(db, 'universal_playlist');
+        onValue(playlistRef, (snapshot) => {
+            const data = snapshot.val();
+            const listContainer = document.getElementById('channelList');
+            
+            if (data && Array.isArray(data)) {
+                globalChannels = data; // Базадаги каналларни массивга оламиз
+                renderChannels(globalChannels);
+            } else {
+                listContainer.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">Базада плейлист топилмади. Админ панелдан юкланг.</div>';
+            }
         });
 
-        // М3U Парсер — Ортиқча #EXTVLCOPT қаторларини ўтказиб юборади
-        function parseM3U(data) {
-            const lines = data.split('\n');
-            let currentChannel = null;
-
-            for (let i = 0; i < lines.length; i++) {
-                let line = lines[i].trim();
-                if (!line) continue;
-
-                if (line.startsWith('#EXTINF:')) {
-                    currentChannel = {};
-                    
-                    // Логотипни ажратиб олиш
-                    const logoMatch = line.match(/tvg-logo="([^"]+)"/);
-                    currentChannel.logo = logoMatch ? logoMatch[1] : 'http://rafail1982.uz/favicon.png';
-                    
-                    // Канал номини ажратиб олиш
-                    const commaIndex = line.lastIndexOf(',');
-                    currentChannel.name = commaIndex !== -1 ? line.substring(commaIndex + 1).trim() : 'Номаълум канал';
-                } else if (line.startsWith('#')) {
-                    // Агар қатор #EXTVLCOPT ёки бошқа созлама бўлса, шунчаки ташлаб ўтилади
-                    continue;
-                } else if (currentChannel) {
-                    // Видео ҳаволасини олиш
-                    currentChannel.url = line;
-                    channels.push(currentChannel);
-                    currentChannel = null;
-                }
-            }
-        }
-
-        // Каналларни чап менюга чиқариш
+        // 3. Каналларни экранга чиқариш функцияси
         function renderChannels(channelData) {
             const listContainer = document.getElementById('channelList');
+            if (!listContainer) return;
             listContainer.innerHTML = '';
 
-            if(channelData.length === 0) {
-                listContainer.innerHTML = '<div style="padding:10px; color:#aaa;">Канал топилмади</div>';
+            if (channelData.length === 0) {
+                listContainer.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">Канал топилмади</div>';
                 return;
             }
 
             channelData.forEach((channel) => {
                 const item = document.createElement('div');
                 item.className = 'channel-item';
+                
+                // Канал босилганда ижро этиш функциясига боғлаш
                 item.onclick = () => playChannel(channel, item);
 
                 item.innerHTML = `
-                    <img class="channel-logo" src="${channel.logo}" onerror="this.src='http://rafail1982.uz/favicon.png'">
-                    <div class="channel-name">${channel.name}</div>
+                    <img class="channel-logo" src="${channel.logo}" onerror="this.src='http://rafail1982.uz/favicon.png'">  
+                    <div class="channel-name">${channel.name}</div>   
                 `;
                 listContainer.appendChild(item);
             });
         }
 
-        // Канални плеерда ишга тушириш
+        // 4. Канални плеерда ишга тушириш
         function playChannel(channel, element) {
             document.querySelectorAll('.channel-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
 
             document.getElementById('currentTrackTitle').innerText = channel.name;
 
-            // Видео форматини аниқлаш (.m3u8, .mpd ёки .mp4)
-            let type = 'application/x-mpegURL'; // HLS учун стандарт
-            
+            // Форматни аниқлаш
+            let type = 'application/x-mpegURL'; // HLS (.m3u8)
             if (channel.url.includes('.mpd')) {
-                type = 'application/dash+xml'; // DASH учун
+                type = 'application/dash+xml'; // DASH
             } else if (channel.url.includes('.mp4')) {
-                type = 'video/mp4'; // MP4 учун
+                type = 'video/mp4'; // MP4
             }
 
+            // Плеерга янги линкни бериш
             player.src({
                 src: channel.url,
                 type: type
             });
             
             player.play().catch(error => {
-                console.log("Авто-плей блокланди ёки трансляцияда хатолик:", error);
+                console.log("Авто-плей чекланди ёки линкда хатолик:", error);
             });
         }
 
-        // Қидирув функцияси
-        function filterChannels() {
-            const query = document.getElementById('searchChannel').value.toLowerCase();
-            const filtered = channels.filter(channel => channel.name.toLowerCase().includes(query));
+        // 5. Қидирув тизимини боғлаш
+        document.getElementById('searchChannel').oninput = function() {
+            const query = this.value.toLowerCase();
+            const filtered = globalChannels.filter(channel => channel.name.toLowerCase().includes(query));
             renderChannels(filtered);
-        }
+        };
     </script>
 </body>
 </html>
