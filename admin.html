@@ -19,6 +19,19 @@
         .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 100%; max-width: 350px; text-align: center; }
         .admin-container { display: none; width: 100%; max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         .header-box { background: white; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        /* Янги статистика блоклари учун CSS стиллар */
+        .stats-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 25px; margin-bottom: 25px; }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
+        .stat-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px; }
+        .stat-icon { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
+        .bg-views { background: linear-gradient(135deg, #4361ee, #4cc9f0); }
+        .bg-countries { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .stat-info h3 { margin: 0; font-size: 26px; font-weight: bold; color: var(--dark); }
+        .stat-info p { margin: 5px 0 0 0; color: #777; font-size: 14px; }
+        .country-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .country-badge { background: #f1f3f5; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #495057; display: inline-flex; align-items: center; gap: 5px; border: 1px solid #e9ecef; }
+
         .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; }
@@ -40,7 +53,6 @@
         .action-btns { display: flex; gap: 5px; }
         .btn-sm { padding: 6px 10px; border-radius: 6px; font-size: 12px; }
         .status-msg { font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 10px; display: none; }
-        /* Реклама расмлари мослашувчан бўлиши учун */
         img { max-width: 100%; height: auto; }
     </style>
 </head>
@@ -69,6 +81,29 @@
         </div>
     </div>
 
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon bg-views">
+                <i class="fas fa-eye"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="todayViews">0</h3>
+                <p>Бугунги кўришлар</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon bg-countries">
+                <i class="fas fa-globe-americas"></i>
+            </div>
+            <div class="stat-info" style="width: 100%;">
+                <p style="margin:0 0 5px 0; font-weight:bold; color:var(--dark);">Давлатлар бўйича ташрифлар:</p>
+                <div class="country-badges" id="countryStatsContainer">
+                    <span style="color:#999; font-size:13px;">Юкланмоқда...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="grid-layout">
         <div class="side-form">
             <div class="card">
@@ -87,7 +122,6 @@
                 </select>
 
                 <input type="text" id="title" placeholder="Мақола сарлавҳаси">
-                
                 <input type="text" id="sourceUrl" placeholder="Манба ҳаволаси (URL)">
 
                 <div style="background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px dashed #ccc; margin-bottom: 15px;">
@@ -155,7 +189,7 @@
     const passInput = document.getElementById('pass');
     const titleInput = document.getElementById('title');
     const catInput = document.getElementById('cat');
-    const sourceInput = document.getElementById('sourceUrl'); // Манба инпути олинди
+    const sourceInput = document.getElementById('sourceUrl');
     const imgInput = document.getElementById('img');
     const videoInput = document.getElementById('videoIframe');
     const txtInput = document.getElementById('txt');
@@ -169,10 +203,45 @@
     onAuthStateChanged(auth, u => {
         document.getElementById('login-section').style.display = u ? 'none' : 'flex';
         document.getElementById('admin-content').style.display = u ? 'block' : 'none';
-        if(u) loadPosts();
+        if(u) {
+            loadPosts();
+            loadAnalytics(); // Аналитикани юклаш функцияси чақирилди
+        }
     });
 
     document.getElementById('logoutBtn').onclick = () => signOut(auth);
+
+    // СТАТИСТИКАНИ РЕАЛ ВАҚТДА ЮКЛАШ
+    function loadAnalytics() {
+        // Бугунги санани оламиз (YYYY-MM-DD форматда)
+        const today = new Date().toISOString().split('T')[0];
+
+        // 1. Бугунги кўришлар сонини эшитиш
+        onValue(ref(db, `analytics/daily_views/${today}`), (snapshot) => {
+            const views = snapshot.val();
+            document.getElementById('todayViews').innerText = views ? views : 0;
+        });
+
+        // 2. Давлатлар статистикасини эшитиш
+        onValue(ref(db, `analytics/countries`), (snapshot) => {
+            const countries = snapshot.val();
+            const container = document.getElementById('countryStatsContainer');
+            container.innerHTML = "";
+
+            if (countries) {
+                // Маълумотларни чиройли badge кўринишида чиқарамиз
+                Object.keys(countries).forEach(country => {
+                    const count = countries[country];
+                    const badge = document.createElement('span');
+                    badge.className = 'country-badge';
+                    badge.innerHTML = `<i class="fas fa-map-marker-alt" style="color:var(--danger)"></i> ${country}: <strong>${count}</strong>`;
+                    container.appendChild(badge);
+                });
+            } else {
+                container.innerHTML = "<span style='color:#999; font-size:13px;'>Ташрифлар мавжуд эмас</span>";
+            }
+        });
+    }
 
     // РАСМ ЮКЛАШ (Storage)
     document.getElementById('postFile').onchange = async (e) => {
@@ -187,7 +256,7 @@
             const url = await getDownloadURL(snap.ref);
             imgInput.value = url;
             status.innerText = "✅ Расм юкланди!";
-        } catch(e) {
+        } catch(e) { 
              console.error(e);
              alert("Юклашда хато! Storage Rules ни текширинг.");
              status.innerText = "❌ Хатолик юз берди";
@@ -199,7 +268,7 @@
         const id = postIdInput.value;
         const data = {
             title: titleInput.value,
-            source: sourceInput.value, // Манба базага сақланади
+            source: sourceInput.value,
             image: imgInput.value,
             video: videoInput.value,
             category: catInput.value,
@@ -231,7 +300,6 @@
             if(data) {
                 Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
-                    // HTML ни ясаш
                     const item = document.createElement('div');
                     item.className = 'post-item';
                     item.innerHTML = `
@@ -245,7 +313,6 @@
                         </div>
                     `;
                     
-                    // Тугмаларга функцияларни боғлаш (Модул ичида хавфсиз йўл)
                     item.querySelector('.edit-btn').onclick = () => editPost(key);
                     item.querySelector('.delete-btn').onclick = () => deletePost(key);
                     
@@ -264,7 +331,7 @@
             if(post) {
                 postIdInput.value = id;
                 titleInput.value = post.title;
-                sourceInput.value = post.source || ""; // Манба формага қайтарилади
+                sourceInput.value = post.source || "";
                 imgInput.value = post.image || "";
                 catInput.value = post.category;
                 txtInput.value = post.content;
@@ -288,7 +355,7 @@
     function resetForm() {
         postIdInput.value = "";
         titleInput.value = "";
-        sourceInput.value = ""; // Тозалашда манба ҳам бўшатилади
+        sourceInput.value = "";
         imgInput.value = "";
         txtInput.value = "";
         videoInput.value = "";
