@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
@@ -32,7 +32,7 @@
         #adBlock { max-width: 1200px; margin: 15px auto; display: none; text-align: center; padding: 0 15px; }
         #adBlock img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-        /* МЕНЮ БАР (overflow олиб ташланди, тугмалар сиғиши таъминланди) */
+        /* МЕНЮ БАР */
         .menu-bar { background: white; padding: 10px; text-align: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; }
         
         /* Менюдаги оддий тугмалар */
@@ -51,7 +51,7 @@
             color: white;
         }
 
-        /* ОЧИЛУВЧИ БЛОК (Мутлақ кўриниши учун стиллар тўғриланди) */
+        /* ОЧИЛУВЧИ БЛОК */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -61,7 +61,7 @@
             z-index: 9999;
             border-radius: 8px;
             margin-top: 8px;
-            right: 0; /* Ўнг томонга текисланди, ташқарига чиқиб кетмайди */
+            right: 0;
             overflow: hidden;
             border: 1px solid #ddd;
         }
@@ -184,20 +184,49 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, update, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+        authDomain: "universal-portal-108b7.firebaseapp.com",
         databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "universal-portal-108b7"
+        projectId: "universal-portal-108b7",
+        storageBucket: "universal-portal-108b7.appspot.com"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // ТАШРИФЛАРНИ ҲИСОБЛАШ ФУНКЦИЯСИ
+    async function trackVisitor() {
+        if (sessionStorage.getItem("visited")) return;
+        sessionStorage.setItem("visited", "true");
+
+        const today = new Date().toISOString().split('T')[0];
+        const updates = {};
+        
+        updates[`analytics/daily_views/${today}`] = increment(1);
+
+        try {
+            const response = await fetch('https://ipapi.co/json/');
+            const geoData = await response.json();
+            const country = geoData.country_name || "Номаълум";
+
+            updates[`analytics/countries/${country}`] = increment(1);
+        } catch (error) {
+            console.log("Давлатни аниқлашда хатолик:", error);
+            updates[`analytics/countries/Номаълум`] = increment(1);
+        }
+
+        update(ref(db), updates);
+    }
+
+    // Статистика функциясини ишга тушириш
+    trackVisitor();
+
     // МЕНЮНИ ОЧИШ ВА ЁПИШ ФУНКЦИЯЛАРИ
     window.toggleDropdown = function(event) {
-        event.stopPropagation(); // Босилганда дарров ёпилиб кетмаслиги учун
+        event.stopPropagation();
         document.getElementById("dropdownContent").classList.toggle("show");
     }
 
@@ -233,23 +262,20 @@
 
     // Категория танлаш функцияси
     window.filterCat = (category, btn) => {
-        // Ҳамма тугмалардан active классни олиб ташлаш
         document.querySelectorAll('.menu-bar .menu-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
-        // Агар яширин категория танланса, бош тугма матнини ўзгартириш
         const mainBtn = document.getElementById('mainDropBtn');
         const hiddenCats = ['Tabobat', 'Ҳикоялар', 'Хангомалар', 'Кулинария', 'Шеърият'];
         
         if(hiddenCats.includes(category)) {
             mainBtn.innerHTML = `${category} <span class="arrow">▼</span>`;
-            mainBtn.classList.add('active'); // "Бошқалар" тугмасини ҳам актив қилиш
+            mainBtn.classList.add('active');
         } else {
             mainBtn.innerHTML = `Бошқалар <span class="arrow">▼</span>`;
         }
         
         renderPosts(category);
-        // Танлангандан кейин рўйхатни ёпиш
         document.getElementById("dropdownContent").classList.remove("show");
     };
 

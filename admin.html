@@ -20,7 +20,6 @@
         .admin-container { display: none; width: 100%; max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         .header-box { background: white; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
         
-        /* Янги статистика блоклари учун CSS стиллар */
         .stats-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 25px; margin-bottom: 25px; }
         @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
         .stat-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px; }
@@ -31,7 +30,7 @@
         .stat-info p { margin: 5px 0 0 0; color: #777; font-size: 14px; }
         .country-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
         .country-badge { background: #f1f3f5; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #495057; display: inline-flex; align-items: center; gap: 5px; border: 1px solid #e9ecef; }
-
+        
         .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; }
@@ -205,7 +204,7 @@
         document.getElementById('admin-content').style.display = u ? 'block' : 'none';
         if(u) {
             loadPosts();
-            loadAnalytics(); // Аналитикани юклаш функцияси чақирилди
+            loadAnalytics(); 
         }
     });
 
@@ -213,7 +212,6 @@
 
     // СТАТИСТИКАНИ РЕАЛ ВАҚТДА ЮКЛАШ
     function loadAnalytics() {
-        // Бугунги санани оламиз (YYYY-MM-DD форматда)
         const today = new Date().toISOString().split('T')[0];
 
         // 1. Бугунги кўришлар сонини эшитиш
@@ -229,7 +227,6 @@
             container.innerHTML = "";
 
             if (countries) {
-                // Маълумотларни чиройли badge кўринишида чиқарамиз
                 Object.keys(countries).forEach(country => {
                     const count = countries[country];
                     const badge = document.createElement('span');
@@ -374,7 +371,7 @@
             link: document.getElementById('adLinkUrl').value
         }).then(() => alert("Реклама сақланди!"));
     };
-    
+
     document.getElementById('saveNotice').onclick = () => {
         set(ref(db, 'site_notice'), {
             text: document.getElementById('noticeText').value
