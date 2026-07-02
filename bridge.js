@@ -16,7 +16,16 @@ const db = getDatabase(app);
 
 // Саҳифа номини аниқлаш
 const path = window.location.pathname;
-const pageName = path.split("/").pop().split(".")[0]; 
+let pageName = path.split("/").pop().split(".")[0]; 
+
+// Агар Гитҳабда линк муаммо бўлса ёки бўш бўлса, хавфсизлик учун текширув:
+if (!pageName || pageName === "index") {
+    pageName = "index"; 
+}
+
+// ДИҚҚАТ: Агар админ панелдан мақола юборганда категорияга "Табобат" деб ёзаётган бўлсангиз,
+// пастдаги кодни фаоллаштиринг (иккита чизиқни олиб ташланг):
+// if (pageName === "med") pageName = "Табобат";
 
 const container = document.getElementById('post-display-area');
 const sidebar = document.getElementById('sidebar-links');
@@ -25,23 +34,21 @@ const sidebar = document.getElementById('sidebar-links');
 const postsRef = query(ref(db, 'all_posts'), orderByChild('category'), equalTo(pageName));
 
 onValue(postsRef, (snapshot) => {
-  if (container) container.innerHTML = '<h1>Сарлавҳалар</h1>'; 
+  if (container) container.innerHTML = ''; 
   if (sidebar) sidebar.innerHTML = '';
 
   const data = snapshot.val();
   if (data) {
-    // Тескари тартибда чиқариш
     const entries = Object.entries(data).reverse();
     
     entries.forEach(([key, post]) => {
-      // Мақолани чиқариш
       if (container) {
         container.innerHTML += `
           <article class="post-card">
             ${post.image ? `<img src="${post.image}" alt="img">` : ''}
             <div class="post-body">
               <h2>${post.title}</h2>
-              <p style="font-size:13px; color:#888;">📅 ${post.time}</p>
+              <p style="font-size:13px; color:#888;">📅 ${post.time || ''}</p>
               <p>${post.content}</p>
               ${post.video ? `<div class="video-box">${post.video}</div>` : ''}
             </div>
@@ -49,12 +56,15 @@ onValue(postsRef, (snapshot) => {
         `;
       }
 
-      // Sidebar линк қўшиш
       if (sidebar) {
         sidebar.innerHTML += `<li><a href="#">➔ ${post.title}</a></li>`;
       }
     });
   } else {
-    if (container) container.innerHTML += "<p>Ҳозирча бу бўлимда мақолалар йўқ.</p>";
+    if (container) {
+        // Консолга чиқариб кўрамиз, база айнан қайси сўз билан қидиряпти
+        console.log("Қидирилган категория:", pageName);
+        container.innerHTML = `<p style="text-align:center; color:#7f8c8d;">"${pageName}" рукнида ҳозирча мақолалар йўқ.</p>`;
+    }
   }
 });
