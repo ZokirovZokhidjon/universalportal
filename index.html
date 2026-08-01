@@ -289,17 +289,15 @@
         document.getElementById("dropdownContent").classList.toggle("show");
     }
 
-    window.addEventListener('click', function(event) {
-        if (!event.target.matches('.main-drop-btn') && !event.target.matches('.arrow') && !event.target.matches('#dropBtnText')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+window.addEventListener('click', function(event) {
+    const dropdown = document.getElementById("dropdownContent");
+    // Фақат меню очиқ бўлсагина ёпиш логикасини ишлатамиз
+    if (dropdown && dropdown.classList.contains('show')) {
+        if (!event.target.closest('.dropdown')) {
+            dropdown.classList.remove('show');
         }
-    });
+    }
+});
 
     // Рекламани Firebase дан юклаш
     onValue(ref(db, 'ads'), (s) => {
