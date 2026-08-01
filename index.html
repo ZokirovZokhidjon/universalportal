@@ -6,6 +6,22 @@
     <title>Universal Portal - Асосий Саҳифа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* GOOGLE TRANSLATE НИ БУТУНЛАЙ ЯШИРИШ СТИЛЛАРИ */
+        #google_translate_element, 
+        .goog-te-banner-frame, 
+        .skiptranslate,
+        .goog-te-spinner-pos {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+            position: static !important;
+        }
+        .goog-te-gadget {
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+
         /* Оригинал ранглар */
         :root { 
             --blue: #c5c5be; 
@@ -132,22 +148,25 @@
 </head>
 <body>
 
-<div class="test-banner" data-i18n="testBanner">📢 Ушбу сайт тест режимида ишламоқда</div>
+<!-- ЯШИРИН GOOGLE TRANSLATE КОМПОНЕНТИ -->
+<div id="google_translate_element"></div>
+
+<div class="test-banner">📢 Ушбу сайт тест режимида ишламоқда</div>
 
 <header>
-    <!-- ТИЛ ТУГМАЛАРИ -->
-    <div class="lang-buttons">
+    <!-- 3 ТА ТИЛ ТУГМАСИ -->
+    <div class="lang-buttons notranslate">
         <button class="lang-btn" id="lang-uz" onclick="setLanguage('uz')">Ўзбекча</button>
         <button class="lang-btn" id="lang-ru" onclick="setLanguage('ru')">Русский</button>
         <button class="lang-btn" id="lang-en" onclick="setLanguage('en')">English</button>
     </div>
 
-    <a class='admin-icon' href='admin.html' title='Шахсий кабинет'><i class="fas fa-user-circle"></i></a>
-    <h1>UNIVERSAL PORTAL</h1>
+    <a class='admin-icon notranslate' href='admin.html' title='Шахсий кабинет'><i class="fas fa-user-circle"></i></a>
+    <h1 class="notranslate">UNIVERSAL PORTAL</h1>
     <img src="logo1.jpg" alt="logo" onerror="this.style.display='none'">
     <div class="search-container">
-        <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Сайтдан қидириш...">
-        <button onclick="searchPosts()" data-i18n="searchBtn">Қидириш</button>
+        <input type="text" id="searchInput" placeholder="Сайтдан қидириш...">
+        <button onclick="searchPosts()">Қидириш</button>
     </div>
 </header>
 
@@ -158,23 +177,23 @@
 </div>
 
 <nav class="menu-bar">
-    <button class="menu-btn active" onclick="filterCat('all', this)" data-i18n="all">Ҳаммаси</button>
-    <button class="menu-btn" onclick="filterCat('Янгиликлар', this)" data-i18n="news">Янгиликлар</button>
-    <button class="menu-btn" onclick="filterCat('Кинотеатр', this)" data-i18n="cinema">Кинотеатр</button>
-    <button class="menu-btn" onclick="filterCat('Клиплар', this)" data-i18n="clips">Клиплар</button>
+    <button class="menu-btn active" onclick="filterCat('all', this)">Ҳаммаси</button>
+    <button class="menu-btn" onclick="filterCat('Янгиликлар', this)">Янгиликлар</button>
+    <button class="menu-btn" onclick="filterCat('Кинотеатр', this)">Кинотеатр</button>
+    <button class="menu-btn" onclick="filterCat('Клиплар', this)">Клиплар</button>
     
     <div class="dropdown">
         <button class="menu-btn main-drop-btn" id="mainDropBtn" onclick="toggleDropdown(event)">
-            <span id="dropBtnText" data-i18n="others">Бошқалар</span> <span class="arrow">▼</span>
+            <span id="dropBtnText">Бошқалар</span> <span class="arrow">▼</span>
         </button>
         
         <div id="dropdownContent" class="dropdown-content">
-            <button class="menu-btn" onclick="filterCat('Tabobat', this)" data-i18n="tabobat">Табобат</button>
-            <button class="menu-btn" onclick="filterCat('Ҳикоялар', this)" data-i18n="hikoyalar">Ҳикоялар</button>
-            <button class="menu-btn" onclick="filterCat('Хангомалар', this)" data-i18n="xangomalar">Хангомалар</button>
-            <button class="menu-btn" onclick="filterCat('Кулинария', this)" data-i18n="kulinariya">Кулинария</button>
-            <button class="menu-btn" onclick="filterCat('Шеърият', this)" data-i18n="sheyriyat">Шеърият</button>   
-            <a href="tv.html" class="menu-btn tv-link" data-i18n="tv">Тв каналлар</a>
+            <button class="menu-btn" onclick="filterCat('Tabobat', this)">Табобат</button>
+            <button class="menu-btn" onclick="filterCat('Ҳикоялар', this)">Ҳикоялар</button>
+            <button class="menu-btn" onclick="filterCat('Хангомалар', this)">Хангомалар</button>
+            <button class="menu-btn" onclick="filterCat('Кулинария', this)">Кулинария</button>
+            <button class="menu-btn" onclick="filterCat('Шеърият', this)">Шеърият</button>   
+            <a href="tv.html" class="menu-btn tv-link notranslate">Тв каналлар</a>
         </div>
     </div>
 </nav>
@@ -182,6 +201,43 @@
 <div class="container">
     <div class="news-grid" id="newsWrapper">Юкланмоқда...</div>
 </div>
+
+<!-- GOOGLE TRANSLATE ENGINE СКРИПТИ -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'uz',
+            includedLanguages: 'uz,ru,en',
+            autoDisplay: false
+        }, 'google_translate_element');
+
+        const savedLang = localStorage.getItem("app_lang") || "uz";
+        updateLangButtons(savedLang);
+    }
+
+    function setLanguage(lang) {
+        localStorage.setItem("app_lang", lang);
+
+        // Гугл таржимони Cookie'сини тозалаш ва янгисини ёзиш
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+
+        if (lang !== 'uz') {
+            document.cookie = "googtrans=/uz/" + lang + "; path=/;";
+            document.cookie = "googtrans=/uz/" + lang + "; domain=" + window.location.hostname + "; path=/;";
+        }
+
+        // Тилни танлаганда саҳифа автоматик қайта юкланади ва Гугл таржима қилади
+        location.reload();
+    }
+
+    function updateLangButtons(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active-lang'));
+        const activeBtn = document.getElementById(`lang-${lang}`);
+        if (activeBtn) activeBtn.classList.add('active-lang');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -198,144 +254,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // --- ЛУҒАТ (I18N) СТАЦИОНАР ТАРЖИМАЛАР ---
-    const i18n = {
-        uz: {
-            testBanner: "📢 Ушбу сайт тест режимида ишламоқда",
-            searchPlaceholder: "Сайтдан қидириш...",
-            searchBtn: "Қидириш",
-            all: "Ҳаммаси",
-            news: "Янгиликлар",
-            cinema: "Кинотеатр",
-            clips: "Клиплар",
-            others: "Бошқалар",
-            tabobat: "Табобат",
-            hikoyalar: "Ҳикоялар",
-            xangomalar: "Хангомалар",
-            kulinariya: "Кулинария",
-            sheyriyat: "Шеърият",
-            tv: "Тв каналлар",
-            readMore: "Батафсил ўқиш...",
-            views: "та кўриш",
-            recently: "Яқинда",
-            notFound: "Маълумот топилмади.",
-            loading: "Юкланмоқда..."
-        },
-        ru: {
-            testBanner: "📢 Этот сайт работает в тестовом режиме",
-            searchPlaceholder: "Поиск по сайту...",
-            searchBtn: "Искать",
-            all: "Все",
-            news: "Новости",
-            cinema: "Кинотеатр",
-            clips: "Клипы",
-            others: "Другое",
-            tabobat: "Медицина",
-            hikoyalar: "Рассказы",
-            xangomalar: "Юмор",
-            kulinariya: "Кулинария",
-            sheyriyat: "Поэзия",
-            tv: "ТВ каналы",
-            readMore: "Читать далее...",
-            views: "просмотров",
-            recently: "Недавно",
-            notFound: "Информация не найдена.",
-            loading: "Загрузка..."
-        },
-        en: {
-            testBanner: "📢 This site is operating in test mode",
-            searchPlaceholder: "Search site...",
-            searchBtn: "Search",
-            all: "All",
-            news: "News",
-            cinema: "Cinema",
-            clips: "Clips",
-            others: "Others",
-            tabobat: "Medicine",
-            hikoyalar: "Stories",
-            xangomalar: "Humor",
-            kulinariya: "Culinary",
-            sheyriyat: "Poetry",
-            tv: "TV Channels",
-            readMore: "Read more...",
-            views: "views",
-            recently: "Recently",
-            notFound: "No information found.",
-            loading: "Loading..."
-        }
-    };
-
-    // Категория номларининг луғат харитаси
-    const catMap = {
-        'Янгиликлар': 'news',
-        'Кинотеатр': 'cinema',
-        'Клиплар': 'clips',
-        'Tabobat': 'tabobat',
-        'Ҳикоялар': 'hikoyalar',
-        'Хангомалар': 'xangomalar',
-        'Кулинария': 'kulinariya',
-        'Шеърият': 'sheyriyat'
-    };
-
-    let currentLang = localStorage.getItem("app_lang") || "uz";
     let allPosts = {};
     let currentCategory = 'all';
     let currentSearchTerm = '';
-    const translationCache = {};
-
-    // --- ДИНАМИК ТАРЖИМА (Хавфсиз Таймаут билан) ---
-    async function translateText(text, targetLang) {
-        if (!text || targetLang === 'uz') return text;
-        const cacheKey = `${text}_${targetLang}`;
-        if (translationCache[cacheKey]) return translationCache[cacheKey];
-
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1500); // 1.5 сония таймаут
-
-            const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=uz|${targetLang}`, {
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-            const data = await res.json();
-            if (data.responseData && data.responseData.translatedText) {
-                const result = data.responseData.translatedText;
-                translationCache[cacheKey] = result;
-                return result;
-            }
-        } catch (e) {
-            // Агар таржима API ишламаса, қотиб қолмай асл матн қайтади
-        }
-        return text;
-    }
-
-    // ТИЛНИ ЎЗГАРТИРИШ ФУНКЦИЯСИ
-    window.setLanguage = function(lang) {
-        currentLang = lang;
-        localStorage.setItem("app_lang", lang);
-        applyStaticTranslations();
-        renderPosts(currentCategory, currentSearchTerm);
-    };
-
-    function applyStaticTranslations() {
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active-lang'));
-        const activeBtn = document.getElementById(`lang-${currentLang}`);
-        if(activeBtn) activeBtn.classList.add('active-lang');
-
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (i18n[currentLang] && i18n[currentLang][key]) {
-                el.innerText = i18n[currentLang][key];
-            }
-        });
-
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-            const key = el.getAttribute('data-i18n-placeholder');
-            if (i18n[currentLang] && i18n[currentLang][key]) {
-                el.placeholder = i18n[currentLang][key];
-            }
-        });
-    }
 
     // ТАШРИФЛАРНИ ҲИСОБЛАШ ФУНКЦИЯСИ
     async function trackVisitor() {
@@ -421,7 +342,6 @@
         renderPosts(currentCategory, currentSearchTerm);
     };
 
-    // МАҚОЛАЛАРНИ ДАРҲОЛ ВА ХАВФСИЗ РЕНДЕР ҚИЛИШ
     function renderPosts(category, searchTerm = "") {
         const wrapper = document.getElementById('newsWrapper');
         wrapper.innerHTML = "";
@@ -447,41 +367,26 @@
                     mediaHtml = `<div class="video-container">${p.video}</div>`;
                 }
 
-                // Категория тегини таржимаси
-                const catKey = catMap[p.category];
-                const tagText = (catKey && i18n[currentLang][catKey]) ? i18n[currentLang][catKey] : (p.category || '');
-
                 card.innerHTML = `
                     ${mediaHtml}
                     <div class="card-body">
-                        <span class="card-tag" style="background:${p.category ? 'var(--blue)' : 'transparent'}">${tagText}</span>
-                        <h2 class="card-title" id="post-title-${id}">${p.title}</h2>
+                        <span class="card-tag" style="background:${p.category ? 'var(--blue)' : 'transparent'}">${p.category || ''}</span>
+                        <h2 class="card-title">${p.title}</h2>
                         <div class="card-stats">
-                            <span><i class="far fa-clock"></i> ${p.time || i18n[currentLang].recently}</span>
-                            <span><i class="fas fa-eye"></i> ${p.views || 0} ${i18n[currentLang].views}</span>
+                            <span><i class="far fa-clock"></i> ${p.time || 'Яқинда'}</span>
+                            <span><i class="fas fa-eye"></i> ${p.views || 0} та көриш</span>
                         </div>
-                        <a href="post.html?id=${id}" class="read-more">${i18n[currentLang].readMore}</a>
+                        <a href="post.html?id=${id}" class="read-more">Батафсил ўқиш...</a>
                     </div>
                 `;
                 wrapper.appendChild(card);
-
-                // Мақола сарлавҳасини орқа фонда хавфсиз таржима қилиш
-                if (currentLang !== 'uz') {
-                    translateText(p.title, currentLang).then(translated => {
-                        const titleEl = document.getElementById(`post-title-${id}`);
-                        if (titleEl) titleEl.innerText = translated;
-                    });
-                }
             }
         });
 
         if (found === 0) {
-            wrapper.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color:#fff;">${i18n[currentLang].notFound}</p>`;
+            wrapper.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color:#fff;">Маълумот топилмади.</p>`;
         }
     }
-
-    // Саҳифа юкланганда тилни ўрнатиш
-    applyStaticTranslations();
 </script>
 <script type="module" src="bridge.js"></script>
 </body>
