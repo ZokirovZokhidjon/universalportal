@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <title>Universal Portal - Асосий Саҳифа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Оригинал ранглар */
         :root { 
             --blue: #c5c5be; 
             --dark: #26323d; 
@@ -13,37 +14,115 @@
             --orange: #30698a; 
         }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-Aqm5aA_IYIYZ1w08k071qDbCx72bVwEffQ&s); background-size: cover; margin: 0; }
+        
+        /* 3 ТА ТИЛ ТУГМАСИ СТИЛЛАРИ */
+        .lang-buttons {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 6px;
+            z-index: 100;
+        }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ffffff;
+            color: var(--dark);
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .lang-btn:hover {
+            background: #34495e;
+            color: #ffffff;
+        }
+        /* Актив тил тугмаси */
+        .lang-btn.active-lang {
+            background: #d63f10;
+            color: #ffffff;
+            border-color: #d63f10;
+        }
+
         .test-banner { background-image: var(--orange); color: rgb(243, 241, 241); text-align: center; padding: 10px; font-weight: bold; }
+        
         header { background: #42b2c9; padding: 20px; border-bottom: 2px solid var(--blue); text-align: center; position: relative; }
         header h1 { margin: 0 0 15px 0; color: var(--dark); font-size: 28px; }
         header img { border-radius: 50%; border: 3px groove red; box-shadow: 0 4px 10px rgba(0,0,0,0.2); width: 100px; height: 100px; }
+        
         .admin-icon { position: absolute; top: 20px; right: 20px; font-size: 30px; color: var(--blue); text-decoration: none; transition: 0.3s; }
         .admin-icon:hover { color: var(--dark); }
+        
         .search-container { max-width: 500px; margin: 15px auto; display: flex; gap: 5px; padding: 0 15px; }
         .search-container input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
         .search-container button { padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 8px; cursor: pointer; }
+
+        /* Реклама блоки услублари */
         #adBlock { max-width: 1200px; margin: 15px auto; display: none; text-align: center; padding: 0 15px; }
         #adBlock img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+        /* МЕНЮ БАР */
         .menu-bar { background: white; padding: 10px; text-align: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; }
+        
         .menu-btn { background: #d63f10; border: 1px solid var(--blue); color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: 500; transition: 0.2s; display: inline-block; vertical-align: middle; }
         .menu-btn.active { background: var(--blue); color: white; }
+        
         .dropdown { position: relative; display: inline-block; }
         .main-drop-btn { background-color: #34495e; color: white; }
-        .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 200px; box-shadow: 0px 8px 24px rgba(0,0,0,0.2); z-index: 9999; border-radius: 8px; margin-top: 8px; right: 0; overflow: hidden; border: 1px solid #ddd; }
-        .dropdown-content .menu-btn { color: #26323d !important; padding: 12px 20px; text-decoration: none; display: block; width: 100%; text-align: left; background: none !important; border: none !important; margin: 0; border-radius: 0; cursor: pointer; box-sizing: border-box; border-bottom: 1px solid #eee; font-weight: normal; }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.2);
+            z-index: 9999;
+            border-radius: 8px;
+            margin-top: 8px;
+            right: 0;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .dropdown-content .menu-btn {
+            color: #26323d !important;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none !important;
+            border: none !important;
+            margin: 0;
+            border-radius: 0;
+            cursor: pointer;
+            box-sizing: border-box;
+            border-bottom: 1px solid #eee;
+            font-weight: normal;
+        }
+
         .dropdown-content .menu-btn:last-child { border-bottom: none; }
         .dropdown-content .menu-btn:hover { background-color: #f1f1f1 !important; color: #d63f10 !important; }
         .dropdown-content .menu-btn.active { background-color: #19749e !important; color: white !important; }
+
         .tv-link { display: block !important; color: wheat !important; background-color: #2c3e50 !important; text-align: center !important; text-decoration: none; }
         .tv-link:hover { background-color: #34495e !important; }
+
         .show { display: block !important; }
+        
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        
         .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .card-img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
         .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
         .card-tag { font-size: 11px; background: var(--blue); color: #fff; padding: 3px 8px; border-radius: 5px; align-self: flex-start; margin-bottom: 10px; }
         .card-title { font-size: 18px; margin: 0 0 15px 0; color: var(--dark); font-weight: bold; line-height: 1.4; }
@@ -53,15 +132,22 @@
 </head>
 <body>
 
-<div class="test-banner">📢 Ушбу сайт тест режимида ишламоқда</div>
+<div class="test-banner" data-i18n="testBanner">📢 Ушбу сайт тест режимида ишламоқда</div>
 
 <header>
+    <!-- ТИЛ ТУГМАЛАРИ -->
+    <div class="lang-buttons">
+        <button class="lang-btn" id="lang-uz" onclick="setLanguage('uz')">Ўзбекча</button>
+        <button class="lang-btn" id="lang-ru" onclick="setLanguage('ru')">Русский</button>
+        <button class="lang-btn" id="lang-en" onclick="setLanguage('en')">English</button>
+    </div>
+
     <a class='admin-icon' href='admin.html' title='Шахсий кабинет'><i class="fas fa-user-circle"></i></a>
     <h1>UNIVERSAL PORTAL</h1>
     <img src="logo1.jpg" alt="logo" onerror="this.style.display='none'">
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Сайтдан қидириш...">
-        <button onclick="searchPosts()">Қидириш</button>
+        <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Сайтдан қидириш...">
+        <button onclick="searchPosts()" data-i18n="searchBtn">Қидириш</button>
     </div>
 </header>
 
@@ -72,22 +158,23 @@
 </div>
 
 <nav class="menu-bar">
-    <button class="menu-btn active" onclick="filterCat('all', this)">Ҳаммаси</button>
-    <button class="menu-btn" onclick="filterCat('Янгиликлар', this)">Янгиликлар</button>
-    <button class="menu-btn" onclick="filterCat('Кинотеатр', this)">Кинотеатр</button>
-    <button class="menu-btn" onclick="filterCat('Клиплар', this)">Клиплар</button>
+    <button class="menu-btn active" onclick="filterCat('all', this)" data-i18n="all">Ҳаммаси</button>
+    <button class="menu-btn" onclick="filterCat('Янгиликлар', this)" data-i18n="news">Янгиликлар</button>
+    <button class="menu-btn" onclick="filterCat('Кинотеатр', this)" data-i18n="cinema">Кинотеатр</button>
+    <button class="menu-btn" onclick="filterCat('Клиплар', this)" data-i18n="clips">Клиплар</button>
     
     <div class="dropdown">
         <button class="menu-btn main-drop-btn" id="mainDropBtn" onclick="toggleDropdown(event)">
-            Бошқалар <span class="arrow">▼</span>
+            <span id="dropBtnText" data-i18n="others">Бошқалар</span> <span class="arrow">▼</span>
         </button>
+        
         <div id="dropdownContent" class="dropdown-content">
-            <button class="menu-btn" onclick="filterCat('Tabobat', this)">Табобат</button>
-            <button class="menu-btn" onclick="filterCat('Ҳикоялар', this)">Ҳикоялар</button>
-            <button class="menu-btn" onclick="filterCat('Хангомалар', this)">Хангомалар</button>
-            <button class="menu-btn" onclick="filterCat('Кулинария', this)">Кулинария</button>
-            <button class="menu-btn" onclick="filterCat('Шеърият', this)">Шеърият</button>
-            <a href="tv.html" class="menu-btn tv-link">Тв каналлар</a>
+            <button class="menu-btn" onclick="filterCat('Tabobat', this)" data-i18n="tabobat">Табобат</button>
+            <button class="menu-btn" onclick="filterCat('Ҳикоялар', this)" data-i18n="hikoyalar">Ҳикоялар</button>
+            <button class="menu-btn" onclick="filterCat('Хангомалар', this)" data-i18n="xangomalar">Хангомалар</button>
+            <button class="menu-btn" onclick="filterCat('Кулинария', this)" data-i18n="kulinariya">Кулинария</button>
+            <button class="menu-btn" onclick="filterCat('Шеърият', this)" data-i18n="sheyriyat">Шеърият</button>   
+            <a href="tv.html" class="menu-btn tv-link" data-i18n="tv">Тв каналлар</a>
         </div>
     </div>
 </nav>
@@ -111,23 +198,161 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // --- ЛУҒАТ (I18N) СТАЦИОНАР ТАРЖИМАЛАР ---
+    const i18n = {
+        uz: {
+            testBanner: "📢 Ушбу сайт тест режимида ишламоқда",
+            searchPlaceholder: "Сайтдан қидириш...",
+            searchBtn: "Қидириш",
+            all: "Ҳаммаси",
+            news: "Янгиликлар",
+            cinema: "Кинотеатр",
+            clips: "Клиплар",
+            others: "Бошқалар",
+            tabobat: "Табобат",
+            hikoyalar: "Ҳикоялар",
+            xangomalar: "Хангомалар",
+            kulinariya: "Кулинария",
+            sheyriyat: "Шеърият",
+            tv: "Тв каналлар",
+            readMore: "Батафсил ўқиш...",
+            views: "та кўриш",
+            recently: "Яқинда",
+            notFound: "Маълумот топилмади.",
+            loading: "Юкланмоқда..."
+        },
+        ru: {
+            testBanner: "📢 Этот сайт работает в тестовом режиме",
+            searchPlaceholder: "Поиск по сайту...",
+            searchBtn: "Искать",
+            all: "Все",
+            news: "Новости",
+            cinema: "Кинотеатр",
+            clips: "Клипы",
+            others: "Другое",
+            tabobat: "Медицина",
+            hikoyalar: "Рассказы",
+            xangomalar: "Юмор",
+            kulinariya: "Кулинария",
+            sheyriyat: "Поэзия",
+            tv: "ТВ каналы",
+            readMore: "Читать далее...",
+            views: "просмотров",
+            recently: "Недавно",
+            notFound: "Информация не найдена.",
+            loading: "Загрузка..."
+        },
+        en: {
+            testBanner: "📢 This site is operating in test mode",
+            searchPlaceholder: "Search site...",
+            searchBtn: "Search",
+            all: "All",
+            news: "News",
+            cinema: "Cinema",
+            clips: "Clips",
+            others: "Others",
+            tabobat: "Medicine",
+            hikoyalar: "Stories",
+            xangomalar: "Humor",
+            kulinariya: "Culinary",
+            sheyriyat: "Poetry",
+            tv: "TV Channels",
+            readMore: "Read more...",
+            views: "views",
+            recently: "Recently",
+            notFound: "No information found.",
+            loading: "Loading..."
+        }
+    };
+
+    // Категория номларининг луғат харитаси
+    const catMap = {
+        'Янгиликлар': 'news',
+        'Кинотеатр': 'cinema',
+        'Клиплар': 'clips',
+        'Tabobat': 'tabobat',
+        'Ҳикоялар': 'hikoyalar',
+        'Хангомалар': 'xangomalar',
+        'Кулинария': 'kulinariya',
+        'Шеърият': 'sheyriyat'
+    };
+
+    let currentLang = localStorage.getItem("app_lang") || "uz";
+    let allPosts = {};
+    let currentCategory = 'all';
+    let currentSearchTerm = '';
+    const translationCache = {};
+
+    // --- ДИНАМИК ТАРЖИМА (Хавфсиз Таймаут билан) ---
+    async function translateText(text, targetLang) {
+        if (!text || targetLang === 'uz') return text;
+        const cacheKey = `${text}_${targetLang}`;
+        if (translationCache[cacheKey]) return translationCache[cacheKey];
+
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1500); // 1.5 сония таймаут
+
+            const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=uz|${targetLang}`, {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            const data = await res.json();
+            if (data.responseData && data.responseData.translatedText) {
+                const result = data.responseData.translatedText;
+                translationCache[cacheKey] = result;
+                return result;
+            }
+        } catch (e) {
+            // Агар таржима API ишламаса, қотиб қолмай асл матн қайтади
+        }
+        return text;
+    }
+
+    // ТИЛНИ ЎЗГАРТИРИШ ФУНКЦИЯСИ
+    window.setLanguage = function(lang) {
+        currentLang = lang;
+        localStorage.setItem("app_lang", lang);
+        applyStaticTranslations();
+        renderPosts(currentCategory, currentSearchTerm);
+    };
+
+    function applyStaticTranslations() {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active-lang'));
+        const activeBtn = document.getElementById(`lang-${currentLang}`);
+        if(activeBtn) activeBtn.classList.add('active-lang');
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (i18n[currentLang] && i18n[currentLang][key]) {
+                el.innerText = i18n[currentLang][key];
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (i18n[currentLang] && i18n[currentLang][key]) {
+                el.placeholder = i18n[currentLang][key];
+            }
+        });
+    }
+
+    // ТАШРИФЛАРНИ ҲИСОБЛАШ ФУНКЦИЯСИ
     async function trackVisitor() {
         if (sessionStorage.getItem("visited")) return;
         sessionStorage.setItem("visited", "true");
 
         const today = new Date().toISOString().split('T')[0];
         const updates = {};
+        
         updates[`analytics/daily_views/${today}`] = increment(1);
 
         try {
             const response = await fetch('https://ipapi.co/json/');
-            if (response.ok) {
-                const geoData = await response.json();
-                const country = geoData.country_name || "Номаълум";
-                updates[`analytics/countries/${country}`] = increment(1);
-            } else {
-                updates[`analytics/countries/Номаълум`] = increment(1);
-            }
+            const geoData = await response.json();
+            const country = geoData.country_name || "Номаълум";
+
+            updates[`analytics/countries/${country}`] = increment(1);
         } catch (error) {
             updates[`analytics/countries/Номаълум`] = increment(1);
         }
@@ -137,13 +362,14 @@
 
     trackVisitor();
 
+    // МЕНЮНИ ОЧИШ ВА ЁПИШ ФУНКЦИЯЛАРИ
     window.toggleDropdown = function(event) {
         event.stopPropagation();
         document.getElementById("dropdownContent").classList.toggle("show");
     }
 
     window.addEventListener('click', function(event) {
-        if (!event.target.matches('.main-drop-btn') && !event.target.matches('.arrow')) {
+        if (!event.target.matches('.main-drop-btn') && !event.target.matches('.arrow') && !event.target.matches('#dropBtnText')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
             for (var i = 0; i < dropdowns.length; i++) {
                 var openDropdown = dropdowns[i];
@@ -154,6 +380,7 @@
         }
     });
 
+    // Рекламани Firebase дан юклаш
     onValue(ref(db, 'ads'), (s) => {
         const ad = s.val();
         if(ad && ad.img) {
@@ -163,46 +390,48 @@
         }
     });
 
-    let allPosts = {};
-
+    // Мақолаларни олиш
     onValue(ref(db, 'all_posts'), (snapshot) => {
         allPosts = snapshot.val() || {};
         renderPosts('all');
     });
 
+    // Категория танлаш функцияси
     window.filterCat = (category, btn) => {
         document.querySelectorAll('.menu-bar .menu-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
+        
         const mainBtn = document.getElementById('mainDropBtn');
         const hiddenCats = ['Tabobat', 'Ҳикоялар', 'Хангомалар', 'Кулинария', 'Шеърият'];
-
+        
         if(hiddenCats.includes(category)) {
-            mainBtn.innerHTML = `${category} <span class="arrow">▼</span>`;
             mainBtn.classList.add('active');
         } else {
-            mainBtn.innerHTML = `Бошқалар <span class="arrow">▼</span>`;
+            mainBtn.classList.remove('active');
         }
-
-        renderPosts(category);
+        
+        currentCategory = category;
+        renderPosts(category, currentSearchTerm);
         document.getElementById("dropdownContent").classList.remove("show");
     };
 
+    // Қидириш тизими
     window.searchPosts = () => {
-        const term = document.getElementById('searchInput').value.toLowerCase();
-        renderPosts('all', term);
+        currentSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+        renderPosts(currentCategory, currentSearchTerm);
     };
 
+    // МАҚОЛАЛАРНИ ДАРҲОЛ ВА ХАВФСИЗ РЕНДЕР ҚИЛИШ
     function renderPosts(category, searchTerm = "") {
         const wrapper = document.getElementById('newsWrapper');
         wrapper.innerHTML = "";
-
+        
         const keys = Object.keys(allPosts).reverse();
         let found = 0;
 
         keys.forEach(id => {
             const p = allPosts[id];
-
+            
             const matchCat = (category === 'all' || p.category === category);
             const matchSearch = p.title.toLowerCase().includes(searchTerm);
 
@@ -210,7 +439,7 @@
                 found++;
                 const card = document.createElement('div');
                 card.className = 'card';
-
+                
                 let mediaHtml = "";
                 if (p.image) {
                     mediaHtml = `<img src="${p.image}" class="card-img" alt="${p.title}" onerror="this.style.display='none'">`;
@@ -218,27 +447,42 @@
                     mediaHtml = `<div class="video-container">${p.video}</div>`;
                 }
 
+                // Категория тегини таржимаси
+                const catKey = catMap[p.category];
+                const tagText = (catKey && i18n[currentLang][catKey]) ? i18n[currentLang][catKey] : (p.category || '');
+
                 card.innerHTML = `
                     ${mediaHtml}
                     <div class="card-body">
-                        <span class="card-tag" style="background:${p.category ? 'var(--blue)' : 'transparent'}">${p.category || ''}</span>
-                        <h2 class="card-title">${p.title}</h2>
+                        <span class="card-tag" style="background:${p.category ? 'var(--blue)' : 'transparent'}">${tagText}</span>
+                        <h2 class="card-title" id="post-title-${id}">${p.title}</h2>
                         <div class="card-stats">
-                            <span><i class="far fa-clock"></i> ${p.time || 'Яқинда'}</span>
-                            <span><i class="fas fa-eye"></i> ${p.views || 0} та кўриш</span>
+                            <span><i class="far fa-clock"></i> ${p.time || i18n[currentLang].recently}</span>
+                            <span><i class="fas fa-eye"></i> ${p.views || 0} ${i18n[currentLang].views}</span>
                         </div>
-                        <a href="post.html?id=${id}" class="read-more">Батафсил ўқиш...</a>
+                        <a href="post.html?id=${id}" class="read-more">${i18n[currentLang].readMore}</a>
                     </div>
                 `;
                 wrapper.appendChild(card);
+
+                // Мақола сарлавҳасини орқа фонда хавфсиз таржима қилиш
+                if (currentLang !== 'uz') {
+                    translateText(p.title, currentLang).then(translated => {
+                        const titleEl = document.getElementById(`post-title-${id}`);
+                        if (titleEl) titleEl.innerText = translated;
+                    });
+                }
             }
         });
 
         if (found === 0) {
-            wrapper.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color:#fff;">Маълумот топилмади.</p>`;
+            wrapper.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color:#fff;">${i18n[currentLang].notFound}</p>`;
         }
     }
-</script>
 
+    // Саҳифа юкланганда тилни ўрнатиш
+    applyStaticTranslations();
+</script>
+<script type="module" src="bridge.js"></script>
 </body>
 </html>
