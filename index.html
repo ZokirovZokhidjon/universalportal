@@ -100,6 +100,10 @@
         .menu-btn { background: #d63f10; border: 1px solid var(--blue); color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: 500; transition: 0.2s; display: inline-block; vertical-align: middle; }
         .menu-btn.active { background: var(--blue); color: white; }
         
+        /* Галерея тугмаси стили */
+        .gallery-btn-link { background: #27ae60 !important; border-color: #27ae60 !important; text-decoration: none !important; }
+        .gallery-btn-link:hover { background: #219150 !important; }
+
         .dropdown { position: relative; display: inline-block; }
         .main-drop-btn { background-color: #34495e; color: white; }
 
@@ -197,6 +201,9 @@
     <button class="menu-btn" onclick="filterCat('Кинотеатр', this)">Кинотеатр</button>
     <button class="menu-btn" onclick="filterCat('Клиплар', this)">Клиплар</button>
     
+    <!-- ЯНГИ ГАЛЕРЕЯ ТУГМАСИ -->
+    <a href="gallery.html" class="menu-btn gallery-btn-link notranslate"><i class="fas fa-camera"></i> Галерея</a>
+    
     <div class="dropdown">
         <button class="menu-btn main-drop-btn" id="mainDropBtn" onclick="toggleDropdown(event)">
             <span id="dropBtnText">Бошқалар</span> <span class="arrow">▼</span>
@@ -208,6 +215,7 @@
             <button class="menu-btn" onclick="filterCat('Хангомалар', this)">Хангомалар</button>
             <button class="menu-btn" onclick="filterCat('Кулинария', this)">Кулинария</button>
             <button class="menu-btn" onclick="filterCat('Шеърият', this)">Шеърият</button>   
+            <a href="gallery.html" class="menu-btn notranslate" style="color: #27ae60 !important; font-weight: bold;">📸 Наманган Манзаралари</a>
             <a href="tv.html" class="menu-btn tv-link notranslate">Тв каналлар</a>
         </div>
     </div>
