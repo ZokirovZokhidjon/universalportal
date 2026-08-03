@@ -10,19 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* Сарлавҳадаги Металл / Силвер Текстура Эффекти */
         .metallic-text {
             background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(0,0,0,0.7);
         }
-
-        /* Biocyte Стилдаги Металл Капсула Тугмалар */
         .biocyte-btn {
             background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
             color: #38bdf8;
-            border: 1px solid #38bdf8/40;
+            border: 1px solid rgba(56, 189, 248, 0.4);
             box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 0 4px 12px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
         }
@@ -33,13 +30,9 @@
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
             transform: translateY(-2px);
         }
-
-        /* Кириш панелидаги кибер ёруғлик эффекти */
         .glow-box {
             box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.15);
         }
-
-        /* Мақолалар рўйхати скроллбари */
         .custom-scroll::-webkit-scrollbar {
             width: 6px;
         }
@@ -57,11 +50,10 @@
 </head>
 <body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-black">
 
-<!-- 1. КИРИШ ҚИСМИ (АВТОРИЗАЦИЯ / ПАРОЛ) -->
+<!-- 1. КИРИШ ҚИСМИ -->
 <div id="login-section" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md px-4">
     <div class="login-card w-full max-w-md bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-8 sm:p-10 glow-box text-center relative overflow-hidden">
         
-        <!-- Декоратив нур -->
         <div class="absolute -top-12 -left-12 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl"></div>
         <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
 
@@ -73,8 +65,7 @@
             <h2 class="text-2xl font-black uppercase tracking-wider metallic-text mb-1">Админ Панел</h2>
             <p class="text-xs text-slate-500 uppercase tracking-widest mb-8">Universal Portal Control System</p>
 
-            <!-- ENTER ВА СИЧҚОНЧА БИЛАН КИРИШ УЧУН FORM ТЕГИ ИШЛАТИЛДИ -->
-            <form id="loginForm" class="space-y-4 text-left" onsubmit="return false;">
+            <form id="loginForm" class="space-y-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Email Манзил</label>
                     <div class="relative">
@@ -105,7 +96,7 @@
     </div>
 </div>
 
-<!-- 2. АСОСИЙ АДМИН DASHBOARD (МУВАФФАҚИЯТЛИ КИРИЛГАНДАН СЎНГ) -->
+<!-- 2. АСОСИЙ АДМИН DASHBOARD -->
 <div id="admin-content" class="hidden max-w-7xl w-full mx-auto px-4 py-8">
     
     <!-- HEADER BAR -->
@@ -128,8 +119,6 @@
 
     <!-- СТАТИСТИКА БЛОКИ -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        
-        <!-- Бугунги кўришлар -->
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex items-center gap-5 shadow-xl">
             <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-2xl flex-shrink-0">
                 <i class="fas fa-eye"></i>
@@ -140,7 +129,6 @@
             </div>
         </div>
 
-        <!-- Давлатлар статистикаси -->
         <div class="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
             <div class="flex items-center gap-3 mb-3">
                 <i class="fas fa-globe-americas text-emerald-400 text-lg"></i>
@@ -150,16 +138,13 @@
                 <span class="text-xs text-slate-500">Юкланмоқда...</span>
             </div>
         </div>
-
     </div>
 
     <!-- АСОСИЙ ИШНИ БОШҚАРИШ СЕТКАСИ -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- ЧАП ТОМОН: ФОРМА ВА ТЕЗКОР РЕКЛАМА (7 колонка) -->
+        <!-- ЧАП ТОМОН -->
         <div class="lg:col-span-7 space-y-8">
-            
-            <!-- Мақола қўшиш / таҳрирлаш -->
             <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
                 <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-6 pb-3 border-b border-slate-800 flex items-center gap-2">
                     <i class="fas fa-pen-fancy text-sky-400"></i> Мақола бошқаруви
@@ -191,7 +176,6 @@
                         <input type="text" id="sourceUrl" placeholder="Манба ҳаволаси (URL)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
                     </div>
 
-                    <!-- Расм юклаш зонаси -->
                     <div class="bg-slate-950/60 border-2 border-dashed border-slate-800 rounded-xl p-4 text-center space-y-2">
                         <label class="block text-xs font-bold text-slate-400 uppercase">Компьютердан расм юклаш</label>
                         <input type="file" id="postFile" accept="image/*" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-600/20 file:text-sky-400 hover:file:bg-sky-600/30 cursor-pointer">
@@ -211,35 +195,19 @@
                     </div>
 
                     <div class="flex gap-3 pt-2">
-                        <button id="pubBtn" class="flex-1 py-3 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                        <button id="pubBtn" type="button" class="flex-1 py-3 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition flex items-center justify-center gap-2">
                             <i class="fas fa-paper-plane"></i> <span id="btnText">НАШР ҚИЛИШ</span>
                         </button>
-                        <button id="cancelEdit" class="hidden px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl transition">
+                        <button id="cancelEdit" type="button" class="hidden px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl transition">
                             Бекор қилиш
                         </button>
                     </div>
                 </div>
             </div>
-
-            <!-- Тезкор Реклама Блоки -->
-            <div class="bg-slate-900/90 border border-slate-800 border-l-4 border-l-emerald-500 rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fas fa-ad text-emerald-400"></i> Тезкор реклама
-                </h3>
-                <input type="text" id="adTitle" placeholder="Реклама матни / сарлавҳаси" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-emerald-500">
-                <input type="text" id="adImgUrl" placeholder="Реклама расм URL" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-emerald-500">
-                <input type="text" id="adLinkUrl" placeholder="Реклама линки (URL)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-emerald-500">
-                <button id="saveAd" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition">
-                    Сақлаш
-                </button>
-            </div>
-
         </div>
 
-        <!-- ЎНГ ТОМОН: СЎНГГИ МАҚОЛАЛАР ВА ХАБАРНОМА (5 колонка) -->
+        <!-- ЎНГ ТОМОН -->
         <div class="lg:col-span-5 space-y-8">
-            
-            <!-- Мақолалар рўйхати -->
             <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col h-[580px]">
                 <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-4 pb-3 border-b border-slate-800 flex items-center gap-2">
                     <i class="fas fa-list text-sky-400"></i> Сўнгги мақолалар
@@ -248,26 +216,6 @@
                     <p class="text-center text-xs text-slate-500 py-8">Юкланмоқда...</p>
                 </div>
             </div>
-
-            <!-- Тезкор хабарнома (Югурувчи сатр) -->
-            <div class="bg-slate-900/90 border border-slate-800 border-l-4 border-l-amber-500 rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fas fa-bullhorn text-amber-400"></i> Тезкор хабарнома
-                </h3>
-
-                <!-- Marquee Предпросмотр блоки -->
-                <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-2.5 overflow-hidden">
-                    <marquee id="noticePreview" class="text-xs text-amber-400 font-semibold" behavior="scroll" direction="left">
-                        Хабарнома матни шу ерда югуриб туради...
-                    </marquee>
-                </div>
-
-                <input type="text" id="noticeText" placeholder="Югурувчи сатр матни..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-amber-500">
-                <button id="saveNotice" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition">
-                    Янгилаш
-                </button>
-            </div>
-
         </div>
 
     </div>
@@ -277,8 +225,8 @@
 <!-- FIREBASE ВА МАНТИҚ СКРИПТИ -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, push, update, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
@@ -290,29 +238,29 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getDatabase(app);
+    const auth = getAuth(app);
     const storage = getStorage(app);
 
+    // DOM Элементлари
     const emailInput = document.getElementById('email');
     const passInput = document.getElementById('pass');
+    const postIdInput = document.getElementById('postId');
     const titleInput = document.getElementById('title');
-    const catInput = document.getElementById('cat');
     const sourceInput = document.getElementById('sourceUrl');
     const imgInput = document.getElementById('img');
     const videoInput = document.getElementById('videoIframe');
+    const catInput = document.getElementById('cat');
     const txtInput = document.getElementById('txt');
-    const postIdInput = document.getElementById('postId');
 
     // КИРИШ ФУНКЦИЯСИ
-    const handleLogin = (e) => {
-        if(e) e.preventDefault();
+    document.getElementById('loginForm').onsubmit = (e) => {
+        e.preventDefault();
         signInWithEmailAndPassword(auth, emailInput.value, passInput.value)
-            .catch(err => alert("Логин ёки парол хато!"));
+            .catch(err => alert("Логин ёки парол хато: " + err.message));
     };
 
-    document.getElementById('loginForm').onsubmit = handleLogin;
-
+    // АВТОРИЗАЦИЯ ҲОЛАТИ
     onAuthStateChanged(auth, u => {
         const loginSec = document.getElementById('login-section');
         const adminContent = document.getElementById('admin-content');
@@ -322,7 +270,6 @@
             adminContent.classList.remove('hidden');
             loadPosts();
             loadAnalytics(); 
-            loadAdAndNotice(); 
         } else {
             loginSec.classList.remove('hidden');
             adminContent.classList.add('hidden');
@@ -355,16 +302,6 @@
                 });
             } else {
                 container.innerHTML = "<span class='text-xs text-slate-500'>Ташрифлар мавжуд эмас</span>";
-            }
-        });
-    }
-
-    // РЕКЛАМА ВА ХАБАРНОМАНИ БАЗАДАН ЮКЛАШ
-    function loadAdAndNotice() {
-        onValue(ref(db, 'site_notice'), (snapshot) => {
-            const notice = snapshot.val();
-            if (notice && notice.text) {
-                document.getElementById('noticePreview').innerText = notice.text;
             }
         });
     }
@@ -455,7 +392,7 @@
     }
 
     // ТАҲРИРЛАШ ФУНКЦИЯСИ
-    async function editPost(id) {
+    function editPost(id) {
         onValue(ref(db, 'all_posts/' + id), (snapshot) => {
             const post = snapshot.val();
             if(post) {
@@ -475,13 +412,13 @@
     }
 
     // ЎЧИРИШ ФУНКЦИЯСИ
-    async function deletePost(id) {
+    function deletePost(id) {
         if(confirm("Ростан ҳам ушбу мақолани ўчирмоқчимисиз?")) {
             remove(ref(db, 'all_posts/' + id));
         }
     }
 
-    // ФОРМАНИ ТОЗАЛАШ (МАҚОЛАЛАР УЧУН)
+    // ФОРМАНИ ТОЗАЛАШ
     function resetForm() {
         postIdInput.value = "";
         titleInput.value = "";
@@ -497,45 +434,6 @@
     }
 
     document.getElementById('cancelEdit').onclick = resetForm;
-
-    // РЕКЛАМАНИ САҚЛАШ ВА ИНПУТЛАРНИ ТОЗАЛАШ
-    document.getElementById('saveAd').onclick = () => {
-        const adTitleEl = document.getElementById('adTitle');
-        const adImgEl = document.getElementById('adImgUrl');
-        const adLinkEl = document.getElementById('adLinkUrl');
-
-        set(ref(db, 'ads'), {
-            title: adTitleEl.value,
-            img: adImgEl.value, 
-            link: adLinkEl.value
-        }).then(() => {
-            alert("Реклама сақланди!");
-            adTitleEl.value = "";
-            adImgEl.value = "";
-            adLinkEl.value = "";
-        });
-    };
-
-    // ХАБАРНОМА МАТНИ КИРИТИЛАЁТГАНДА MARQUEE ДАРҲОЛ ЎЗГАРАДИ
-    document.getElementById('noticeText').oninput = (e) => {
-        document.getElementById('noticePreview').innerText = e.target.value || "Хабарнома матни шу ерда югуриб туради...";
-    };
-
-    // ХАБАРНОМАНИ САҚЛАШ ВА ИНПУТНИ ТОЗАЛАШ
-    document.getElementById('saveNotice').onclick = () => {
-        const noticeInput = document.getElementById('noticeText');
-        const val = noticeInput.value;
-
-        if(!val) return alert("Хабарнома матнини киритинг!");
-
-        set(ref(db, 'site_notice'), {
-            text: val
-        }).then(() => {
-            alert("Хабарнома янгиланди!");
-            noticeInput.value = ""; // Инпут майдони тозаланади
-        });
-    };
 </script>
-<script type="module" src="bridge.js"></script>
 </body>
 </html>
