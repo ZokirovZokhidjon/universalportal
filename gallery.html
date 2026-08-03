@@ -4,304 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Галерея - Universal Portal</title>
+    
+    <!-- Tailwind CSS & FontAwesome Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root {
-            --primary-color: #3498db;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #2c3e50;
-            --header-height: 70px;
+        /* Сарлавҳадаги Металл / Силвер Текстура Эффекти */
+        .metallic-text {
+            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        /* Неон Ёруғлик Эффекти Card'лар учун */
+        .glow-card {
+            box-shadow: 0 0 20px -5px rgba(56, 189, 248, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glow-card:hover {
+            box-shadow: 0 0 30px 5px rgba(56, 189, 248, 0.35);
+            transform: translateY(-5px);
         }
 
-        /* Header Styles */
-        header {
-            background-color: var(--card-bg);
-            height: var(--header-height);
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary-color);
-            letter-spacing: 1px;
-        }
-
-        .header-center {
-            font-size: 16px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar-icon {
-            font-size: 36px;
-            color: var(--primary-color);
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-controls select {
-            border: 1px solid #ddd;
-            padding: 6px 10px;
-            border-radius: 6px;
-            background-color: var(--bg-color);
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .header-controls i {
-            font-size: 20px;
-            color: #7f8c8d;
-            cursor: pointer;
-        }
-
-        /* Main Content Styles */
-        main {
-            flex-grow: 1;
-            padding: 25px 30px;
-        }
-
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 30px auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            height: 420px;
-            background-color: #ddd;
-        }
-
-        .carousel {
-            display: flex;
-            height: 100%;
-            transition: transform 0.5s ease-in-out;
-            width: 100%;
-        }
-
-        .carousel-item {
-            min-width: 100%;
-            height: 100%;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-prev,
-        .carousel-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255,255,255,0.8);
-            border: none;
-            border-radius: 50%;
-            width: 42px;
-            height: 42px;
-            cursor: pointer;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 10;
-            transition: all 0.3s;
-        }
-
-        .carousel-prev:hover,
-        .carousel-next:hover {
-            background-color: #fff;
-            color: var(--primary-color);
-        }
-
-        .carousel-prev { left: 15px; }
-        .carousel-next { right: 15px; }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .carousel-indicators span {
+        /* Карусель Индикаторлари (Нуқтачалар) */
+        .indicator-dot {
             width: 10px;
             height: 10px;
-            border-radius: 50%;
-            background-color: rgba(255,255,255,0.6);
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+        }
+        .indicator-dot.active {
+            width: 32px;
+            background-color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
         }
 
-        .carousel-indicators span.active {
-            background-color: #fff;
-            width: 24px;
+        /* Махсус Скроллбар */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
             border-radius: 10px;
         }
-
-        /* Gallery Styles */
-        .gallery-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .gallery-container h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-left: 12px;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border: 1px solid #eee;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .gallery-item span {
-            display: block;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            text-align: center;
-        }
-        .home a{
-            text-decoration: none;
-            font-size: 16px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            color: red;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
         }
     </style>
 </head>
-<body>
+<body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-black">
 
-    <header>
-        <div class="logo">UNIVERSAL PORTAL</div>
-        <div class="home"> <a href="index.html" class="btn">Асосий сахифага</a></div>
-        <div class="header-center">Юртим кўрки ва унинг гўзаллиги</div>
-        <div class="header-controls">
-            <div class="user-profile">
-                <i class="fas fa-user-circle user-avatar-icon"></i>
+    <!-- 1. HEADER (КИБЕР/ШИША НАВИГАЦИЯ БАР) -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-900/80 border-b border-slate-800/80 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-2xl">
+        <div class="flex items-center gap-6">
+            <div class="logo text-lg sm:text-xl font-black uppercase tracking-widest metallic-text flex items-center gap-2">
+                <i class="fas fa-cubes text-sky-400"></i> Universal Portal
             </div>
-            <select>
+            <div class="hidden md:flex items-center">
+                <a href="index.html" class="px-4 py-2 bg-slate-800/80 hover:bg-sky-600/20 border border-slate-700/80 hover:border-sky-500/50 text-slate-300 hover:text-sky-400 text-xs font-bold rounded-xl transition-all duration-300 flex items-center gap-2">
+                    <i class="fas fa-arrow-left text-sky-400"></i> Асосий саҳифага
+                </a>
+            </div>
+        </div>
+
+        <div class="header-center hidden lg:block text-xs font-semibold uppercase tracking-widest text-slate-400">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></span>
+            Юртим кўрки ва унинг гўзаллиги
+        </div>
+
+        <div class="header-controls flex items-center gap-3 sm:gap-4">
+            <!-- Мобиль учун Асосий саҳифа тугмаси -->
+            <a href="index.html" class="md:hidden p-2.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-xl hover:text-sky-400 text-xs">
+                <i class="fas fa-home"></i>
+            </a>
+
+            <!-- Профиль Иконкаси -->
+            <div class="user-profile flex items-center gap-2 pl-2 border-l border-slate-800">
+                <i class="fas fa-user-circle text-2xl sm:text-3xl text-sky-400 hover:scale-110 transition cursor-pointer"></i>
+            </div>
+
+            <!-- Тил танлаш -->
+            <select class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-bold outline-none focus:border-sky-500 cursor-pointer">
                 <option value="uz">UZ</option>
                 <option value="en">EN</option>
                 <option value="ru">RU</option>
             </select>
-            <i class="fas fa-bars"></i>
-        </div>
-    </header> 
 
-    <main>
-        <div class="carousel-container">
-            <div class="carousel">
-                <div class="carousel-item">
-                    <!-- ХАТО ТЎҒРИЛАНДИ: Расм линки тўғридан-тўғри src ичига қўйилди -->
-                    <img src="https://nampravda.uz/images/e0ee99adce3009295904f7d3f0920287.jpg" alt="Carousel 1" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%233498db\'/><text x=\'50%\' y=\'50%\' font-size=\'28\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Расм юкланмади</text></svg>';">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://uzreport.news/fotobank/image/14821304181.jpg" alt="Carousel 2" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%232ecc71\'/><text x=\'50%\' y=\'50%\' font-size=\'28\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Расм юкланмади</text></svg>';">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqXM53mKPqmFGANhB4hgg2rjiVDbYPBQ5F-bpV-6DUbhQ-kwh9mLmLEm7Z&s=10" alt="Carousel 3" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%239b59b6\'/><text x=\'50%\' y=\'50%\' font-size=\'28\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Расм юкланмади</text></svg>';">
-                </div>
-            </div>
-            <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
-            <div class="carousel-indicators">
-                <span class="active"></span>
-                <span></span>
-                <span></span>
-            </div>
+            <button class="text-slate-400 hover:text-sky-400 text-lg p-1.5">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+    </header>
 
-        <div class="gallery-container">
-            <h2>Расмлар галереяси</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://yuz.uz/imageproxy/980x/https://yuz.uz/file/news/f4869de9a85fd7ec29453a0200d766e0.jpg" alt="Gallery 1" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e74c3c\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Sunset View</text></svg>';">
-                    <span>Sunset View</span>
+    <!-- 2. АСОСИЙ МАЗМУН (MAIN CONTENT) -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 sm:py-10 space-y-10">
+        
+        <!-- КАРОУСЕЛЬ (СЛАЙДЕР) БЛОКИ -->
+        <section class="carousel-container relative w-full h-[260px] sm:h-[400px] md:h-[480px] rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl bg-slate-950 group">
+            
+            <!-- Слайдлар треки -->
+            <div class="carousel flex w-full h-full transition-transform duration-500 ease-in-out">
+                
+                <div class="carousel-item min-w-full h-full relative">
+                    <img src="https://nampravda.uz/images/e0ee99adce3009295904f7d3f0920287.jpg" alt="Carousel 1" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'28\' fill=\'%2338bdf8\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Расм юкланмади</text></svg>';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAYMaAYhvq2G2eSjluBg7CLb7KHGOXxPJlddU8FIA2dMDt4G6qSSOW5pKW&s=10" alt="Gallery 2" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23f39c12\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Local Craft</text></svg>';">
-                    <span>Local Craft</span>
+
+                <div class="carousel-item min-w-full h-full relative">
+                    <img src="https://uzreport.news/fotobank/image/14821304181.jpg" alt="Carousel 2" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'28\' fill=\'%2338bdf8\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Расм юкланмади</text></svg>';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRfGduIJvBvlz-iCOGR-jh2eEpEwuthhMy90lK1rHO_8IF5icD9-ewpJc&s=10" alt="Gallery 3" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%231abc9c\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Ancient View</text></svg>';">
-                    <span>Ancient View</span>
+
+                <div class="carousel-item min-w-full h-full relative">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqXM53mKPqmFGANhB4hgg2rjiVDbYPBQ5F-bpV-6DUbhQ-kwh9mLmLEm7Z&s=10" alt="Carousel 3" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'28\' fill=\'%2338bdf8\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Расм юкланмади</text></svg>';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://nampravda.uz/images/e0ee99adce3009295904f7d3f0920287.jpg" alt="Gallery 4" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%2334495e\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23ffffff\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>City Lights</text></svg>';">
-                    <span>City Lights</span>
-                </div>
+
             </div>
-        </div>
+
+            <!-- Навигация тугмалари (Чап ва Ўнг) -->
+            <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-slate-900/80 hover:bg-sky-500 border border-slate-700 hover:border-sky-400 text-white hover:text-black rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 opacity-80 group-hover:opacity-100 shadow-xl">
+                <i class="fas fa-chevron-left text-sm"></i>
+            </button>
+            
+            <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-slate-900/80 hover:bg-sky-500 border border-slate-700 hover:border-sky-400 text-white hover:text-black rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 opacity-80 group-hover:opacity-100 shadow-xl">
+                <i class="fas fa-chevron-right text-sm"></i>
+            </button>
+
+            <!-- Индикаторлар (Нуқтачалар) -->
+            <div class="carousel-indicators absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-slate-800/80">
+                <span class="indicator-dot active"></span>
+                <span class="indicator-dot"></span>
+                <span class="indicator-dot"></span>
+            </div>
+        </section>
+
+        <!-- РАСМЛАР ГАЛЕРЕЯСИ СЕТКАСИ -->
+        <section class="gallery-container space-y-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h2 class="text-xl sm:text-2xl font-black uppercase tracking-wide metallic-text flex items-center gap-3">
+                    <i class="fas fa-photo-video text-sky-400"></i> Расмлар галереяси
+                </h2>
+                <span class="text-xs text-slate-500 uppercase font-bold tracking-widest hidden sm:inline-block">
+                    Мукаммал Тўплам
+                </span>
+            </div>
+
+            <div class="gallery-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                
+                <!-- Карточка 1 -->
+                <div class="gallery-item bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden hover:border-sky-500/50 glow-card group cursor-pointer flex flex-col justify-between">
+                    <div class="overflow-hidden h-48 bg-slate-950 relative">
+                        <img src="https://yuz.uz/imageproxy/980x/https://yuz.uz/file/news/f4869de9a85fd7ec29453a0200d766e0.jpg" alt="Gallery 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 ease-out" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23e74c3c\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Sunset View</text></svg>';">
+                        <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    <span class="p-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-300 group-hover:text-sky-400 transition-colors border-t border-slate-800/80 bg-slate-950/40">
+                        Sunset View
+                    </span>
+                </div>
+
+                <!-- Карточка 2 -->
+                <div class="gallery-item bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden hover:border-sky-500/50 glow-card group cursor-pointer flex flex-col justify-between">
+                    <div class="overflow-hidden h-48 bg-slate-950 relative">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAYMaAYhvq2G2eSjluBg7CLb7KHGOXxPJlddU8FIA2dMDt4G6qSSOW5pKW&s=10" alt="Gallery 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 ease-out" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23f39c12\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Local Craft</text></svg>';">
+                        <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    <span class="p-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-300 group-hover:text-sky-400 transition-colors border-t border-slate-800/80 bg-slate-950/40">
+                        Local Craft
+                    </span>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div class="gallery-item bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden hover:border-sky-500/50 glow-card group cursor-pointer flex flex-col justify-between">
+                    <div class="overflow-hidden h-48 bg-slate-950 relative">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRfGduIJvBvlz-iCOGR-jh2eEpEwuthhMy90lK1rHO_8IF5icD9-ewpJc&s=10" alt="Gallery 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 ease-out" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%231abc9c\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>Ancient View</text></svg>';">
+                        <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    <span class="p-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-300 group-hover:text-sky-400 transition-colors border-t border-slate-800/80 bg-slate-950/40">
+                        Ancient View
+                    </span>
+                </div>
+
+                <!-- Карточка 4 -->
+                <div class="gallery-item bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden hover:border-sky-500/50 glow-card group cursor-pointer flex flex-col justify-between">
+                    <div class="overflow-hidden h-48 bg-slate-950 relative">
+                        <img src="https://nampravda.uz/images/e0ee99adce3009295904f7d3f0920287.jpg" alt="Gallery 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 ease-out" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%230f172a\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%2334495e\' font-family=\'sans-serif\' text-anchor=\'middle\' dy=\'.3em\'>City Lights</text></svg>';">
+                        <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    <span class="p-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-300 group-hover:text-sky-400 transition-colors border-t border-slate-800/80 bg-slate-950/40">
+                        City Lights
+                    </span>
+                </div>
+
+            </div>
+        </section>
     </main>
 
+    <!-- 3. FOOTER (ПОДВАЛ) -->
+    <footer class="mt-12 border-t border-slate-800/80 py-6 bg-slate-950 text-center text-xs text-slate-500">
+        <p>© Universal Portal | Барча ҳуқуқлар ҳимояланган</p>
+    </footer>
+
+    <!-- СЛАЙДЕР ЖАВАCКРИПТ МАНТИҒИ -->
     <script>
         const carousel = document.querySelector('.carousel');
         const carouselItems = document.querySelectorAll('.carousel-item');
         const carouselPrev = document.querySelector('.carousel-prev');
         const carouselNext = document.querySelector('.carousel-next');
-        const carouselIndicators = document.querySelectorAll('.carousel-indicators span');
+        const carouselIndicators = document.querySelectorAll('.indicator-dot');
 
         let currentSlide = 0;
 
@@ -334,8 +251,9 @@
             });
         });
 
-        // Auto slide change (5 seconds)
+        // Автомат равишда алмашиш (5 сония)
         setInterval(nextSlide, 5000);
     </script>
+    <script type="module" src="bridge.js"></script>
 </body>
 </html>
