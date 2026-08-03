@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universalportal - Мурожаатлар ва Чат</title>
+    
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* GOOGLE TRANSLATE НИ ЯШИРИШ СТИЛЛАРИ */
+        #google_translate_element, 
+        .goog-te-banner-frame, 
+        .skiptranslate,
+        .goog-te-spinner-pos {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+            position: static !important;
+        }
+        .goog-te-gadget {
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        /* Металл / Силвер Текстура Эффекти */
+        .metallic-text {
+            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+        }
+
+        /* Капсула тугма дизайни */
+        .biocyte-pill {
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%);
+            color: #0f172a;
+            border: 2px solid #64748b;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .biocyte-pill:hover {
+            background: linear-gradient(180deg, #ffffff 0%, #38bdf8 50%, #0284c7 100%);
+            color: #ffffff;
+            border-color: #38bdf8;
+            box-shadow: inset 0 2px 6px rgba(255, 255, 255, 1), 0 0 20px rgba(56, 189, 248, 0.8);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-black text-slate-100 font-sans min-h-screen selection:bg-sky-500 selection:text-black flex flex-col justify-between">
+
+<!-- ЯШИРИН GOOGLE TRANSLATE КОМПОНЕНТИ -->
+<div id="google_translate_element"></div>
+
+<div>
+    <!-- ТЕСТ РЕЖИМИ БАННЕРИ -->
+    <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 text-sky-400 py-2 text-center text-xs sm:text-sm font-semibold tracking-widest uppercase">
+        <marquee behavior="scroll" direction="left" scrollamount="8">
+            📢 Мурожаатлар ва Жонли Чат бўлими &nbsp;&nbsp;&bull;&nbsp;&nbsp; UNIVERSALPORTAL SYSTEM ONLINE
+        </marquee>
+    </div>
+
+    <!-- ЮҚОРИ БАР (Асосий саҳифага қайтиш ва Тиллар) -->
+    <div class="max-w-6xl w-full mx-auto px-4 pt-6 flex justify-between items-center z-50">
+        <a href="index.html" class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-sky-400 transition bg-slate-900 border border-slate-800 px-4 py-2 rounded-full">
+            <i class="fas fa-arrow-left"></i> Асосий саҳифага қайтиш
+        </a>
+        <div class="lang-buttons notranslate flex gap-2">
+            <button class="lang-btn text-xs font-bold px-3 py-1 rounded-full border border-slate-700 bg-slate-900 text-slate-300 hover:text-white transition" id="lang-uz" onclick="setLanguage('uz')">Ўзб</button>
+            <button class="lang-btn text-xs font-bold px-3 py-1 rounded-full border border-slate-700 bg-slate-900 text-slate-300 hover:text-white transition" id="lang-ru" onclick="setLanguage('ru')">Рус</button>
+            <button class="lang-btn text-xs font-bold px-3 py-1 rounded-full border border-slate-700 bg-slate-900 text-slate-300 hover:text-white transition" id="lang-en" onclick="setLanguage('en')">Eng</button>
+        </div>
+    </div>
+
+    <!-- АСОСИЙ КОНТЕНТ -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-8">
+        
+        <!-- САРЛАВҲА -->
+        <div class="text-center mb-10">
+            <h1 class="notranslate text-3xl sm:text-5xl font-black tracking-tighter metallic-text uppercase mb-3">
+                Мурожаатлар ва Чат
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
+                Чап тарафда сайт бўйича мурожаат ва таклифларингизни қолдиринг, ўнг тарафда эса жонли чат орқали мулоқот қилинг.
+            </p>
+        </div>
+
+        <!-- АСОСИЙ ИККИТА КАРТОЧКА (ГЭРИД СИСТЕМАРИ) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- 1-КАРТОЧКА: ЧАП ТАРАФ - МУРОЖААТЛАР ВА ТАКЛИФЛАР -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl shadow-2xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fas fa-paper-plane text-sky-400"></i> Мурожаат юбориш
+                    </h2>
+                    
+                    <form id="messageForm" class="space-y-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Сизнинг исмингиз:</label>
+                            <input type="text" id="senderName" required placeholder="Масалан: Анвар" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-sky-500 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Мавзу тури:</label>
+                            <select id="messageType" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-sky-500 transition">
+                                <option value="Таклиф">💡 Таклиф</option>
+                                <option value="Шикоят">⚠️ Шикоят</option>
+                                <option value="Фикр-мулоҳаза">💬 Фикр-мулоҳаза</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Мурожаат матни:</label>
+                            <textarea id="messageText" required rows="3" placeholder="Фикрингизни батафсил ёзинг..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-sky-500 transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" id="sendBtn" class="w-full py-2.5 biocyte-pill text-xs font-black uppercase tracking-widest rounded-xl">
+                            Мурожаатни юбориш
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Мурожаатлар лентаси (кичик рўйхат) -->
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase mb-2 flex items-center gap-2">
+                        <i class="fas fa-history text-sky-400"></i> Келиб тушган мурожаатлар
+                    </h3>
+                    <div id="messagesWrapper" class="overflow-y-auto max-h-[220px] space-y-2 pr-1">
+                        <div class="text-center text-slate-500 py-6 text-xs">Юкланмоқда...</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 2-КАРТОЧКА: ЎНГ ТАРАФ - ЖОНЛИ ЧАТ ВА ТЕЛЕГРАМ БОТ -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl shadow-2xl flex flex-col justify-between h-[580px]">
+                <div>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                        <h2 class="text-base font-bold text-slate-200 flex items-center gap-2">
+                            <i class="fas fa-comments text-emerald-400"></i> Жонли Чат (Онлайн)
+                        </h2>
+                        <!-- Телеграм ботга тезкор ўтиish -->
+                        <a href="https://t.me/Universalchaneluz" target="_blank" class="text-[11px] bg-sky-600/20 text-sky-400 border border-sky-500/30 px-3 py-1 rounded-full hover:bg-sky-600 hover:text-white transition flex items-center gap-1.5">
+                            <i class="fab fa-telegram"></i> Ботга ўтиш
+                        </a>
+                    </div>
+
+                    <!-- Чат хабарлари чиқадиган жой -->
+                    <div id="chatMessagesWrapper" class="overflow-y-auto h-[370px] space-y-3 pr-2 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                        <div class="text-center text-slate-500 py-16 text-xs">Чат хабарлари юкланмоқда...</div>
+                    </div>
+                </div>
+
+                <!-- Чатга хабар ёзиш формаси -->
+                <form id="chatForm" class="mt-4 flex gap-2">
+                    <input type="text" id="chatSender" required placeholder="Исмингиз..." class="w-1/3 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-sky-500 transition">
+                    <input type="text" id="chatText" required placeholder="Хабар ёзинг..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-sky-500 transition">
+                    <button type="submit" id="chatSendBtn" class="bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shrink-0">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<!-- ФУТЕР -->
+<footer class="max-w-6xl w-full mx-auto px-4 py-6 border-t border-slate-800/80 text-center text-xs text-slate-500 mt-12">
+    &copy; UNIVERSALPORTAL. Барча ҳуқуқлар ҳимояланган.
+</footer>
+
+<!-- GOOGLE TRANSLATE ENGINE СКРИПТИ -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'uz',
+            includedLanguages: 'uz,ru,en',
+            autoDisplay: false
+        }, 'google_translate_element');
+
+        const savedLang = localStorage.getItem("app_lang") || "uz";
+        updateLangButtons(savedLang);
+    }
+
+    function setLanguage(lang) {
+        localStorage.setItem("app_lang", lang);
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+
+        if (lang !== 'uz') {
+            document.cookie = "googtrans=/uz/" + lang + "; path=/;";
+            document.cookie = "googtrans=/uz/" + lang + "; domain=" + window.location.hostname + "; path=/;";
+        }
+        location.reload();
+    }
+
+    function updateLangButtons(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('!bg-sky-600', '!border-sky-500', '!text-white'));
+        const activeBtn = document.getElementById(`lang-${lang}`);
+        if (activeBtn) activeBtn.classList.add('!bg-sky-600', '!border-sky-500', '!text-white');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- FIREBASE ВА МАНТИҚ СКРИПТЛАРИ -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+        authDomain: "universal-portal-108b7.firebaseapp.com",
+        databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "universal-portal-108b7",
+        storageBucket: "universal-portal-108b7.appspot.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+   // 1. МУРОЖААТЛАР ЛЕНТАСИ ВА ТЕЛЕГРАМ БОТГА ЮБОРИШ МАНТИҚИ (ЧАП КАРТОЧКА)
+    const messageForm = document.getElementById('messageForm');
+    const messagesWrapper = document.getElementById('messagesWrapper');
+
+    // ТЕЛЕГРАМ БОТ СОЗЛАМАЛАРИ (Бу ерга ўз бот токенегиз ва чат ID рақамингизни ёзасиз)
+    // ТЕЛЕГРАМ БОТ СОЗЛАМАЛАРИ
+   // ТЕЛЕГРАМ БОТ СОЗЛАМАЛАРИ (Бот токенини BotFather'дан олиб ёзасиз)
+   // ТЕЛЕГРАМ БОТ СОЗЛАМАЛАРИ
+   const TELEGRAM_BOT_TOKEN = "8558104527:AAHcTOP6WrxKU79lINAdOJBBCpgcprhMnbU"; 
+    const TELEGRAM_CHAT_ID = "@Universalchaneluz";
+    messageForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('senderName').value.trim();
+        const type = document.getElementById('messageType').value;
+        const text = document.getElementById('messageText').value.trim();
+        
+        const now = new Date();
+        const timeStr = now.toLocaleDateString('uz-UZ') + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const btn = document.getElementById('sendBtn');
+        btn.disabled = true;
+        btn.innerText = "Юборилмоқда...";
+
+        try {
+            // 1. Firebase базасига сақлаш
+            await push(ref(db, 'user_messages'), {
+                name: name,
+                type: type,
+                text: text,
+                time: timeStr
+            });
+
+            // 2. Telegram ботга хабар юбориш
+            if (TELEGRAM_BOT_TOKEN !== "SIZNING_BOT_TOKENINGIZ") {
+                const tgMessage = `📩 <b>Янги мурожаат келди!</b>\n\n` +
+                                  `👤 <b>Исм:</b> ${escapeHtml(name)}\n` +
+                                  `📌 <b>Тури:</b> ${type}\n` +
+                                  `📝 <b>Матн:</b> ${escapeHtml(text)}\n` +
+                                  `⏰ <b>Вақт:</b> ${timeStr}`;
+
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: tgMessage,
+                        parse_mode: 'HTML'
+                    })
+                });
+            }
+
+            messageForm.reset();
+            btn.disabled = false;
+            btn.innerText = "Мурожаатни юбориш";
+            alert("Мурожаатингиз муваффақиятли юборилди ва ботга йўналтирилди!");
+
+        } catch (error) {
+            console.error("Хатолик:", error);
+            alert("Хатолик юз берди: " + error.message);
+            btn.disabled = false;
+            btn.innerText = "Мурожаатни юбориш";
+        }
+    });
+
+    // XSS дан ҳимоя қилиш учун ёрдамчи функция
+    function escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+</script>
+
+</body>
+</html>

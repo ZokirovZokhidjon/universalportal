@@ -143,38 +143,38 @@
         <div class="lg:col-span-6 relative flex justify-center lg:justify-end pr-0 lg:pr-6">
             
             <!-- Орқа фондаги эгилган SVG чизиқ -->
-            <svg class="hidden sm:block absolute right-[10px] top-2 h-[290px] w-48 pointer-events-none stroke-slate-700/60" viewBox="0 0 200 300" fill="none">
-                <path d="M 185 15 Q 85 150 185 285" stroke-width="3" stroke-dasharray="6 4" />
+            <svg class="hidden sm:block absolute right-[10px] top-2 h-[340px] w-48 pointer-events-none stroke-slate-700/60" viewBox="0 0 200 350" fill="none">
+                <path d="M 185 15 Q 85 175 185 335" stroke-width="3" stroke-dasharray="6 4" />
             </svg>
 
-            <!-- Вертикал Меню Капсулалари (Ҳар бири X-ўқи бўйлаб эгилган) -->
+            <!-- Вертикал Меню Капсулалари -->
             <div class="relative z-10 flex flex-col space-y-3 w-full max-w-xs items-end">
                 
-                <!-- 1-қатор (Юқорида - ўнг томонда) -->
+                <!-- 1-қатор -->
                 <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-1">
                     <button class="menu-btn biocyte-pill active w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('all', this)">Ҳаммаси</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 2-қатор (Бироз ичкарига/чапга силжиган) -->
+                <!-- 2-қатор -->
                 <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-6">
                     <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('Янгиликлар', this)">Янгиликлар</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 3-қатор (Марказий эгилиш - энг ичкарида) -->
+                <!-- 3-қатор -->
                 <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-10">
                     <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('Кинотеатр', this)">Кинотеатр</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 4-қатор (Марказий эгилиш - энг ичкарида) -->
+                <!-- 4-қатор -->
                 <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-10">
                     <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('Клиплар', this)">Клиплар</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 5-қатор (Ортга/ўнгга қайтаётган нуқта) -->
+                <!-- 5-қатор: Галерея -->
                 <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-6">
                     <a href="gallery.html" class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right notranslate flex items-center justify-end gap-2">
                         <i class="fas fa-camera"></i> Галерея
@@ -182,7 +182,15 @@
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 6-қатор (Пастки нуқта - ўнг томонда) -->
+                <!-- 6-қатор: Мурожаатлар ва чат -->
+                <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-3">
+                    <a href="chat.html" class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right notranslate flex items-center justify-end gap-2">
+                        <i class="fas fa-comments"></i> Мурожаатлар ва чат
+                    </a>
+                    <div class="node-circle hidden sm:block"></div>
+                </div>
+
+                <!-- 7-қатор: Бошқалар (Dropdown) -->
                 <div class="curved-row relative w-full sm:-translate-x-1">
                     <div class="flex items-center justify-end space-x-3 w-full">
                         <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right flex items-center justify-between" id="mainDropBtn" onclick="toggleDropdown(event)">
@@ -213,13 +221,6 @@
 
     </div>
 </header>
-
-<!-- РЕКЛАМА БЛОКИ -->
-<div id="adBlock" class="max-w-7xl mx-auto my-4 px-4 hidden text-center">
-    <a id="adLink" href="#" target="_blank" class="inline-block overflow-hidden rounded-2xl border border-slate-800 shadow-2xl">
-        <img id="adImg" src="" alt="Реклама" class="max-h-36 w-full object-contain mx-auto">
-    </a>
-</div>
 
 <!-- АСОСИЙ КОНТЕНТ (КАРТОЧКАЛАР СЕТКАСИ) -->
 <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
@@ -323,16 +324,6 @@
         }
     });
 
-    // Рекламани юклаш
-    onValue(ref(db, 'ads'), (s) => {
-        const ad = s.val();
-        if(ad && ad.img) {
-            document.getElementById('adBlock').classList.remove('hidden');
-            document.getElementById('adImg').src = ad.img;
-            document.getElementById('adLink').href = ad.link || "#";
-        }
-    });
-
     // Мақолаларни олиш
     onValue(ref(db, 'all_posts'), (snapshot) => {
         allPosts = snapshot.val() || {};
@@ -360,7 +351,8 @@
 
     // Қидириш
     window.searchPosts = () => {
-        currentSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const searchInputElem = document.getElementById('searchInput');
+        currentSearchTerm = searchInputElem ? searchInputElem.value.toLowerCase() : '';
         renderPosts(currentCategory, currentSearchTerm);
     };
 
