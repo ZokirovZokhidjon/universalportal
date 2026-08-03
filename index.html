@@ -51,12 +51,18 @@
             border: 3px solid #94a3b8;
             box-shadow: 0 0 10px rgba(148, 163, 184, 0.8);
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
         .biocyte-pill:hover + .node-circle,
         .biocyte-pill.active + .node-circle {
             background: #38bdf8;
             border-color: #ffffff;
             box-shadow: 0 0 15px #38bdf8;
+        }
+
+        /* Меню қаторларининг эгилиш анимацияси */
+        .curved-row {
+            transition: transform 0.4s ease-in-out;
         }
 
         /* Сарлавҳадаги Металл / Силвер Текстура Эффекти */
@@ -106,16 +112,15 @@
     </a>
 </div>
 
-<!-- АСОСИЙ HERO БОБИ: BIOCYTE ИНТЕРФЕЙСИ УСЛУБИДА (Чапда Лого/Брендинг, Ўнгда Эгилган Меню) -->
+<!-- АСОСИЙ HERO БОБИ (Чапда Брендинг, Ўнгда Эгилган Меню) -->
 <header class="relative max-w-7xl w-full mx-auto px-4 py-8 lg:py-12 border-b border-slate-800/80">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
         <!-- ЧАП ТОМОН: БРЕНДИНГ (UNIVERSALPORTAL) -->
-        <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
+        <div class="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
             <div class="flex items-center space-x-4">
                 <img src="logo1.jpg" alt="logo" class="w-20 h-20 sm:w-24 sm:h-24 rounded-lg border-2 border-slate-600 shadow-2xl object-cover" onerror="this.style.display='none'">
                 <div>
-                    <!-- BIOCYTE ўрнига UNIVERSALPORTAL -->
                     <h1 class="notranslate text-4xl sm:text-6xl font-black tracking-tighter metallic-text uppercase leading-none">
                         UNIVERSALPORTAL
                     </h1>
@@ -134,46 +139,52 @@
             </div>
         </div>
 
-        <!-- ЎНГ ТОМОН: РАСМДАГИДЕК ЭГИЛГАН ЧИЗИҚЛИ ВЕРТИКАЛ МЕНЮ -->
-        <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
-            <!-- Эгилган фоний чизиқ (SVG Curve) -->
-            <svg class="hidden sm:block absolute right-32 top-0 h-full w-40 pointer-events-none stroke-slate-700/60" viewBox="0 0 100 400" preserveAspectRatio="none">
-                <path d="M 80 0 Q 10 200 80 400" fill="none" stroke-width="4" />
+        <!-- ЎНГ ТОМОН: ЧИЗИҚ БЎЙЛАБ ЭГИЛГАН ВЕРТИКАЛ МЕНЮ -->
+        <div class="lg:col-span-6 relative flex justify-center lg:justify-end pr-0 lg:pr-6">
+            
+            <!-- Орқа фондаги эгилган SVG чизиқ -->
+            <svg class="hidden sm:block absolute right-[10px] top-2 h-[290px] w-48 pointer-events-none stroke-slate-700/60" viewBox="0 0 200 300" fill="none">
+                <path d="M 185 15 Q 85 150 185 285" stroke-width="3" stroke-dasharray="6 4" />
             </svg>
 
-            <!-- Вертикал Меню Капсулалари -->
-            <div class="relative z-10 flex flex-col space-y-3 w-full max-w-xs">
+            <!-- Вертикал Меню Капсулалари (Ҳар бири X-ўқи бўйлаб эгилган) -->
+            <div class="relative z-10 flex flex-col space-y-3 w-full max-w-xs items-end">
                 
-                <div class="flex items-center justify-end space-x-3">
+                <!-- 1-қатор (Юқорида - ўнг томонда) -->
+                <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-1">
                     <button class="menu-btn biocyte-pill active w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('all', this)">Ҳаммаси</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <div class="flex items-center justify-end space-x-3">
+                <!-- 2-қатор (Бироз ичкарига/чапга силжиган) -->
+                <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-6">
                     <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('Янгиликлар', this)">Янгиликлар</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <div class="flex items-center justify-end space-x-3">
+                <!-- 3-қатор (Марказий эгилиш - энг ичкарида) -->
+                <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-10">
                     <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('Кинотеатр', this)">Кинотеатр</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <div class="flex items-center justify-end space-x-3">
+                <!-- 4-қатор (Марказий эгилиш - энг ичкарида) -->
+                <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-10">
                     <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right" onclick="filterCat('Клиплар', this)">Клиплар</button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <div class="flex items-center justify-end space-x-3">
+                <!-- 5-қатор (Ортга/ўнгга қайтаётган нуқта) -->
+                <div class="curved-row flex items-center justify-end space-x-3 w-full sm:-translate-x-6">
                     <a href="gallery.html" class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right notranslate flex items-center justify-end gap-2">
                         <i class="fas fa-camera"></i> Галерея
                     </a>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- ДРОПДАВН "БОШҚАЛАР" -->
-                <div class="relative w-full">
-                    <div class="flex items-center justify-end space-x-3">
+                <!-- 6-қатор (Пастки нуқта - ўнг томонда) -->
+                <div class="curved-row relative w-full sm:-translate-x-1">
+                    <div class="flex items-center justify-end space-x-3 w-full">
                         <button class="menu-btn biocyte-pill w-full py-2.5 px-6 rounded-full text-xs font-black tracking-widest uppercase text-right flex items-center justify-between" id="mainDropBtn" onclick="toggleDropdown(event)">
                             <i class="fas fa-chevron-down text-xs"></i>
                             <span id="dropBtnText">Бошқалар</span>
@@ -181,7 +192,7 @@
                         <div class="node-circle hidden sm:block"></div>
                     </div>
                     
-                    <div id="dropdownContent" class="hidden absolute right-0 mt-2 w-full bg-slate-900 border-2 border-slate-700 rounded-2xl shadow-2xl overflow-hidden z-50">
+                    <div id="dropdownContent" class="hidden absolute right-6 mt-2 w-64 bg-slate-900 border-2 border-slate-700 rounded-2xl shadow-2xl overflow-hidden z-50">
                         <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Tabobat', this)">Табобат</button>
                         <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Ҳикоялар', this)">Ҳикоялар</button>
                         <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Хангомалар', this)">Хангомалар</button>
