@@ -88,6 +88,7 @@
             width: 100%; height: 100%;
             border-radius: 0.75rem 0.75rem 0 0;
         }
+     
     </style>
 </head>
 <body class="bg-black text-slate-100 font-sans min-h-screen selection:bg-sky-500 selection:text-black flex flex-col overflow-x-hidden">
@@ -117,11 +118,11 @@
 <!-- АСОСИЙ HERO БОБИ (Чапда Брендинг, Ўнгда Эгилган Меню) -->
 <header class="relative max-w-7xl w-full mx-auto px-4 py-8 lg:py-12 border-b border-slate-800/80">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        
+        <canvas id="animCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 z-0"></canvas>
         <!-- ЧАП ТОМОН: БРЕНДИНГ (UNIVERSALPORTAL) -->
         <div class="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
             <div class="flex items-center space-x-4">
-                <img src="UNIVERSALportal.jfif" alt="logo" class="w-20 h-20 sm:w-24 sm:h-24 rounded-lg border-radius:120px; border-slate-600 shadow-2xl object-cover" onerror="this.style.display='none'">
+                <img src="UNIVERSALportal.jfif" alt="logo" class="w-20 h-20 sm:w-24 sm:h-24 rounded-lg border-120 border-slate-600 shadow-2xl object-cover" onerror="this.style.display='none'">
                 <div>
                     <h1 class="notranslate text-4xl sm:text-6xl font-black tracking-tighter metallic-text uppercase leading-none">
                         UNIVERSALPORTAL
@@ -233,6 +234,47 @@
 
 <!-- GOOGLE TRANSLATE ENGINE СКРИПТИ -->
 <script type="text/javascript">
+
+    const canvas = document.getElementById('animCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const particles = Array.from({ length: 30 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2.5 + 1,
+    dx: (Math.random() - 0.5) * 1.2,
+    dy: (Math.random() - 0.5) * 1.2,
+    color: `hsl(${Math.random() * 360}, 100%, 70%)`
+  }));
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = p.color;
+      ctx.fill();
+
+      p.x += p.dx;
+      p.y += p.dy;
+
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'uz',
