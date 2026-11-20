@@ -6,7 +6,7 @@
     <title>Блог - Universal Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --blue: #3498db; --dark: #2c3e50; --bg: #f2f4f7; }
+        :root { --blue: #3498db; --dark: #2c3e50; --bg: #f2f4f7; --green: #10b981; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
         header { background: #fff; padding: 15px; border-bottom: 1px solid #ddd; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; }
@@ -22,6 +22,23 @@
         .post-title { font-size: 32px; color: var(--dark); margin-bottom: 10px; }
         .post-meta { color: #888; font-size: 14px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
         .post-body { font-size: 18px; line-height: 1.8; color: #333; white-space: pre-wrap; }
+
+        /* Ҳужжат юклаб олиш тугмаси стили */
+        .doc-box { margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee; }
+        .doc-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            background: var(--green);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+        .doc-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .doc-btn.link-btn { background: var(--blue); }
     </style>
 </head>
 <body>
@@ -37,7 +54,7 @@
     <div id="loader" style="text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
     
     <article id="mainPost" style="display:none;">
-        <img id="postImg" class="post-image" style="display:none;">
+        <img id="postImg" class="post-image" style="display:none;" alt="Мақола расми">
         <h2 id="postTitle" class="post-title"></h2>
         <div class="post-meta">
             <i class="far fa-calendar-alt"></i> <span id="postTime"></span> | 
@@ -47,6 +64,9 @@
         <div id="videoContainer" class="post-video-container" style="display:none;"></div>
 
         <div id="postBody" class="post-body"></div>
+
+        <!-- Ҳужжат (Word, Excel, PDF, PPT, PPTX ёки ҳавола) тугмаси учун жой -->
+        <div id="docContainer" class="doc-box" style="display:none;"></div>
     </article>
 </div>
 
@@ -68,37 +88,66 @@
 
     if (postId) {
         onValue(ref(db, 'all_posts/' + postId), (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('mainPost').style.display = 'block';
+            const p = snapshot.val();
+            const loader = document.getElementById('loader');
+            const mainPost = document.getElementById('mainPost');
+
+            if (p) {
+                loader.style.display = 'none';
+                mainPost.style.display = 'block';
                 
-                document.getElementById('postTitle').innerText = data.title;
-                document.getElementById('postBody').innerText = data.content;
-                document.getElementById('postCat').innerText = data.category;
-                document.getElementById('postTime').innerText = data.time;
+                document.getElementById('postTitle').innerText = p.title || '';
+                document.getElementById('postBody').innerText = p.content || '';
+                document.getElementById('postCat').innerText = p.category || '';
+                document.getElementById('postTime').innerText = p.time || '';
 
                 // Расм бўлса чиқарамиз
-                if (data.image) {
-                    const img = document.getElementById('postImg');
-                    img.src = data.image;
+                const img = document.getElementById('postImg');
+                if (p.image) {
+                    img.src = p.image;
                     img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
                 }
 
                 // Видео бўлса чиқарамиз
-                if (data.video) {
-                    const videoDiv = document.getElementById('videoContainer');
-                    videoDiv.innerHTML = data.video;
+                const videoDiv = document.getElementById('videoContainer');
+                if (p.video) {
+                    videoDiv.innerHTML = p.video;
                     videoDiv.style.display = 'block';
+                } else {
+                    videoDiv.style.display = 'none';
                 }
 
-                document.title = data.title;
+                // Ҳужжат (Word, Excel, PDF, PPT, PPTX) ёки ҳавола бўлса чиқарамиз
+                const docContainer = document.getElementById('docContainer');
+                if (p.document && p.document.data && p.document.name) {
+                    docContainer.innerHTML = `
+                        <a href="${p.document.data}" download="${p.document.name}" class="doc-btn">
+                            <i class="fas fa-download"></i> Ҳужжатни юклаб олиш (${p.document.name})
+                        </a>
+                    `;
+                    docContainer.style.display = 'block';
+                } else if (p.docUrl) {
+                    docContainer.innerHTML = `
+                        <a href="${p.docUrl}" target="_blank" rel="noopener noreferrer" class="doc-btn link-btn">
+                            <i class="fas fa-external-link-alt"></i> Ҳужжатни очиш
+                        </a>
+                    `;
+                    docContainer.style.display = 'block';
+                } else {
+                    docContainer.innerHTML = '';
+                    docContainer.style.display = 'none';
+                }
+
+                document.title = (p.title || 'Блог') + ' - Universal Portal';
+            } else {
+                loader.innerHTML = '<p>Мақола топилмади.</p>';
             }
         });
     } else {
         window.location.href = "index.html";
     }
-    
 </script>
 </body>
 </html>
