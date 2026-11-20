@@ -16,20 +16,6 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(0,0,0,0.7);
         }
-        .biocyte-btn {
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 0 4px 12px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-        .biocyte-btn:hover {
-            background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
-            color: #ffffff;
-            border-color: #38bdf8;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
-            transform: translateY(-2px);
-        }
         .glow-box {
             box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.15);
         }
@@ -147,7 +133,7 @@
         <div class="lg:col-span-7 space-y-8">
             <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
                 <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-6 pb-3 border-b border-slate-800 flex items-center gap-2">
-                    <i class="fas fa-pen-fancy text-sky-400"></i> Мақола бошқаруви
+                    <i class="fas fa-pen-fancy text-sky-400"></i> Мақола ва Файл бошқаруви
                 </h3>
 
                 <input type="hidden" id="postId">
@@ -176,14 +162,50 @@
                         <input type="text" id="sourceUrl" placeholder="Манба ҳаволаси (URL)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
                     </div>
 
-                    <div class="bg-slate-950/60 border-2 border-dashed border-slate-800 rounded-xl p-4 text-center space-y-2">
-                        <label class="block text-xs font-bold text-slate-400 uppercase">Компьютердан расм юклаш</label>
+                    <!-- 1. КОМПЬЮТЕРДАН РАСМ ЮКЛАШ -->
+                    <div class="bg-slate-950/60 border-2 border-dashed border-slate-800 hover:border-sky-500/50 transition rounded-xl p-4 text-center space-y-2">
+                        <label class="block text-xs font-bold text-sky-400 uppercase">
+                            <i class="fas fa-image mr-1"></i> Компьютердан расм юклаш (JPG, PNG, WEBP)
+                        </label>
                         <input type="file" id="postFile" accept="image/*" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-600/20 file:text-sky-400 hover:file:bg-sky-600/30 cursor-pointer">
                         <div id="postStatus" class="hidden text-xs text-sky-400 font-bold pt-1">Юкланмоқда...</div>
+                        <!-- Расм предпросмотр -->
+                        <div id="imgPreviewBox" class="hidden pt-2">
+                            <img id="imgPreview" src="" alt="Preview" class="max-h-36 mx-auto rounded-lg border border-slate-700 object-cover">
+                        </div>
                     </div>
 
                     <div>
-                        <input type="text" id="img" placeholder="Расм URL манзили" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
+                        <input type="text" id="img" placeholder="Расм URL манзили (автоматик тўлади ёки қўлда киритинг)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
+                    </div>
+
+                    <!-- 2. ҲУЖЖАТЛАР ЮКЛАШ (WORD, EXCEL, PDF, PPT, PPTX) -->
+                    <div class="bg-slate-950/60 border-2 border-dashed border-emerald-800/60 hover:border-emerald-500/50 transition rounded-xl p-4 text-center space-y-2">
+                        <label class="block text-xs font-bold text-emerald-400 uppercase">
+                            <i class="fas fa-file-alt mr-1"></i> Ҳужжат юклаш (Word, Excel, PDF, PPT, PPTX)
+                        </label>
+                        <p class="text-[11px] text-slate-500">Қўллаб-қувватланади: .doc, .docx, .xls, .xlsx, .pdf, .ppt, .pptx (5 МБ гача)</p>
+                        <input type="file" id="docFile" accept=".doc,.docx,.xls,.xlsx,.pdf,.ppt,.pptx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-600/20 file:text-emerald-400 hover:file:bg-emerald-600/30 cursor-pointer">
+                        
+                        <div id="docStatus" class="hidden text-xs text-emerald-400 font-bold pt-1"></div>
+                        
+                        <!-- Танланган файл ҳақида маълумот -->
+                        <div id="docBadge" class="hidden mt-2 p-2.5 bg-slate-900 border border-emerald-500/40 rounded-lg flex items-center justify-between text-left">
+                            <div class="flex items-center gap-2 overflow-hidden">
+                                <i id="docIcon" class="fas fa-file text-emerald-400 text-lg"></i>
+                                <div class="truncate">
+                                    <p id="docNameDisplay" class="text-xs font-bold text-slate-200 truncate"></p>
+                                    <p id="docSizeDisplay" class="text-[10px] text-slate-400"></p>
+                                </div>
+                            </div>
+                            <button type="button" id="clearDocBtn" class="text-rose-400 hover:text-rose-300 text-xs px-2 py-1">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="text" id="docUrl" placeholder="Ёки тайёр ҳужжат URL манзили (Google Drive / Telegram)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-emerald-500">
                     </div>
 
                     <div>
@@ -208,7 +230,7 @@
 
         <!-- ЎНГ ТОМОН -->
         <div class="lg:col-span-5 space-y-8">
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col h-[580px]">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col h-[720px]">
                 <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-4 pb-3 border-b border-slate-800 flex items-center gap-2">
                     <i class="fas fa-list text-sky-400"></i> Сўнгги мақолалар
                 </h3>
@@ -225,9 +247,8 @@
 <!-- FIREBASE ВА МАНТИҚ СКРИПТИ -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, update, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
@@ -240,7 +261,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const auth = getAuth(app);
-    const storage = getStorage(app);
 
     // DOM Элементлари
     const emailInput = document.getElementById('email');
@@ -249,9 +269,12 @@
     const titleInput = document.getElementById('title');
     const sourceInput = document.getElementById('sourceUrl');
     const imgInput = document.getElementById('img');
+    const docUrlInput = document.getElementById('docUrl');
     const videoInput = document.getElementById('videoIframe');
     const catInput = document.getElementById('cat');
     const txtInput = document.getElementById('txt');
+
+    let uploadedDocData = null; // Юкланган ҳужжат маълумотлари (Base64, номи, тури)
 
     // КИРИШ ФУНКЦИЯСИ
     document.getElementById('loginForm').onsubmit = (e) => {
@@ -306,50 +329,165 @@
         });
     }
 
-    // РАСМ ЮКЛАШ (Storage)
-    document.getElementById('postFile').onchange = async (e) => {
+    // ==============================================================
+    // 1. РАСМНИ СИҚИБ ВА МУАММОСИЗ ЮКЛАШ (Firebase Storage'сиз ҳам ишлайди!)
+    // ==============================================================
+    document.getElementById('postFile').onchange = (e) => {
         const file = e.target.files[0];
-        if(!file) return;
+        if (!file) return;
+
         const status = document.getElementById('postStatus');
+        const previewBox = document.getElementById('imgPreviewBox');
+        const previewImg = document.getElementById('imgPreview');
+
         status.classList.remove('hidden');
-        status.innerText = "Юкланмоқда...";
-        const fileRef = sRef(storage, 'posts/' + Date.now() + "_" + file.name);
-        try {
-            const snap = await uploadBytes(fileRef, file);
-            const url = await getDownloadURL(snap.ref);
-            imgInput.value = url;
-            status.innerText = "✅ Расм юкланди!";
-        } catch(e) { 
-             console.error(e);
-             alert("Юклашда хато! Storage Rules ни текширинг.");
-             status.innerText = "❌ Хатолик юз берди";
+        status.className = "text-xs text-sky-400 font-bold pt-1";
+        status.innerText = "⏳ Расм қайта ишланмоқда...";
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = new Image();
+            img.onload = function() {
+                // Расмни оптимал ўлчамга келтириш (макс 900px кенглик)
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 900;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Сифатини 0.75 қилиб сиқиш (Базада тез очилиши учун)
+                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75);
+                
+                imgInput.value = compressedBase64;
+                previewImg.src = compressedBase64;
+                previewBox.classList.remove('hidden');
+
+                status.className = "text-xs text-emerald-400 font-bold pt-1";
+                status.innerText = "✅ Расм муваффақиятли юкланди!";
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // URL қўлда киритилганда ҳам кўрсатиш
+    imgInput.oninput = () => {
+        const val = imgInput.value.trim();
+        if (val) {
+            document.getElementById('imgPreview').src = val;
+            document.getElementById('imgPreviewBox').classList.remove('hidden');
+        } else {
+            document.getElementById('imgPreviewBox').classList.add('hidden');
         }
     };
 
-    // МАҚОЛАНИ САҚЛАШ ЁКИ ЯНГИЛАШ
+    // ==============================================================
+    // 2. ҲУЖЖАТЛАРНИ ЮКЛАШ (WORD, EXCEL, PDF, PPT, PPTX)
+    // ==============================================================
+    document.getElementById('docFile').onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const docStatus = document.getElementById('docStatus');
+        const maxSize = 5 * 1024 * 1024; // 5 MB
+
+        if (file.size > maxSize) {
+            alert("Файл ҳажми 5 МБ дан катта! Катта файлларни Google Drive ёки Telegram'га юклаб, ҳаволасини пастдаги майдонга қўйинг.");
+            e.target.value = "";
+            return;
+        }
+
+        docStatus.classList.remove('hidden');
+        docStatus.innerText = "⏳ Ҳужжат ўқилмоқда...";
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const base64Data = event.target.result;
+            const ext = file.name.split('.').pop().toLowerCase();
+            
+            uploadedDocData = {
+                name: file.name,
+                ext: ext,
+                size: (file.size / 1024).toFixed(1) + " KB",
+                data: base64Data
+            };
+
+            // Иконкани файл турига қараб танлаш
+            const iconElem = document.getElementById('docIcon');
+            if (['doc', 'docx'].includes(ext)) iconElem.className = "fas fa-file-word text-blue-400 text-xl";
+            else if (['xls', 'xlsx'].includes(ext)) iconElem.className = "fas fa-file-excel text-emerald-400 text-xl";
+            else if (ext === 'pdf') iconElem.className = "fas fa-file-pdf text-rose-400 text-xl";
+            else if (['ppt', 'pptx'].includes(ext)) iconElem.className = "fas fa-file-powerpoint text-amber-400 text-xl";
+            else iconElem.className = "fas fa-file-alt text-slate-300 text-xl";
+
+            document.getElementById('docNameDisplay').innerText = file.name;
+            document.getElementById('docSizeDisplay').innerText = uploadedDocData.size + " • Тайёр";
+            document.getElementById('docBadge').classList.remove('hidden');
+            docStatus.innerText = "✅ Ҳужжат бириктирилди!";
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // Бириктирилган ҳужжатни тозалаш
+    document.getElementById('clearDocBtn').onclick = () => {
+        uploadedDocData = null;
+        document.getElementById('docFile').value = "";
+        document.getElementById('docBadge').classList.add('hidden');
+        document.getElementById('docStatus').classList.add('hidden');
+    };
+
+    // ==============================================================
+    // 3. МАҚОЛАНИ САҚЛАШ ЁКИ ЯНГИЛАШ
+    // ==============================================================
     document.getElementById('pubBtn').onclick = () => {
         const id = postIdInput.value;
+        const pubBtn = document.getElementById('pubBtn');
+
         const data = {
-            title: titleInput.value,
-            source: sourceInput.value,
-            image: imgInput.value,
-            video: videoInput.value,
+            title: titleInput.value.trim(),
+            source: sourceInput.value.trim(),
+            image: imgInput.value.trim(),
+            video: videoInput.value.trim(),
             category: catInput.value,
-            content: txtInput.value,
+            content: txtInput.value.trim(),
+            docUrl: docUrlInput.value.trim(),
+            document: uploadedDocData, // Word, Excel, PDF, PPT, PPTX файли
             time: new Date().toLocaleString('uz-UZ')
         };
 
-        if(!data.title || !data.content) return alert("Сарлавҳа ва матн шарт!");
+        if (!data.title || (!data.content && !data.document && !data.docUrl)) {
+            return alert("Сарлавҳа ва камида матн ёки ҳужжат киритиш шарт!");
+        }
 
-        if(id) {
+        pubBtn.disabled = true;
+        document.getElementById('btnText').innerText = "САҚЛАНМОҚДА...";
+
+        if (id) {
             update(ref(db, 'all_posts/' + id), data).then(() => {
-                alert("Мақола янгиланди!");
+                alert("✅ Мақола ва файллар янгиланди!");
                 resetForm();
+            }).catch(err => {
+                alert("Хатолик: " + err.message);
+            }).finally(() => {
+                pubBtn.disabled = false;
             });
         } else {
             push(ref(db, 'all_posts'), data).then(() => {
-                alert("Нашр қилинди!");
+                alert("✅ Муваффақиятли нашр қилинди!");
                 resetForm();
+            }).catch(err => {
+                alert("Хатолик: " + err.message);
+            }).finally(() => {
+                pubBtn.disabled = false;
             });
         }
     };
@@ -363,18 +501,22 @@
             if(data) {
                 Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
+                    const hasDoc = post.document || post.docUrl;
                     const item = document.createElement('div');
                     item.className = 'p-3 bg-slate-950/80 border border-slate-800/80 rounded-xl flex items-center justify-between gap-3 hover:border-slate-700 transition';
                     item.innerHTML = `
                         <div class="overflow-hidden">
-                            <h4 class="text-xs font-bold text-slate-200 truncate mb-1">${post.title}</h4>
+                            <h4 class="text-xs font-bold text-slate-200 truncate mb-1">
+                                ${hasDoc ? '<i class="fas fa-paperclip text-emerald-400 mr-1" title="Ҳужжат бириктирилган"></i>' : ''}
+                                ${post.title}
+                            </h4>
                             <p class="text-[10px] text-slate-500">${post.category} | ${post.time}</p>
                         </div>
                         <div class="flex items-center gap-1.5 flex-shrink-0">
-                            <button class="edit-btn p-2 bg-sky-600/20 text-sky-400 hover:bg-sky-600 hover:text-white rounded-lg text-xs transition">
+                            <button class="edit-btn p-2 bg-sky-600/20 text-sky-400 hover:bg-sky-600 hover:text-white rounded-lg text-xs transition" title="Таҳрирлаш">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="delete-btn p-2 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg text-xs transition">
+                            <button class="delete-btn p-2 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg text-xs transition" title="Ўчириш">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -397,12 +539,30 @@
             const post = snapshot.val();
             if(post) {
                 postIdInput.value = id;
-                titleInput.value = post.title;
+                titleInput.value = post.title || "";
                 sourceInput.value = post.source || "";
                 imgInput.value = post.image || "";
-                catInput.value = post.category;
-                txtInput.value = post.content;
+                docUrlInput.value = post.docUrl || "";
+                catInput.value = post.category || "Янгиликлар";
+                txtInput.value = post.content || "";
                 videoInput.value = post.video || "";
+
+                if (post.image) {
+                    document.getElementById('imgPreview').src = post.image;
+                    document.getElementById('imgPreviewBox').classList.remove('hidden');
+                } else {
+                    document.getElementById('imgPreviewBox').classList.add('hidden');
+                }
+
+                if (post.document) {
+                    uploadedDocData = post.document;
+                    document.getElementById('docNameDisplay').innerText = post.document.name;
+                    document.getElementById('docSizeDisplay').innerText = post.document.size || "Юкланган";
+                    document.getElementById('docBadge').classList.remove('hidden');
+                } else {
+                    uploadedDocData = null;
+                    document.getElementById('docBadge').classList.add('hidden');
+                }
                 
                 document.getElementById('btnText').innerText = "ЎЗГАРТИРИШНИ САҚЛАШ";
                 document.getElementById('cancelEdit').classList.remove('hidden');
@@ -424,13 +584,20 @@
         titleInput.value = "";
         sourceInput.value = "";
         imgInput.value = "";
+        docUrlInput.value = "";
         txtInput.value = "";
         videoInput.value = "";
+        uploadedDocData = null;
         catInput.selectedIndex = 0;
+
         document.getElementById('btnText').innerText = "НАШР ҚИЛИШ";
         document.getElementById('cancelEdit').classList.add('hidden');
         document.getElementById('postStatus').classList.add('hidden');
+        document.getElementById('docStatus').classList.add('hidden');
+        document.getElementById('docBadge').classList.add('hidden');
+        document.getElementById('imgPreviewBox').classList.add('hidden');
         document.getElementById('postFile').value = "";
+        document.getElementById('docFile').value = "";
     }
 
     document.getElementById('cancelEdit').onclick = resetForm;
