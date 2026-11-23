@@ -103,6 +103,9 @@
             <a href="klip.html" target="_blank" class="px-3.5 py-2.5 bg-slate-800 hover:bg-pink-600/30 border border-slate-700 text-pink-400 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                 <i class="fas fa-music"></i> Клиплар
             </a>
+            <a href="gallery.html" target="_blank" class="px-3.5 py-2.5 bg-slate-800 hover:bg-emerald-600/30 border border-slate-700 text-emerald-400 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                <i class="fas fa-camera"></i> Галерея
+            </a>
             <button onclick="location.reload()" class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                 <i class="fas fa-sync"></i> Янгилаш
             </button>
@@ -140,6 +143,7 @@
         
         <!-- ЧАП ТОМОН -->
         <div class="lg:col-span-7 space-y-8">
+            <!-- 1-БЛОК: МАҚОЛА, ФИЛЬМ ВА КЛИП БОШҚАРУВИ -->
             <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
                 <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-6 pb-3 border-b border-slate-800 flex items-center gap-2">
                     <i class="fas fa-pen-fancy text-sky-400"></i> Мақола, Фильм ва Клип бошқаруви
@@ -174,7 +178,7 @@
                         <input type="text" id="sourceUrl" placeholder="Манба ҳаволаси (URL)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
                     </div>
 
-                    <!-- 1. КОМПЬЮТЕРДАН РАСМ ЮКЛАШ -->
+                    <!-- КОМПЬЮТЕРДАН РАСМ ЮКЛАШ -->
                     <div class="bg-slate-950/60 border-2 border-dashed border-slate-800 hover:border-sky-500/50 transition rounded-xl p-4 text-center space-y-2">
                         <label id="imgUploadLabel" class="block text-xs font-bold text-sky-400 uppercase">
                             <i class="fas fa-image mr-1"></i> Компьютердан расм юклаш (JPG, PNG, WEBP)
@@ -190,7 +194,7 @@
                         <input type="text" id="img" placeholder="Расм / Постер URL манзили (автоматик тўлади ёки қўлда киритинг)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
                     </div>
 
-                    <!-- 2. ҲУЖЖАТЛАР ЮКЛАШ (WORD, EXCEL, PDF, PPT, PPTX) -->
+                    <!-- ҲУЖЖАТЛАР ЮКЛАШ -->
                     <div class="bg-slate-950/60 border-2 border-dashed border-emerald-800/60 hover:border-emerald-500/50 transition rounded-xl p-4 text-center space-y-2">
                         <label class="block text-xs font-bold text-emerald-400 uppercase">
                             <i class="fas fa-file-alt mr-1"></i> Ҳужжат юклаш (Word, Excel, PDF, PPT, PPTX)
@@ -236,11 +240,58 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 2-БЛОК: ГАЛЕРЕЯ БОШҚАРУВИ (gallery.html УЧУН) -->
+            <div class="bg-slate-900/90 border border-emerald-500/30 rounded-2xl p-6 shadow-2xl relative">
+                <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-800">
+                    <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fas fa-camera-retro text-emerald-400"></i> Галереяга расм ва матн қўшиш
+                    </h3>
+                    <a href="gallery.html" target="_blank" class="text-[11px] font-bold text-emerald-400 hover:underline">
+                        gallery.html ни очиш <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+
+                <input type="hidden" id="galleryId">
+
+                <div class="space-y-4">
+                    <!-- Компьютердан расм юклаш -->
+                    <div class="bg-slate-950/60 border-2 border-dashed border-emerald-800/60 hover:border-emerald-500/60 transition rounded-xl p-4 text-center space-y-2">
+                        <label class="block text-xs font-bold text-emerald-400 uppercase">
+                            <i class="fas fa-cloud-upload-alt mr-1"></i> Галерея учун расм танланг (JPG, PNG, WEBP)
+                        </label>
+                        <input type="file" id="galFile" accept="image/*" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-600/20 file:text-emerald-400 hover:file:bg-emerald-600/30 cursor-pointer">
+                        <div id="galStatus" class="hidden text-xs text-emerald-400 font-bold pt-1"></div>
+                        <div id="galPreviewBox" class="hidden pt-2">
+                            <img id="galPreview" src="" alt="Gallery Preview" class="max-h-44 mx-auto rounded-lg border border-slate-700 object-cover">
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="text" id="galImgUrl" placeholder="Расм URL манзили (компьютердан юкланса автоматик тўлади ёки ҳавола қўйинг)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1">Расмга матн / изоҳ ёзинг</label>
+                        <textarea id="galCaption" rows="3" placeholder="Масалан: Наманган шаҳри, Гуллар фестивали манзараси..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-emerald-500"></textarea>
+                    </div>
+
+                    <div class="flex gap-3 pt-1">
+                        <button id="saveGalBtn" type="button" class="flex-1 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fas fa-plus-circle"></i> <span id="galBtnText">ГАЛЕРЕЯГА ҚЎШИШ</span>
+                        </button>
+                        <button id="cancelGalEdit" type="button" class="hidden px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl transition">
+                            Бекор қилиш
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ЎНГ ТОМОН -->
         <div class="lg:col-span-5 space-y-8">
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col h-[720px]">
+            <!-- 1. СЎНГГИ ЁЗУВЛАР -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col h-[520px]">
                 <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-800">
                     <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
                         <i class="fas fa-list text-sky-400"></i> Сўнгги ёзувлар
@@ -253,6 +304,19 @@
                     </select>
                 </div>
                 <div id="postsContainer" class="custom-scroll flex-1 overflow-y-auto space-y-3 pr-1">
+                    <p class="text-center text-xs text-slate-500 py-8">Юкланмоқда...</p>
+                </div>
+            </div>
+
+            <!-- 2. ГАЛЕРЕЯ РАСМЛАРИ РЎЙХАТИ -->
+            <div class="bg-slate-900/90 border border-emerald-500/30 rounded-2xl p-6 shadow-2xl flex flex-col h-[460px]">
+                <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-800">
+                    <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fas fa-images text-emerald-400"></i> Галерея расмлари
+                    </h3>
+                    <span id="galCountBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">0</span>
+                </div>
+                <div id="galleryListContainer" class="custom-scroll flex-1 overflow-y-auto space-y-3 pr-1">
                     <p class="text-center text-xs text-slate-500 py-8">Юкланмоқда...</p>
                 </div>
             </div>
@@ -280,7 +344,7 @@
     const db = getDatabase(app);
     const auth = getAuth(app);
 
-    // DOM Элементлари
+    // DOM Элементлари (Мақолалар)
     const emailInput = document.getElementById('email');
     const passInput = document.getElementById('pass');
     const postIdInput = document.getElementById('postId');
@@ -295,27 +359,28 @@
     const imgUploadLabel = document.getElementById('imgUploadLabel');
     const adminFilter = document.getElementById('adminFilter');
 
+    // DOM Элементлари (Галерея)
+    const galleryIdInput = document.getElementById('galleryId');
+    const galImgUrlInput = document.getElementById('galImgUrl');
+    const galCaptionInput = document.getElementById('galCaption');
+    const galFileInput = document.getElementById('galFile');
+    const galStatus = document.getElementById('galStatus');
+    const galPreviewBox = document.getElementById('galPreviewBox');
+    const galPreview = document.getElementById('galPreview');
+
     let uploadedDocData = null;
     let cachedAllPosts = null;
 
-    // Категориядан бўлим турини аниқлаш (news | cinema | klip)
     function resolveSectionType(categoryValue) {
         const val = (categoryValue || '').toLowerCase();
-        if (val.includes('кино') || val.includes('фильм') || val.includes('cinema')) {
-            return 'cinema';
-        }
-        if (val.includes('клип') || val.includes('klip') || val.includes('мусиқ')) {
-            return 'klip';
-        }
+        if (val.includes('кино') || val.includes('фильм') || val.includes('cinema')) return 'cinema';
+        if (val.includes('клип') || val.includes('klip') || val.includes('мусиқ')) return 'klip';
         return 'news';
     }
 
-    // Эски ёки янги ёзувнинг турини аниқлаш
     function detectPostType(post) {
         if (!post) return 'news';
-        if (post.type === 'cinema' || post.type === 'klip' || post.type === 'news') {
-            return post.type;
-        }
+        if (post.type === 'cinema' || post.type === 'klip' || post.type === 'news') return post.type;
         return resolveSectionType(post.category);
     }
 
@@ -324,11 +389,11 @@
         if (type === 'cinema') {
             targetPageHint.innerHTML = 'Сақланганда <strong>cinema.html</strong> (Кинотеатр) саҳифасида ва ўнг рўйхатда постер расми билан кўринади.';
             imgUploadLabel.innerHTML = '<i class="fas fa-film mr-1"></i> Фильм постерини юклаш (JPG, PNG, WEBP)';
-            videoInput.placeholder = 'Фильм Iframe коди (<iframe src="..."></iframe>) ёки .mp4 видео манзили (Кинотеатр учун муҳим)';
+            videoInput.placeholder = 'Фильм Iframe коди (<iframe src="..."></iframe>) ёки .mp4 видео манзили';
         } else if (type === 'klip') {
             targetPageHint.innerHTML = 'Сақланганда <strong>klip.html</strong> (Клиплар) саҳифасида ва ўнг рўйхатда расми билан кўринади.';
             imgUploadLabel.innerHTML = '<i class="fas fa-music mr-1"></i> Клип муқова расмини юклаш (JPG, PNG, WEBP)';
-            videoInput.placeholder = 'Клип Iframe коди (<iframe src="..."></iframe>) ёки .mp4 видео манзили (Клиплар учун муҳим)';
+            videoInput.placeholder = 'Клип Iframe коди (<iframe src="..."></iframe>) ёки .mp4 видео манзили';
         } else {
             targetPageHint.innerHTML = 'Сақланганда <strong>post.html</strong> (Янгиликлар) саҳифасида кўринади.';
             imgUploadLabel.innerHTML = '<i class="fas fa-image mr-1"></i> Компьютердан расм юклаш (JPG, PNG, WEBP)';
@@ -355,6 +420,7 @@
             loginSec.classList.add('hidden');
             adminContent.classList.remove('hidden');
             loadPosts();
+            loadGalleryItems();
             loadAnalytics(); 
         } else {
             loginSec.classList.remove('hidden');
@@ -392,7 +458,34 @@
         });
     }
 
-    // 1. РАСМНИ СИҚИБ ЮКЛАШ
+    // Умумий расм сиқиш ёрдамчиси
+    function compressImageFile(file, maxWidth, quality, callback) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                callback(canvas.toDataURL('image/jpeg', quality));
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // 1. МАҚОЛА РАСМИНИ СИҚИБ ЮКЛАШ
     document.getElementById('postFile').onchange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -405,37 +498,13 @@
         status.className = "text-xs text-sky-400 font-bold pt-1";
         status.innerText = "⏳ Расм қайта ишланмоқда...";
 
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const img = new Image();
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                const MAX_WIDTH = 900;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > MAX_WIDTH) {
-                    height *= MAX_WIDTH / width;
-                    width = MAX_WIDTH;
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75);
-                
-                imgInput.value = compressedBase64;
-                previewImg.src = compressedBase64;
-                previewBox.classList.remove('hidden');
-
-                status.className = "text-xs text-emerald-400 font-bold pt-1";
-                status.innerText = "✅ Расм муваффақиятли юкланди!";
-            };
-            img.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
+        compressImageFile(file, 900, 0.75, (compressedBase64) => {
+            imgInput.value = compressedBase64;
+            previewImg.src = compressedBase64;
+            previewBox.classList.remove('hidden');
+            status.className = "text-xs text-emerald-400 font-bold pt-1";
+            status.innerText = "✅ Расм муваффақиятли юкланди!";
+        });
     };
 
     imgInput.oninput = () => {
@@ -506,8 +575,8 @@
         const sectionType = resolveSectionType(catInput.value);
 
         const data = {
-            type: sectionType,       // "news" | "cinema" | "klip"
-            section: sectionType,    // post.html, cinema.html, klip.html учун аниқ фильтр
+            type: sectionType,
+            section: sectionType,
             title: titleInput.value.trim(),
             source: sourceInput.value.trim(),
             image: imgInput.value.trim(),
@@ -627,7 +696,6 @@
         });
     }
 
-    // ТАҲРИРЛАШ ФУНКЦИЯСИ
     function editPost(id) {
         onValue(ref(db, 'all_posts/' + id), (snapshot) => {
             const post = snapshot.val();
@@ -666,14 +734,12 @@
         }, {onlyOnce: true});
     }
 
-    // ЎЧИРИШ ФУНКЦИЯСИ
     function deletePost(id) {
         if(confirm("Ростан ҳам ушбу мақолани ўчирмоқчимисиз?")) {
             remove(ref(db, 'all_posts/' + id));
         }
     }
 
-    // ФОРМАНИ ТОЗАЛАШ
     function resetForm() {
         postIdInput.value = "";
         titleInput.value = "";
@@ -697,6 +763,151 @@
     }
 
     document.getElementById('cancelEdit').onclick = resetForm;
+
+    // ==============================================================
+    // 4. ГАЛЕРЕЯ БОШҚАРУВИ (gallery_items)
+    // ==============================================================
+    galFileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        galStatus.classList.remove('hidden');
+        galStatus.className = "text-xs text-emerald-400 font-bold pt-1";
+        galStatus.innerText = "⏳ Галерея расми қайта ишланмоқда...";
+
+        compressImageFile(file, 1100, 0.80, (compressedBase64) => {
+            galImgUrlInput.value = compressedBase64;
+            galPreview.src = compressedBase64;
+            galPreviewBox.classList.remove('hidden');
+            galStatus.innerText = "✅ Расм тайёр!";
+        });
+    };
+
+    galImgUrlInput.oninput = () => {
+        const val = galImgUrlInput.value.trim();
+        if (val) {
+            galPreview.src = val;
+            galPreviewBox.classList.remove('hidden');
+        } else {
+            galPreviewBox.classList.add('hidden');
+        }
+    };
+
+    document.getElementById('saveGalBtn').onclick = () => {
+        const id = galleryIdInput.value;
+        const saveGalBtn = document.getElementById('saveGalBtn');
+        const image = galImgUrlInput.value.trim();
+        const text = galCaptionInput.value.trim();
+
+        if (!image) {
+            return alert("Галерея учун расм танланг ёки расм URL манзилини киритинг!");
+        }
+
+        const payload = {
+            image,
+            text,
+            time: new Date().toLocaleString('uz-UZ')
+        };
+
+        saveGalBtn.disabled = true;
+        document.getElementById('galBtnText').innerText = "САҚЛАНМОҚДА...";
+
+        if (id) {
+            update(ref(db, 'gallery_items/' + id), payload).then(() => {
+                alert("✅ Галерея расми янгиланди!");
+                resetGalleryForm();
+            }).catch(err => {
+                alert("Хатолик: " + err.message);
+            }).finally(() => {
+                saveGalBtn.disabled = false;
+            });
+        } else {
+            push(ref(db, 'gallery_items'), payload).then(() => {
+                alert("✅ Галереяга расм қўшилди!");
+                resetGalleryForm();
+            }).catch(err => {
+                alert("Хатолик: " + err.message);
+            }).finally(() => {
+                saveGalBtn.disabled = false;
+            });
+        }
+    };
+
+    function loadGalleryItems() {
+        onValue(ref(db, 'gallery_items'), (snapshot) => {
+            const container = document.getElementById('galleryListContainer');
+            const badge = document.getElementById('galCountBadge');
+            const data = snapshot.val();
+
+            container.innerHTML = "";
+
+            if (!data) {
+                badge.innerText = "0";
+                container.innerHTML = "<p class='text-center text-xs text-slate-500 py-8'>Галереяда ҳозирча расмлар йўқ.</p>";
+                return;
+            }
+
+            const keys = Object.keys(data).reverse();
+            badge.innerText = keys.length;
+
+            keys.forEach((key) => {
+                const g = data[key];
+                const row = document.createElement('div');
+                row.className = 'p-2.5 bg-slate-950/80 border border-slate-800/80 rounded-xl flex items-center justify-between gap-3 hover:border-emerald-500/40 transition';
+                row.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <img src="${g.image}" alt="Галерея" class="w-12 h-12 rounded-lg object-cover border border-slate-800 shrink-0 bg-slate-900">
+                        <div class="overflow-hidden">
+                            <p class="text-xs font-semibold text-slate-200 truncate">${g.text || 'Матн киритилмаган'}</p>
+                            <p class="text-[10px] text-slate-500 mt-0.5">${g.time || ''}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <button class="edit-gal p-2 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600 hover:text-white rounded-lg text-xs transition" title="Таҳрирлаш">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="del-gal p-2 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg text-xs transition" title="Ўчириш">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+
+                row.querySelector('.edit-gal').onclick = () => {
+                    galleryIdInput.value = key;
+                    galImgUrlInput.value = g.image || "";
+                    galCaptionInput.value = g.text || "";
+                    if (g.image) {
+                        galPreview.src = g.image;
+                        galPreviewBox.classList.remove('hidden');
+                    }
+                    document.getElementById('galBtnText').innerText = "ЎЗГАРТИРИШНИ САҚЛАШ";
+                    document.getElementById('cancelGalEdit').classList.remove('hidden');
+                    galImgUrlInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+
+                row.querySelector('.del-gal').onclick = () => {
+                    if (confirm("Ушбу расмни галереядан ўчирмоқчимисиз?")) {
+                        remove(ref(db, 'gallery_items/' + key));
+                    }
+                };
+
+                container.appendChild(row);
+            });
+        });
+    }
+
+    function resetGalleryForm() {
+        galleryIdInput.value = "";
+        galImgUrlInput.value = "";
+        galCaptionInput.value = "";
+        galFileInput.value = "";
+        galStatus.classList.add('hidden');
+        galPreviewBox.classList.add('hidden');
+        document.getElementById('galBtnText').innerText = "ГАЛЕРЕЯГА ҚЎШИШ";
+        document.getElementById('cancelGalEdit').classList.add('hidden');
+    }
+
+    document.getElementById('cancelGalEdit').onclick = resetGalleryForm;
 </script>
 </body>
 </html>
