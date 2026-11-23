@@ -93,11 +93,20 @@
                 <i class="fas fa-user-circle mr-1"></i> Хуш келибсиз, Зоҳиджон Носирович
             </p>
         </div>
-        <div class="flex gap-3">
-            <button onclick="location.reload()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl transition flex items-center gap-2">
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
+            <a href="post.html" target="_blank" class="px-3.5 py-2.5 bg-slate-800 hover:bg-sky-600/30 border border-slate-700 text-sky-400 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                <i class="fas fa-newspaper"></i> Янгиликлар
+            </a>
+            <a href="cinema.html" target="_blank" class="px-3.5 py-2.5 bg-slate-800 hover:bg-amber-600/30 border border-slate-700 text-amber-400 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                <i class="fas fa-film"></i> Кинотеатр
+            </a>
+            <a href="klip.html" target="_blank" class="px-3.5 py-2.5 bg-slate-800 hover:bg-pink-600/30 border border-slate-700 text-pink-400 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                <i class="fas fa-music"></i> Клиплар
+            </a>
+            <button onclick="location.reload()" class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                 <i class="fas fa-sync"></i> Янгилаш
             </button>
-            <button id="logoutBtn" class="px-4 py-2.5 bg-rose-600/20 hover:bg-rose-600 border border-rose-500/40 text-rose-300 hover:text-white text-xs font-bold rounded-xl transition flex items-center gap-2">
+            <button id="logoutBtn" class="px-3.5 py-2.5 bg-rose-600/20 hover:bg-rose-600 border border-rose-500/40 text-rose-300 hover:text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                 <i class="fas fa-sign-out-alt"></i> Чиқиш
             </button>
         </div>
@@ -133,29 +142,32 @@
         <div class="lg:col-span-7 space-y-8">
             <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
                 <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-6 pb-3 border-b border-slate-800 flex items-center gap-2">
-                    <i class="fas fa-pen-fancy text-sky-400"></i> Мақола ва Файл бошқаруви
+                    <i class="fas fa-pen-fancy text-sky-400"></i> Мақола, Фильм ва Клип бошқаруви
                 </h3>
 
                 <input type="hidden" id="postId">
 
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-400 mb-1">Категория</label>
+                        <label class="block text-xs font-bold text-slate-400 mb-1">Категория (Қайси саҳифага тушишини белгилайди)</label>
                         <select id="cat" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
-                            <option value="Янгиликлар">Янгиликлар</option>
-                            <option value="Табобат">Табобат</option>
-                            <option value="Кинотеатр">Кинотеатр</option>
-                            <option value="Клиплар">Мусиқий клиплар</option>
-                            <option value="Ҳикоялар">Ҳикоялар</option>
-                            <option value="Хангомалар">Хангомалар</option>
-                            <option value="Кулинария">Кулинария</option>
-                            <option value="Шеърият">Шеърият</option>
-                            <option value="Фойдали маслахат">Фойдали маслахатлар</option>
+                            <option value="Янгиликлар">📰 Янгиликлар (post.html)</option>
+                            <option value="Кинотеатр">🎬 Кинотеатр — Фильмлар (cinema.html)</option>
+                            <option value="Клиплар">🎵 Мусиқий клиплар (klip.html)</option>
+                            <option value="Табобат">🌿 Табобат (post.html)</option>
+                            <option value="Ҳикоялар">📖 Ҳикоялар (post.html)</option>
+                            <option value="Хангомалар">😄 Хангомалар (post.html)</option>
+                            <option value="Кулинария">🍽️ Кулинария (post.html)</option>
+                            <option value="Шеърият">✍️ Шеърият (post.html)</option>
+                            <option value="Фойдали маслахат">💡 Фойдали маслахатлар (post.html)</option>
                         </select>
+                        <p id="targetPageHint" class="text-[11px] text-sky-400 mt-1.5 ml-1">
+                            Сақланганда <strong>post.html</strong> (Янгиликлар) саҳифасида кўринади.
+                        </p>
                     </div>
 
                     <div>
-                        <input type="text" id="title" placeholder="Мақола сарлавҳаси" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
+                        <input type="text" id="title" placeholder="Мақола, фильм ёки клип сарлавҳаси" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
                     </div>
 
                     <div>
@@ -164,19 +176,18 @@
 
                     <!-- 1. КОМПЬЮТЕРДАН РАСМ ЮКЛАШ -->
                     <div class="bg-slate-950/60 border-2 border-dashed border-slate-800 hover:border-sky-500/50 transition rounded-xl p-4 text-center space-y-2">
-                        <label class="block text-xs font-bold text-sky-400 uppercase">
+                        <label id="imgUploadLabel" class="block text-xs font-bold text-sky-400 uppercase">
                             <i class="fas fa-image mr-1"></i> Компьютердан расм юклаш (JPG, PNG, WEBP)
                         </label>
                         <input type="file" id="postFile" accept="image/*" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-600/20 file:text-sky-400 hover:file:bg-sky-600/30 cursor-pointer">
                         <div id="postStatus" class="hidden text-xs text-sky-400 font-bold pt-1">Юкланмоқда...</div>
-                        <!-- Расм предпросмотр -->
                         <div id="imgPreviewBox" class="hidden pt-2">
                             <img id="imgPreview" src="" alt="Preview" class="max-h-36 mx-auto rounded-lg border border-slate-700 object-cover">
                         </div>
                     </div>
 
                     <div>
-                        <input type="text" id="img" placeholder="Расм URL манзили (автоматик тўлади ёки қўлда киритинг)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
+                        <input type="text" id="img" placeholder="Расм / Постер URL манзили (автоматик тўлади ёки қўлда киритинг)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500">
                     </div>
 
                     <!-- 2. ҲУЖЖАТЛАР ЮКЛАШ (WORD, EXCEL, PDF, PPT, PPTX) -->
@@ -189,7 +200,6 @@
                         
                         <div id="docStatus" class="hidden text-xs text-emerald-400 font-bold pt-1"></div>
                         
-                        <!-- Танланган файл ҳақида маълумот -->
                         <div id="docBadge" class="hidden mt-2 p-2.5 bg-slate-900 border border-emerald-500/40 rounded-lg flex items-center justify-between text-left">
                             <div class="flex items-center gap-2 overflow-hidden">
                                 <i id="docIcon" class="fas fa-file text-emerald-400 text-lg"></i>
@@ -209,11 +219,11 @@
                     </div>
 
                     <div>
-                        <textarea id="videoIframe" rows="2" placeholder="Видео Iframe коди (YouTube embed)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500"></textarea>
+                        <textarea id="videoIframe" rows="2" placeholder="Видео Iframe коди (YouTube / Mover / VK embed ёки тўғридан-тўғри .mp4 ҳавола)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500"></textarea>
                     </div>
 
                     <div>
-                        <textarea id="txt" rows="6" placeholder="Мақола матни..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500"></textarea>
+                        <textarea id="txt" rows="6" placeholder="Мақола матни ёки фильм/клип тавсифи..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-sky-500"></textarea>
                     </div>
 
                     <div class="flex gap-3 pt-2">
@@ -231,9 +241,17 @@
         <!-- ЎНГ ТОМОН -->
         <div class="lg:col-span-5 space-y-8">
             <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col h-[720px]">
-                <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider mb-4 pb-3 border-b border-slate-800 flex items-center gap-2">
-                    <i class="fas fa-list text-sky-400"></i> Сўнгги мақолалар
-                </h3>
+                <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-800">
+                    <h3 class="text-base font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fas fa-list text-sky-400"></i> Сўнгги ёзувлар
+                    </h3>
+                    <select id="adminFilter" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-[11px] text-slate-300 outline-none focus:border-sky-500">
+                        <option value="all">Барчаси</option>
+                        <option value="news">Янгиликлар</option>
+                        <option value="cinema">Кинотеатр</option>
+                        <option value="klip">Клиплар</option>
+                    </select>
+                </div>
                 <div id="postsContainer" class="custom-scroll flex-1 overflow-y-auto space-y-3 pr-1">
                     <p class="text-center text-xs text-slate-500 py-8">Юкланмоқда...</p>
                 </div>
@@ -273,8 +291,53 @@
     const videoInput = document.getElementById('videoIframe');
     const catInput = document.getElementById('cat');
     const txtInput = document.getElementById('txt');
+    const targetPageHint = document.getElementById('targetPageHint');
+    const imgUploadLabel = document.getElementById('imgUploadLabel');
+    const adminFilter = document.getElementById('adminFilter');
 
-    let uploadedDocData = null; // Юкланган ҳужжат маълумотлари (Base64, номи, тури)
+    let uploadedDocData = null;
+    let cachedAllPosts = null;
+
+    // Категориядан бўлим турини аниқлаш (news | cinema | klip)
+    function resolveSectionType(categoryValue) {
+        const val = (categoryValue || '').toLowerCase();
+        if (val.includes('кино') || val.includes('фильм') || val.includes('cinema')) {
+            return 'cinema';
+        }
+        if (val.includes('клип') || val.includes('klip') || val.includes('мусиқ')) {
+            return 'klip';
+        }
+        return 'news';
+    }
+
+    // Эски ёки янги ёзувнинг турини аниқлаш
+    function detectPostType(post) {
+        if (!post) return 'news';
+        if (post.type === 'cinema' || post.type === 'klip' || post.type === 'news') {
+            return post.type;
+        }
+        return resolveSectionType(post.category);
+    }
+
+    function updateCategoryHint() {
+        const type = resolveSectionType(catInput.value);
+        if (type === 'cinema') {
+            targetPageHint.innerHTML = 'Сақланганда <strong>cinema.html</strong> (Кинотеатр) саҳифасида ва ўнг рўйхатда постер расми билан кўринади.';
+            imgUploadLabel.innerHTML = '<i class="fas fa-film mr-1"></i> Фильм постерини юклаш (JPG, PNG, WEBP)';
+            videoInput.placeholder = 'Фильм Iframe коди (<iframe src="..."></iframe>) ёки .mp4 видео манзили (Кинотеатр учун муҳим)';
+        } else if (type === 'klip') {
+            targetPageHint.innerHTML = 'Сақланганда <strong>klip.html</strong> (Клиплар) саҳифасида ва ўнг рўйхатда расми билан кўринади.';
+            imgUploadLabel.innerHTML = '<i class="fas fa-music mr-1"></i> Клип муқова расмини юклаш (JPG, PNG, WEBP)';
+            videoInput.placeholder = 'Клип Iframe коди (<iframe src="..."></iframe>) ёки .mp4 видео манзили (Клиплар учун муҳим)';
+        } else {
+            targetPageHint.innerHTML = 'Сақланганда <strong>post.html</strong> (Янгиликлар) саҳифасида кўринади.';
+            imgUploadLabel.innerHTML = '<i class="fas fa-image mr-1"></i> Компьютердан расм юклаш (JPG, PNG, WEBP)';
+            videoInput.placeholder = 'Видео Iframe коди (YouTube embed — ихтиёрий)';
+        }
+    }
+
+    catInput.addEventListener('change', updateCategoryHint);
+    updateCategoryHint();
 
     // КИРИШ ФУНКЦИЯСИ
     document.getElementById('loginForm').onsubmit = (e) => {
@@ -329,9 +392,7 @@
         });
     }
 
-    // ==============================================================
-    // 1. РАСМНИ СИҚИБ ВА МУАММОСИЗ ЮКЛАШ (Firebase Storage'сиз ҳам ишлайди!)
-    // ==============================================================
+    // 1. РАСМНИ СИҚИБ ЮКЛАШ
     document.getElementById('postFile').onchange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -348,7 +409,6 @@
         reader.onload = function(event) {
             const img = new Image();
             img.onload = function() {
-                // Расмни оптимал ўлчамга келтириш (макс 900px кенглик)
                 const canvas = document.createElement('canvas');
                 const MAX_WIDTH = 900;
                 let width = img.width;
@@ -364,7 +424,6 @@
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Сифатини 0.75 қилиб сиқиш (Базада тез очилиши учун)
                 const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75);
                 
                 imgInput.value = compressedBase64;
@@ -379,7 +438,6 @@
         reader.readAsDataURL(file);
     };
 
-    // URL қўлда киритилганда ҳам кўрсатиш
     imgInput.oninput = () => {
         const val = imgInput.value.trim();
         if (val) {
@@ -390,15 +448,13 @@
         }
     };
 
-    // ==============================================================
-    // 2. ҲУЖЖАТЛАРНИ ЮКЛАШ (WORD, EXCEL, PDF, PPT, PPTX)
-    // ==============================================================
+    // 2. ҲУЖЖАТЛАРНИ ЮКЛАШ
     document.getElementById('docFile').onchange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         const docStatus = document.getElementById('docStatus');
-        const maxSize = 5 * 1024 * 1024; // 5 MB
+        const maxSize = 5 * 1024 * 1024;
 
         if (file.size > maxSize) {
             alert("Файл ҳажми 5 МБ дан катта! Катта файлларни Google Drive ёки Telegram'га юклаб, ҳаволасини пастдаги майдонга қўйинг.");
@@ -421,7 +477,6 @@
                 data: base64Data
             };
 
-            // Иконкани файл турига қараб танлаш
             const iconElem = document.getElementById('docIcon');
             if (['doc', 'docx'].includes(ext)) iconElem.className = "fas fa-file-word text-blue-400 text-xl";
             else if (['xls', 'xlsx'].includes(ext)) iconElem.className = "fas fa-file-excel text-emerald-400 text-xl";
@@ -437,7 +492,6 @@
         reader.readAsDataURL(file);
     };
 
-    // Бириктирилган ҳужжатни тозалаш
     document.getElementById('clearDocBtn').onclick = () => {
         uploadedDocData = null;
         document.getElementById('docFile').value = "";
@@ -445,14 +499,15 @@
         document.getElementById('docStatus').classList.add('hidden');
     };
 
-    // ==============================================================
-    // 3. МАҚОЛАНИ САҚЛАШ ЁКИ ЯНГИЛАШ
-    // ==============================================================
+    // 3. МАҚОЛА / ФИЛЬМ / КЛИПНИ САҚЛАШ ЁКИ ЯНГИЛАШ
     document.getElementById('pubBtn').onclick = () => {
         const id = postIdInput.value;
         const pubBtn = document.getElementById('pubBtn');
+        const sectionType = resolveSectionType(catInput.value);
 
         const data = {
+            type: sectionType,       // "news" | "cinema" | "klip"
+            section: sectionType,    // post.html, cinema.html, klip.html учун аниқ фильтр
             title: titleInput.value.trim(),
             source: sourceInput.value.trim(),
             image: imgInput.value.trim(),
@@ -460,12 +515,20 @@
             category: catInput.value,
             content: txtInput.value.trim(),
             docUrl: docUrlInput.value.trim(),
-            document: uploadedDocData, // Word, Excel, PDF, PPT, PPTX файли
+            document: uploadedDocData,
             time: new Date().toLocaleString('uz-UZ')
         };
 
-        if (!data.title || (!data.content && !data.document && !data.docUrl)) {
-            return alert("Сарлавҳа ва камида матн ёки ҳужжат киритиш шарт!");
+        if (!data.title) {
+            return alert("Сарлавҳа (ном) киритиш шарт!");
+        }
+
+        if ((sectionType === 'cinema' || sectionType === 'klip') && !data.video) {
+            return alert("Кинотеатр ёки Клиплар бўлими учун видео Iframe коди ёки видео ҳаволасини киритинг!");
+        }
+
+        if (sectionType === 'news' && !data.content && !data.document && !data.docUrl) {
+            return alert("Янгилик учун камида матн ёки ҳужжат киритиш шарт!");
         }
 
         pubBtn.disabled = true;
@@ -473,7 +536,7 @@
 
         if (id) {
             update(ref(db, 'all_posts/' + id), data).then(() => {
-                alert("✅ Мақола ва файллар янгиланди!");
+                alert("✅ Муваффақиятли янгиланди!");
                 resetForm();
             }).catch(err => {
                 alert("Хатолик: " + err.message);
@@ -492,44 +555,75 @@
         }
     };
 
-    // РЎЙХАТНИ ЮКЛАШ
+    // РЎЙХАТНИ ФИЛЬТР БИЛАН ЧИҚАРИШ
+    function renderPostsList() {
+        const container = document.getElementById('postsContainer');
+        container.innerHTML = "";
+        const selectedFilter = adminFilter.value;
+
+        if (!cachedAllPosts) {
+            container.innerHTML = "<p class='text-center text-xs text-slate-500 py-8'>Маълумотлар мавжуд эмас.</p>";
+            return;
+        }
+
+        const keys = Object.keys(cachedAllPosts).reverse().filter(key => {
+            if (selectedFilter === 'all') return true;
+            return detectPostType(cachedAllPosts[key]) === selectedFilter;
+        });
+
+        if (!keys.length) {
+            container.innerHTML = "<p class='text-center text-xs text-slate-500 py-8'>Ушбу бўлимда ёзувлар топилмади.</p>";
+            return;
+        }
+
+        keys.forEach(key => {
+            const post = cachedAllPosts[key];
+            const pType = detectPostType(post);
+            const hasDoc = post.document || post.docUrl;
+
+            let badgeHtml = `<span class="px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-400">Янгилик</span>`;
+            if (pType === 'cinema') {
+                badgeHtml = `<span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400">Кино</span>`;
+            } else if (pType === 'klip') {
+                badgeHtml = `<span class="px-1.5 py-0.5 rounded bg-pink-500/15 text-pink-400">Клип</span>`;
+            }
+
+            const item = document.createElement('div');
+            item.className = 'p-3 bg-slate-950/80 border border-slate-800/80 rounded-xl flex items-center justify-between gap-3 hover:border-slate-700 transition';
+            item.innerHTML = `
+                <div class="overflow-hidden">
+                    <h4 class="text-xs font-bold text-slate-200 truncate mb-1">
+                        ${hasDoc ? '<i class="fas fa-paperclip text-emerald-400 mr-1" title="Ҳужжат бириктирилган"></i>' : ''}
+                        ${post.title}
+                    </h4>
+                    <p class="text-[10px] text-slate-500 flex items-center gap-1.5">
+                        ${badgeHtml}
+                        <span>${post.category} | ${post.time || ''}</span>
+                    </p>
+                </div>
+                <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <button class="edit-btn p-2 bg-sky-600/20 text-sky-400 hover:bg-sky-600 hover:text-white rounded-lg text-xs transition" title="Таҳрирлаш">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="delete-btn p-2 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg text-xs transition" title="Ўчириш">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            item.querySelector('.edit-btn').onclick = () => editPost(key);
+            item.querySelector('.delete-btn').onclick = () => deletePost(key);
+            
+            container.appendChild(item);
+        });
+    }
+
+    adminFilter.addEventListener('change', renderPostsList);
+
     function loadPosts() {
         onValue(ref(db, 'all_posts'), (snapshot) => {
-            const container = document.getElementById('postsContainer');
-            container.innerHTML = "";
-            const data = snapshot.val();
-            if(data) {
-                Object.keys(data).reverse().forEach(key => {
-                    const post = data[key];
-                    const hasDoc = post.document || post.docUrl;
-                    const item = document.createElement('div');
-                    item.className = 'p-3 bg-slate-950/80 border border-slate-800/80 rounded-xl flex items-center justify-between gap-3 hover:border-slate-700 transition';
-                    item.innerHTML = `
-                        <div class="overflow-hidden">
-                            <h4 class="text-xs font-bold text-slate-200 truncate mb-1">
-                                ${hasDoc ? '<i class="fas fa-paperclip text-emerald-400 mr-1" title="Ҳужжат бириктирилган"></i>' : ''}
-                                ${post.title}
-                            </h4>
-                            <p class="text-[10px] text-slate-500">${post.category} | ${post.time}</p>
-                        </div>
-                        <div class="flex items-center gap-1.5 flex-shrink-0">
-                            <button class="edit-btn p-2 bg-sky-600/20 text-sky-400 hover:bg-sky-600 hover:text-white rounded-lg text-xs transition" title="Таҳрирлаш">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="delete-btn p-2 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg text-xs transition" title="Ўчириш">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                    
-                    item.querySelector('.edit-btn').onclick = () => editPost(key);
-                    item.querySelector('.delete-btn').onclick = () => deletePost(key);
-                    
-                    container.appendChild(item);
-                });
-            } else {
-                container.innerHTML = "<p class='text-center text-xs text-slate-500 py-8'>Мақолалар мавжуд эмас.</p>";
-            }
+            cachedAllPosts = snapshot.val();
+            renderPostsList();
         });
     }
 
@@ -546,6 +640,7 @@
                 catInput.value = post.category || "Янгиликлар";
                 txtInput.value = post.content || "";
                 videoInput.value = post.video || "";
+                updateCategoryHint();
 
                 if (post.image) {
                     document.getElementById('imgPreview').src = post.image;
@@ -589,6 +684,7 @@
         videoInput.value = "";
         uploadedDocData = null;
         catInput.selectedIndex = 0;
+        updateCategoryHint();
 
         document.getElementById('btnText').innerText = "НАШР ҚИЛИШ";
         document.getElementById('cancelEdit').classList.add('hidden');
