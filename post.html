@@ -3,24 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Блог - Universal Portal</title>
-    <!-- Open Graph (Telegram, Facebook, WhatsApp превью учун) -->
+    <title>Янгиликлар - Universal Portal</title>
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Universalportal">
-    <meta property="og:title" content="Universalportal - Мақолалар ва Медиа">
-    <meta property="og:description" content="Information & Digital Media — Янгиликлар, кинотеатр, клиплар, табобат, ҳикоялар ва медиа портал.">
+    <meta property="og:title" content="Universalportal - Янгиликлар">
+    <meta property="og:description" content="Сўнгги хабарлар ва янгиликлар — Universalportal.">
     <meta property="og:image" content="https://universalportal.vercel.app/logo1.jpg">
     <meta property="og:url" content="https://universalportal.vercel.app/post.html">
 
-    <!-- Twitter / X карточкаси учун -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Universalportal - Мақолалар ва Медиа">
-    <meta name="twitter:description" content="Information & Digital Media — Янгиликлар, кинотеатр, клиплар, табобат, ҳикоялар ва медиа портал.">
-    <meta name="twitter:image" content="https://universalportal.vercel.app/logo1.jpg">
-
-    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAY1BMVEX///8AAADo6Oj7+/v29vbz8/Pt7e3CwsLf39+Ojo6amppOTk62trYlJSXS0tLKysqCgoIfHx8+Pj55eXlaWlpmZmYsLCwPDw+tra2mpqY5OTlGRkZvb2+8vLzZ2dlgYGAYGBhYJNXNAAAHSklEQVR4nO1c2ZaqQAwcWWQRARVEEJX//8qLMh6BpEJa0bkP1jM0RXdSWbrh5+eLL7744otPwXZcKzkdwiDdpUFYRp7vOvZfErKSMsj2izH2WVp6/l8QcuN0tS8IoQez4y5ZfnTKrGgn8HmgLj81YW5yWWsY3bDJouX7KVlhpWbUYR2c30vJ3zWGlK4osvh91uXvnmDUIY/fQ8l6ntIV2TtsPqSCZIYinXsNk+2LlK5YR3NSssMZKF2RurNx8l9duR6SmTgdVOqtRTAHJSedk1KLzHqZk72amdNisX1VHGKdORV5Gh7KoFYan/cSp7Mq9K4P518J8r3j21l5GhPfl4N7TipaJXjiNGIVp7HdupmG1bM6mmg45UzsCDSsDk9xUtnT2uFuVc3VM3alkvEN792uyq7MsxlHpU9Ink+amytjvco1wxYwGVG90pFdewxdWoDjWKS6f2fEKVGNKYR8ZWJhIldL3ZBHoXq66F7LwKyU2TinUYZDrNRmpTMI2SS0uao2vXK1BbBEqlSOoV1AdSlVC4OoQs0VmWoBVWH4hlwYT18kqoKgKnDdUOHE1taPslCUg55+NEGndNlhh3CSk1FOjo1Kbect9pO2rpWDDlA9DSZKIQtm3SckCiYT1WLCAWOz0QreqizDknoiBCKnKaosy7aMWHD24DCLV62yy3YDRt+K9WnMN+qO0dlyHNc6H8jqbqlZuSQX25Sx5bqOdT6BNE1MjVkd3vVn40yGHQ/ok1fqr7HDPmIrkWLWZzMqhkhbqNj1J8sOxms0bv8knC8JSRAjnKSsayeLrHH9u8FgJbQbQgs8TgoFAaUBq+LazUxeWl3yOr8w7T7OsZii5AJVwaKD8mWQqli5gdfFJXVD2GunM4C0Vhtu96CdSOMGlCriGIy/d/CV6Q10dfJW0P/IpOKgpEuXtrDvSl0KXOqSC7Gj6qwK+xQVfTCphP0ejvljq0gJrWCiHeAFyHVSYYDCWB8bQRJJHlHzCSgJIFJKqCk2hZmm/scH5SXp30gZhaYBIpGiRsnmnz5ZkXeSou7HGqBeOq/QyKdE6kCuZqeAcl8Jg2rUsxEqAprBpNxlTPWPx7QUnKQWsE0dhZ0CZg8GD6rrX7Avj16q4K6r6XU5GtMhJrUODiFJMhooVEz+yZJiUi9QrFAzbbqGgDeuYtBU+UxpUXApFVcWVfyYy/GY9yYFyc9BW5qN55x6soUM+6r2WKQeyzyOHnzyw5fhnK/yTs6FGuISj/nwx6/GtYtAD0VPahGMR11SMX9M/JJY5pE8i+qmManFargCMeMQEqlFNRQWh/Fyc1JtCnO+p4Wux2YHwvJdcYzurG1faDuqDb1DsdodTp4X1qB5hQ39TqsO2vujVDzkxPnEK4cPoCQYgNWpV7bVkXgakWI4cWHGAGyYeZ3U3IciZiE11yGbZ5FxpEx61e8Am+cq9/jeBjZ5o4XDZ8EmFLTE+iz4hF61l724nsDN8vxYTZYO1THPs5VWusA2q04TdqcuRtlJKT2vCbwuYC493S4b2FLRuF/dj5pOhEJZE/Y7O8tAUZCBHgFtBRGMPcTil3w7NlpF/EHnOabcj+vKctn2kTZQpg+aoF2/icVvuJch+Tro31kTO1GgRJmUzxN7E90G5317IquBm7ZMy7oHVJmOmzqoqyWuQ4HbDmJ7Fd42rJbhjpQozsK5C0kU8Nb68C7c/pN0UGoaCnqCd+rtwV14606yKulMsbDuQq9p4IDC6Hjwo3AX2oRs0Qh39UsY2KhpgY1KPuYMu4YbJSmpzQ39aCWfCIcb21DcfoaiIFkstPSpkyVIeBvhnn4TRWrewnpp6mAJOiwhkeqXHBfhOrQhMHlYAh0rKYRd+v6ySMsMOAnneO5AAiro1CC7wPsxSKc0pwWBA2K3GjoHtnRQWEp+/XgGkHWonkP7zZDVotinO28N5ARNVbzRPQQ08OBLDIEOCgLZJZ7BR260R6E96QlkgTk38cOFS3Y70QV6MH3M7A6wgFxpxoVwrloCwqlcvCvQMV3ycYnLR458fB2oeqREhwJm6+HgzRIU9zfDfD5CFZbZ9xewWVWFfmfItgUp3a6LrO46xzrA6/AuFw+hsZDtwjAM6smq9xK016XCQCvTD/50nxO8hJX5R1lzfj/HIziV7VSWZZT4anomh1pfRVFUaXm2FMup+phnTuzrcPqzFf156/nQBPHEUVTVB2KzI5tI2T9pV32EYphWfnQ4OzahZPRv+DxTiYNQDM7+IasaR0m95v3k1wBridU7xL1pI+MhieM4OZVBDvxJzABn+4z8ilYiIzoFVhTkpLuylkjN9MH99TFBAoOJ45MkRyY1w68J2oQ0nPwfhzXYXhXbVt31r/3EoQjPqm+JltGjx6JJTF/43cXF5BPf+6YPPno9ovXUj0EuU0F2hGWwLhZNrb7pQ79QcZLEKC/9D382c8P/91ueDv/fD4x+gX71tPqrXz3dMf4pVvLXP8X64osvvvjiH6hoZxtxGJLtAAAAAElFTkSuQmCC" type="image/x-icon">
-
-    <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -29,9 +19,7 @@
             background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
         }
-
         .post-video-container {
             margin: 24px 0;
             background: #000;
@@ -40,71 +28,58 @@
             width: 100%;
             border: 1px solid #1e293b;
         }
-        .post-video-container iframe {
+        .post-video-container iframe,
+        .post-video-container video {
             width: 100%;
             aspect-ratio: 16/9;
             border: none;
             display: block;
         }
-
-        .custom-scroll::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: #020617;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 10px;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb:hover {
-            background: #38bdf8;
-        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #020617; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
     </style>
 </head>
 <body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-sky-500 selection:text-black">
 
-<!-- ЮҚОРИ ТЕСТ БАННЕРИ -->
-<div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 text-sky-400 py-2 text-center text-xs sm:text-sm font-semibold tracking-widest uppercase">
-    <marquee behavior="scroll" direction="left" scrollamount="8">
-        📢 UNIVERSALPORTAL SYSTEM ONLINE &nbsp;&nbsp;&bull;&nbsp;&nbsp; МАҚОЛА ВА МЕДИА ПОРТАЛ
-    </marquee>
-</div>
-
-<!-- HEADER -->
 <header class="bg-slate-950/90 border-b border-slate-800/90 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center gap-4">
-        <a href="index.html" class="flex items-center gap-3 group">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+        <a href="index.html" class="flex items-center gap-3">
             <img src="logo1.jpg" alt="logo" class="w-10 h-10 rounded-lg border border-slate-700 object-cover" onerror="this.style.display='none'">
             <div>
                 <span class="text-xl sm:text-2xl font-black tracking-tighter metallic-text uppercase block leading-none">
                     UNIVERSALPORTAL
                 </span>
                 <span class="text-[10px] tracking-[0.25em] text-slate-500 uppercase block mt-0.5">
-                    DIGITAL MEDIA
+                    ЯНГИЛИКЛАР БЎЛИМИ
                 </span>
             </div>
         </a>
 
-        <a href="index.html" class="px-4 py-2 rounded-full bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-sky-600/25 transition flex items-center gap-2">
-            <i class="fas fa-home"></i> Асосий саҳифа
-        </a>
+        <nav class="flex items-center gap-2 sm:gap-3 text-xs font-bold">
+            <a href="post.html" class="px-3.5 py-2 rounded-full bg-sky-600 text-white">Янгиликлар</a>
+            <a href="cinema.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Кинотеатр</a>
+            <a href="klip.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Клиплар</a>
+            <a href="index.html" class="px-3.5 py-2 rounded-full bg-slate-900 border border-slate-700 hover:border-sky-500 text-sky-400 transition">
+                <i class="fas fa-home"></i> Асосий
+            </a>
+        </nav>
     </div>
 </header>
 
-<!-- АСОСИЙ КОНТЕНТ: ЧАПДА МАҚОЛА, ЎНГДА БОШҚА ЯНГИЛИКЛАР -->
 <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-        <!-- ЧАП ТОМОН: АСОСИЙ МАҚОЛА -->
+        <!-- ЧАП ТОМОН: ТАНЛАНГАН ЯНГИЛИК -->
         <section class="lg:col-span-8 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl">
             <div id="loader" class="text-center py-16 text-sky-400">
                 <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
-                <p class="text-xs text-slate-400 uppercase tracking-widest">Мақола юкланмоқда...</p>
+                <p class="text-xs text-slate-400 uppercase tracking-widest">Янгилик юкланмоқда...</p>
             </div>
 
             <article id="mainPost" class="hidden">
-                <img id="postImg" class="w-full max-h-[480px] object-cover rounded-xl border border-slate-800 mb-6 hidden bg-slate-950" alt="Мақола расми">
+                <img id="postImg" class="w-full max-h-[480px] object-cover rounded-xl border border-slate-800 mb-6 hidden bg-slate-950" alt="Янгилик расми">
 
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <div class="flex flex-wrap items-center gap-2">
@@ -125,13 +100,12 @@
 
                 <div id="postBody" class="text-base sm:text-lg text-slate-200 leading-relaxed whitespace-pre-line"></div>
 
-                <!-- Ҳужжат ёки манба тугмалари -->
                 <div id="docContainer" class="mt-8 pt-6 border-t border-slate-800 flex flex-wrap gap-3 hidden"></div>
                 <div id="sourceContainer" class="mt-4 hidden"></div>
             </article>
         </section>
 
-        <!-- ЎНГ ТОМОН: БАРЧА ЯНГИЛИКЛАРНИНГ ҚИСҚАЧА МАТНЛАРИ -->
+        <!-- ЎНГ ТОМОН: БАРЧА ЯНГИЛИКЛАР РЎЙХАТИ -->
         <aside class="lg:col-span-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl lg:sticky lg:top-24">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
                 <h2 class="text-sm sm:text-base font-black uppercase tracking-wider metallic-text flex items-center gap-2">
@@ -148,7 +122,6 @@
     </div>
 </main>
 
-<!-- FOOTER -->
 <footer class="bg-slate-950 border-t border-slate-800/80 py-5 text-center text-xs text-slate-500">
     UNIVERSALPORTAL &copy; 2026 — Барча ҳуқуқлар ҳимояланган
 </footer>
@@ -167,92 +140,94 @@
     const db = getDatabase(app);
 
     const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
+    let selectedId = urlParams.get('id');
     let currentPostData = null;
 
-    // Асосий мақолани юклаш
-    if (postId) {
-        onValue(ref(db, 'all_posts/' + postId), (snapshot) => {
-            const p = snapshot.val();
-            currentPostData = p;
-            const loader = document.getElementById('loader');
-            const mainPost = document.getElementById('mainPost');
-
-            if (p) {
-                loader.classList.add('hidden');
-                mainPost.classList.remove('hidden');
-
-                document.getElementById('postTitle').innerText = p.title || '';
-                document.getElementById('postBody').innerText = p.content || '';
-                document.getElementById('postCat').innerText = p.category || 'Умумий';
-                document.getElementById('postTime').innerText = p.time || 'Яқинда';
-
-                // Расм
-                const img = document.getElementById('postImg');
-                if (p.image) {
-                    img.src = p.image;
-                    img.classList.remove('hidden');
-                } else {
-                    img.classList.add('hidden');
-                }
-
-                // Видео
-                const videoDiv = document.getElementById('videoContainer');
-                if (p.video) {
-                    videoDiv.innerHTML = p.video;
-                    videoDiv.classList.remove('hidden');
-                } else {
-                    videoDiv.classList.add('hidden');
-                }
-
-                // Ҳужжат (Word, Excel, PDF, PPT, PPTX) ёки ҳавола
-                const docContainer = document.getElementById('docContainer');
-                if (p.document && p.document.data && p.document.name) {
-                    docContainer.innerHTML = `
-                        <a href="${p.document.data}" download="${p.document.name}" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg transition">
-                            <i class="fas fa-download"></i> Ҳужжатни юклаб олиш (${p.document.name})
-                        </a>
-                    `;
-                    docContainer.classList.remove('hidden');
-                } else if (p.docUrl) {
-                    docContainer.innerHTML = `
-                        <a href="${p.docUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg transition">
-                            <i class="fas fa-external-link-alt"></i> Ҳужжатни очиш
-                        </a>
-                    `;
-                    docContainer.classList.remove('hidden');
-                } else {
-                    docContainer.innerHTML = '';
-                    docContainer.classList.add('hidden');
-                }
-
-                // Манба ҳаволаси
-                const sourceContainer = document.getElementById('sourceContainer');
-                if (p.source) {
-                    sourceContainer.innerHTML = `
-                        <a href="${p.source}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 underline">
-                            <i class="fas fa-link"></i> Манбага ўтиш
-                        </a>
-                    `;
-                    sourceContainer.classList.remove('hidden');
-                } else {
-                    sourceContainer.innerHTML = '';
-                    sourceContainer.classList.add('hidden');
-                }
-
-                document.title = (p.title || 'Блог') + ' - Universal Portal';
-            } else {
-                loader.innerHTML = `
-                    <p class="text-slate-400 text-sm mb-4">Мақола топилмади.</p>
-                    <a href="index.html" class="inline-block px-4 py-2 bg-sky-600 text-white text-xs font-bold rounded-xl">Асосий саҳифага қайтиш</a>
-                `;
-            }
-        });
-    } else {
-        window.location.href = "index.html";
+    // Фақат янгиликларни ажратиб олувчи фильтр (фильм ва клипларни чиқариб ташлайди)
+    function isNewsItem(item) {
+        if (!item) return false;
+        const raw = `${item.type || ''} ${item.category || ''} ${item.section || ''}`.toLowerCase();
+        if (raw.includes('кино') || raw.includes('фильм') || raw.includes('cinema') || raw.includes('movie')) {
+            return false;
+        }
+        if (raw.includes('клип') || raw.includes('klip') || raw.includes('clip') || raw.includes('мусиқа')) {
+            return false;
+        }
+        return true;
     }
 
-    // Улашиш матни ва ҳаволани нусхалаш
+    function renderMainNews(p) {
+        currentPostData = p;
+        const loader = document.getElementById('loader');
+        const mainPost = document.getElementById('mainPost');
+
+        if (!p) {
+            loader.classList.remove('hidden');
+            mainPost.classList.add('hidden');
+            loader.innerHTML = `<p class="text-slate-400 text-sm">Янгилик топилмади.</p>`;
+            return;
+        }
+
+        loader.classList.add('hidden');
+        mainPost.classList.remove('hidden');
+
+        document.getElementById('postTitle').innerText = p.title || '';
+        document.getElementById('postBody').innerText = p.content || '';
+        document.getElementById('postCat').innerText = p.category || 'Янгилик';
+        document.getElementById('postTime').innerText = p.time || 'Яқинда';
+
+        const img = document.getElementById('postImg');
+        if (p.image) {
+            img.src = p.image;
+            img.classList.remove('hidden');
+        } else {
+            img.classList.add('hidden');
+        }
+
+        const videoDiv = document.getElementById('videoContainer');
+        if (p.video) {
+            videoDiv.innerHTML = p.video;
+            videoDiv.classList.remove('hidden');
+        } else {
+            videoDiv.classList.add('hidden');
+        }
+
+        const docContainer = document.getElementById('docContainer');
+        if (p.document && p.document.data && p.document.name) {
+            docContainer.innerHTML = `
+                <a href="${p.document.data}" download="${p.document.name}" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg transition">
+                    <i class="fas fa-download"></i> Ҳужжатни юклаб олиш (${p.document.name})
+                </a>
+            `;
+            docContainer.classList.remove('hidden');
+        } else if (p.docUrl) {
+            docContainer.innerHTML = `
+                <a href="${p.docUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg transition">
+                    <i class="fas fa-external-link-alt"></i> Ҳужжатни очиш
+                </a>
+            `;
+            docContainer.classList.remove('hidden');
+        } else {
+            docContainer.innerHTML = '';
+            docContainer.classList.add('hidden');
+        }
+
+        const sourceContainer = document.getElementById('sourceContainer');
+        if (p.source) {
+            sourceContainer.innerHTML = `
+                <a href="${p.source}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 underline">
+                    <i class="fas fa-link"></i> Манбага ўтиш
+                </a>
+            `;
+            sourceContainer.classList.remove('hidden');
+        } else {
+            sourceContainer.innerHTML = '';
+            sourceContainer.classList.add('hidden');
+        }
+
+        document.title = (p.title || 'Янгилик') + ' - Universal Portal';
+    }
+
     document.getElementById('copyShareBtn').onclick = async () => {
         if (!currentPostData) return;
         const cleanText = (currentPostData.content || '').replace(/\s+/g, ' ').trim();
@@ -270,7 +245,6 @@
         }
     };
 
-    // Ўнг томонда барча янгиликларнинг қисқача матнларини чиқариш
     onValue(ref(db, 'all_posts'), (snapshot) => {
         const sidebar = document.getElementById('sidebarPosts');
         const countBadge = document.getElementById('sidebarCount');
@@ -281,15 +255,31 @@
         if (!allData) {
             countBadge.innerText = "0";
             sidebar.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Янгиликлар мавжуд эмас.</p>`;
+            renderMainNews(null);
             return;
         }
 
-        const keys = Object.keys(allData).reverse();
-        countBadge.innerText = keys.length;
+        const newsKeys = Object.keys(allData)
+            .filter((id) => isNewsItem(allData[id]))
+            .reverse();
 
-        keys.forEach((id) => {
+        countBadge.innerText = newsKeys.length;
+
+        if (!newsKeys.length) {
+            sidebar.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Ҳозирча янгиликлар йўқ.</p>`;
+            renderMainNews(null);
+            return;
+        }
+
+        if (!selectedId || !allData[selectedId] || !isNewsItem(allData[selectedId])) {
+            selectedId = newsKeys[0];
+        }
+
+        renderMainNews(allData[selectedId]);
+
+        newsKeys.forEach((id) => {
             const item = allData[id];
-            const isCurrent = (id === postId);
+            const isCurrent = (id === selectedId);
             const cleanText = (item.content || '').replace(/\s+/g, ' ').trim();
             const shortText = cleanText.length > 110 ? cleanText.slice(0, 110) + '...' : (cleanText || 'Батафсил маълумотни очиб кўринг.');
 

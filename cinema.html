@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кинотеатр - Universal Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .metallic-text {
+            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .movie-player iframe,
+        .movie-player video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+            display: block;
+            border-radius: 12px;
+            background: #000;
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #020617; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+    </style>
+</head>
+<body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-sky-500 selection:text-black">
+
+<header class="bg-slate-950/90 border-b border-slate-800/90 sticky top-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="logo1.jpg" alt="logo" class="w-10 h-10 rounded-lg border border-slate-700 object-cover" onerror="this.style.display='none'">
+            <div>
+                <span class="text-xl sm:text-2xl font-black tracking-tighter metallic-text uppercase block leading-none">
+                    UNIVERSALPORTAL
+                </span>
+                <span class="text-[10px] tracking-[0.25em] text-slate-500 uppercase block mt-0.5">
+                    КИНОТЕАТР
+                </span>
+            </div>
+        </a>
+
+        <nav class="flex items-center gap-2 sm:gap-3 text-xs font-bold">
+            <a href="post.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Янгиликлар</a>
+            <a href="cinema.html" class="px-3.5 py-2 rounded-full bg-sky-600 text-white">Кинотеатр</a>
+            <a href="klip.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Клиплар</a>
+            <a href="index.html" class="px-3.5 py-2 rounded-full bg-slate-900 border border-slate-700 hover:border-sky-500 text-sky-400 transition">
+                <i class="fas fa-home"></i> Асосий
+            </a>
+        </nav>
+    </div>
+</header>
+
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- ЧАП ТОМОН: ФИЛЬМ ПЛЕЕРИ ВА ТАВСИФИ -->
+        <section class="lg:col-span-8 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl">
+            <div id="movieLoader" class="text-center py-16 text-sky-400">
+                <i class="fas fa-film fa-spin fa-2x mb-3"></i>
+                <p class="text-xs text-slate-400 uppercase tracking-widest">Фильм юкланмоқда...</p>
+            </div>
+
+            <article id="mainMovie" class="hidden">
+                <div id="moviePlayer" class="movie-player mb-6 border border-slate-800 rounded-xl overflow-hidden bg-black"></div>
+
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span id="movieCat" class="inline-block text-[11px] font-extrabold uppercase bg-amber-500/15 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-md"></span>
+                        <span class="text-xs text-slate-400 flex items-center gap-1">
+                            <i class="far fa-clock text-sky-400"></i> <span id="movieTime"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <h1 id="movieTitle" class="text-2xl sm:text-4xl font-black text-white leading-tight mb-4 pb-4 border-b border-slate-800"></h1>
+
+                <div id="movieDesc" class="text-base text-slate-200 leading-relaxed whitespace-pre-line"></div>
+            </article>
+        </section>
+
+        <!-- ЎНГ ТОМОН: БАРЧА ФИЛЬМЛАР РЎЙХАТИ ВА РАСМЛАРИ -->
+        <aside class="lg:col-span-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl lg:sticky lg:top-24">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                <h2 class="text-sm sm:text-base font-black uppercase tracking-wider metallic-text flex items-center gap-2">
+                    <i class="fas fa-video text-sky-400"></i> Барча фильмлар
+                </h2>
+                <span id="movieCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30">0</span>
+            </div>
+
+            <div id="sidebarMovies" class="custom-scroll space-y-3 max-h-[75vh] overflow-y-auto pr-1">
+                <p class="text-center text-xs text-slate-500 py-8">Фильмлар юкланмоқда...</p>
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<footer class="bg-slate-950 border-t border-slate-800/80 py-5 text-center text-xs text-slate-500">
+    UNIVERSALPORTAL &copy; 2026 — Барча ҳуқуқлар ҳимояланган
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO079n6tlKKTXi1LjtSB1t0ddsxDMQUW4",
+        databaseURL: "https://universal-portal-108b7-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "universal-portal-108b7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let selectedMovieId = urlParams.get('id');
+
+    function isMovieItem(item) {
+        if (!item) return false;
+        const raw = `${item.type || ''} ${item.category || ''} ${item.section || ''}`.toLowerCase();
+        return raw.includes('кино') || raw.includes('фильм') || raw.includes('cinema') || raw.includes('movie');
+    }
+
+    function buildPlayerHtml(item) {
+        if (item.video) {
+            if (item.video.trim().startsWith('<')) return item.video;
+            return `<video src="${item.video}" controls preload="metadata"></video>`;
+        }
+        if (item.videoUrl) {
+            return `<video src="${item.videoUrl}" controls preload="metadata"></video>`;
+        }
+        if (item.image) {
+            return `<img src="${item.image}" alt="${item.title || 'Фильм'}" class="w-full max-h-[460px] object-cover">`;
+        }
+        return `<div class="p-12 text-center text-slate-400 text-sm">Видео манбаси киритилмаган.</div>`;
+    }
+
+    function renderMovie(m) {
+        const loader = document.getElementById('movieLoader');
+        const mainMovie = document.getElementById('mainMovie');
+
+        if (!m) {
+            loader.classList.remove('hidden');
+            mainMovie.classList.add('hidden');
+            loader.innerHTML = `<p class="text-slate-400 text-sm">Ҳозирча фильмлар йўқ.</p>`;
+            return;
+        }
+
+        loader.classList.add('hidden');
+        mainMovie.classList.remove('hidden');
+
+        document.getElementById('moviePlayer').innerHTML = buildPlayerHtml(m);
+        document.getElementById('movieTitle').innerText = m.title || 'Номсиз фильм';
+        document.getElementById('movieCat').innerText = m.category || 'Фильм';
+        document.getElementById('movieTime').innerText = m.time || 'Яқинда';
+        document.getElementById('movieDesc').innerText = m.content || m.description || '';
+        document.title = (m.title || 'Кинотеатр') + ' - Universal Portal';
+    }
+
+    onValue(ref(db, 'all_posts'), (snapshot) => {
+        const sidebar = document.getElementById('sidebarMovies');
+        const countBadge = document.getElementById('movieCount');
+        const allData = snapshot.val();
+
+        sidebar.innerHTML = "";
+
+        if (!allData) {
+            countBadge.innerText = "0";
+            renderMovie(null);
+            return;
+        }
+
+        const movieKeys = Object.keys(allData)
+            .filter((id) => isMovieItem(allData[id]))
+            .reverse();
+
+        countBadge.innerText = movieKeys.length;
+
+        if (!movieKeys.length) {
+            sidebar.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Фильмлар топилмади.</p>`;
+            renderMovie(null);
+            return;
+        }
+
+        if (!selectedMovieId || !allData[selectedMovieId] || !isMovieItem(allData[selectedMovieId])) {
+            selectedMovieId = movieKeys[0];
+        }
+
+        renderMovie(allData[selectedMovieId]);
+
+        movieKeys.forEach((id) => {
+            const item = allData[id];
+            const isCurrent = (id === selectedMovieId);
+            const poster = item.image || 'logo1.jpg';
+
+            const card = document.createElement('a');
+            card.href = `cinema.html?id=${id}`;
+            card.className = `flex items-center gap-3 p-2.5 rounded-xl border transition group ${
+                isCurrent
+                    ? 'bg-sky-950/50 border-sky-500/70 shadow-md shadow-sky-900/20'
+                    : 'bg-slate-950/80 border-slate-800/90 hover:border-sky-500/50 hover:bg-slate-950'
+            }`;
+
+            card.innerHTML = `
+                <img src="${poster}" alt="${item.title || 'Фильм'}"
+                     class="w-16 h-20 object-cover rounded-lg border border-slate-800 shrink-0 bg-slate-900"
+                     onerror="this.src='logo1.jpg'">
+                <div class="min-w-0 flex-1">
+                    <span class="inline-block text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 mb-1">
+                        ${item.category || 'Фильм'}
+                    </span>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-100 group-hover:text-sky-400 transition line-clamp-2">
+                        ${item.title || 'Сарлавҳасиз фильм'}
+                    </h3>
+                    <p class="text-[11px] text-slate-500 mt-1">${item.time || ''}</p>
+                </div>
+            `;
+
+            sidebar.appendChild(card);
+        });
+    });
+</script>
+</body>
+</html>
