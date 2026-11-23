@@ -140,7 +140,7 @@
                 </div>
             </div>
 
-            <!-- КИДИРУВ ПАНЕЛИ -->
+            <!-- ҚИДИРУВ ПАНЕЛИ -->
             <div class="w-full max-w-lg mt-6 flex items-center bg-slate-950/90 border-2 border-slate-800 rounded-full p-1.5 shadow-2xl focus-within:border-sky-500 transition">
                 <input type="text" id="searchInput" placeholder="Сайтдан қидириш..." class="w-full bg-transparent px-4 py-2 text-sm text-slate-200 outline-none placeholder-slate-500">
                 <button onclick="searchPosts()" class="px-6 py-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white text-xs font-black uppercase rounded-full shadow-lg transition">
@@ -172,7 +172,7 @@
                     
                     <!-- Пастга очилувчи меню -->
                     <div id="dropdownContent" class="hidden absolute right-0 sm:right-24 top-22 sm:top-2 w-60 bg-slate-900/95 backdrop-blur-md border-2 border-slate-700 rounded-2xl shadow-2xl overflow-hidden z-50">
-                        <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Tabobat', this)">🌿 Табобат</button>
+                        <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Табобат', this)">🌿 Табобат</button>
                         <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Ҳикоялар', this)">📖 Ҳикоялар</button>
                         <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Хангомалар', this)">😄 Хангомалар</button>
                         <button class="w-full text-right px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-sky-600 hover:text-white border-b border-slate-800 transition" onclick="filterCat('Кулинария', this)">🍲 Кулинария</button>
@@ -187,39 +187,39 @@
                     </div>
                 </div>
 
-                <!-- 2-тугма: Ҳаммаси (Оддий меню тугмасидек) -->
+                <!-- 2-тугма: Ҳаммаси -->
                 <div class="flex items-center justify-end space-x-3 sm:-translate-x-8">
-                    <button class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center" onclick="filterCat('all', this)">
+                    <button class="menu-btn biocyte-circle active w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center" onclick="filterCat('all', this)">
                         <i class="fas fa-th-large text-base mb-1"></i>
                         <span class="text-[9px] font-black tracking-wider uppercase leading-tight">Ҳаммаси</span>
                     </button>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 3-тугма: Янгиликлар -->
+                <!-- 3-тугма: Янгиликлар -> post.html -->
                 <div class="flex items-center justify-end space-x-3 sm:-translate-x-14">
-                    <button class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center" onclick="filterCat('Янгиликлар', this)">
+                    <a href="post.html" class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center notranslate" title="Барча янгиликлар">
                         <i class="fas fa-newspaper text-base mb-1"></i>
                         <span class="text-[8.5px] font-black tracking-tight uppercase leading-tight">Янгиликлар</span>
-                    </button>
+                    </a>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 4-тугма: Кинотеатр -->
+                <!-- 4-тугма: Кинотеатр -> cinema.html -->
                 <div class="flex items-center justify-end space-x-3 sm:-translate-x-16">
-                    <button class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center" onclick="filterCat('Кинотеатр', this)">
+                    <a href="cinema.html" class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center notranslate" title="Кинотеатр — Фильмлар">
                         <i class="fas fa-film text-base mb-1"></i>
                         <span class="text-[9px] font-black tracking-tight uppercase leading-tight">Кинотеатр</span>
-                    </button>
+                    </a>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
-                <!-- 5-тугма: Клиплар -->
+                <!-- 5-тугма: Клиплар -> klip.html -->
                 <div class="flex items-center justify-end space-x-3 sm:-translate-x-14">
-                    <button class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center" onclick="filterCat('Клиплар', this)">
+                    <a href="klip.html" class="menu-btn biocyte-circle w-20 h-20 rounded-full flex flex-col items-center justify-center p-1 text-center notranslate" title="Мусиқий клиплар">
                         <i class="fas fa-music text-base mb-1"></i>
                         <span class="text-[9px] font-black tracking-wider uppercase leading-tight">Клиплар</span>
-                    </button>
+                    </a>
                     <div class="node-circle hidden sm:block"></div>
                 </div>
 
@@ -309,6 +309,24 @@
     let currentCategory = 'all';
     let currentSearchTerm = '';
 
+    // Ёзув турини аниқлаш (news | cinema | klip)
+    function getItemType(p) {
+        if (!p) return 'news';
+        if (p.type === 'cinema' || p.type === 'klip' || p.type === 'news') return p.type;
+        const raw = `${p.category || ''} ${p.section || ''}`.toLowerCase();
+        if (raw.includes('кино') || raw.includes('фильм') || raw.includes('cinema')) return 'cinema';
+        if (raw.includes('клип') || raw.includes('klip') || raw.includes('мусиқ')) return 'klip';
+        return 'news';
+    }
+
+    // Карточкани қайси саҳифада очишни белгилаш
+    function getTargetPage(p, id) {
+        const type = getItemType(p);
+        if (type === 'cinema') return `cinema.html?id=${id}`;
+        if (type === 'klip') return `klip.html?id=${id}`;
+        return `post.html?id=${id}`;
+    }
+
     // ТАШРИФЛАРНИ ҲИСОБЛАШ
     async function trackVisitor() {
         if (sessionStorage.getItem("visited")) return;
@@ -352,16 +370,16 @@
     // Мақолаларни олиш
     onValue(ref(db, 'all_posts'), (snapshot) => {
         allPosts = snapshot.val() || {};
-        renderPosts('all');
+        renderPosts(currentCategory, currentSearchTerm);
     });
 
     // Категория бўйича филтрлаш
     window.filterCat = (category, btn) => {
         document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        if (btn) btn.classList.add('active');
         
         const mainBtn = document.getElementById('mainDropBtn');
-        const hiddenCats = ['Tabobat', 'Ҳикоялар', 'Хангомалар', 'Кулинария', 'Шеърият'];
+        const hiddenCats = ['Табобат', 'Tabobat', 'Ҳикоялар', 'Хангомалар', 'Кулинария', 'Шеърият'];
         
         if(hiddenCats.includes(category)) {
             mainBtn.classList.add('active');
@@ -377,7 +395,7 @@
     // Қидириш
     window.searchPosts = () => {
         const searchInputElem = document.getElementById('searchInput');
-        currentSearchTerm = searchInputElem ? searchInputElem.value.toLowerCase() : '';
+        currentSearchTerm = searchInputElem ? searchInputElem.value.toLowerCase().trim() : '';
         renderPosts(currentCategory, currentSearchTerm);
     };
 
@@ -391,9 +409,15 @@
 
         keys.forEach(id => {
             const p = allPosts[id];
-            
-            const matchCat = (category === 'all' || p.category === category);
-            const matchSearch = p.title.toLowerCase().includes(searchTerm);
+            if (!p) return;
+
+            const pCat = (p.category || '').toLowerCase();
+            const matchCat = (
+                category === 'all' ||
+                p.category === category ||
+                (category === 'Табобат' && pCat === 'tabobat')
+            );
+            const matchSearch = !searchTerm || (p.title || '').toLowerCase().includes(searchTerm);
 
             if (matchCat && matchSearch) {
                 found++;
@@ -402,17 +426,25 @@
                 
                 let mediaHtml = "";
                 if (p.image) {
-                    mediaHtml = `<img src="${p.image}" class="w-full h-48 object-cover bg-slate-800" alt="${p.title}" onerror="this.style.display='none'">`;
+                    mediaHtml = `<img src="${p.image}" class="w-full h-48 object-cover bg-slate-800" alt="${p.title || ''}" onerror="this.style.display='none'">`;
                 } else if (p.video) {
                     mediaHtml = `<div class="video-container">${p.video}</div>`;
                 }
+
+                const targetUrl = getTargetPage(p, id);
+                const itemType = getItemType(p);
+                const btnLabel = itemType === 'cinema'
+                    ? 'Фильмни кўриш...'
+                    : itemType === 'klip'
+                        ? 'Клипни кўриш...'
+                        : 'Батафсил ўқиш...';
 
                 card.innerHTML = `
                     <div>
                         ${mediaHtml}
                         <div class="p-5">
                             ${p.category ? `<span class="inline-block text-[10px] font-extrabold uppercase bg-sky-600/20 text-sky-400 border border-sky-500/30 px-2.5 py-1 rounded-md mb-3">${p.category}</span>` : ''}
-                            <h2 class="text-base sm:text-lg font-bold text-slate-100 line-clamp-2 leading-snug mb-3">${p.title}</h2>
+                            <h2 class="text-base sm:text-lg font-bold text-slate-100 line-clamp-2 leading-snug mb-3">${p.title || ''}</h2>
                         </div>
                     </div>
                     <div class="px-5 pb-5 pt-0">
@@ -420,8 +452,8 @@
                             <span><i class="far fa-clock text-sky-400 mr-1"></i> ${p.time || 'Яқинда'}</span>
                             <span><i class="fas fa-eye text-sky-400 mr-1"></i> ${p.views || 0}</span>
                         </div>
-                        <a href="post.html?id=${id}" class="block w-full text-center py-2 bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white text-xs font-bold rounded-xl transition">
-                            Батафсил ўқиш...
+                        <a href="${targetUrl}" class="block w-full text-center py-2 bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white text-xs font-bold rounded-xl transition">
+                            ${btnLabel}
                         </a>
                     </div>
                 `;
