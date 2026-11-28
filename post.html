@@ -15,18 +15,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        .metallic-text {
-            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
         }
         .post-video-container {
-            margin: 24px 0;
-            background: #000;
-            border-radius: 12px;
+            margin: 20px 0;
+            background: #111827;
             overflow: hidden;
             width: 100%;
-            border: 1px solid #1e293b;
+            border: 1px solid #d1d5db;
         }
         .post-video-container iframe,
         .post-video-container video {
@@ -36,95 +34,125 @@
             display: block;
         }
         .custom-scroll::-webkit-scrollbar { width: 6px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #020617; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f3f4f6; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #7e22ce; }
     </style>
 </head>
-<body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-sky-500 selection:text-black">
+<body class="font-sans min-h-screen flex flex-col">
 
-<header class="bg-slate-950/90 border-b border-slate-800/90 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+<!-- АСОСИЙ ПОРТАЛ КОНТЕЙНЕРИ -->
+<div class="max-w-6xl w-full mx-auto bg-white shadow-xl my-4 border border-gray-200 flex-1 flex flex-col">
+
+    <!-- 1. ЛОГОТИП ВА ҚИДИРУВ ҚАТОРИ -->
+    <header class="px-5 py-5 border-b border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
         <a href="index.html" class="flex items-center gap-3">
-            <img src="logo1.jpg" alt="logo" class="w-10 h-10 rounded-lg border border-slate-700 object-cover" onerror="this.style.display='none'">
-            <div>
-                <span class="text-xl sm:text-2xl font-black tracking-tighter metallic-text uppercase block leading-none">
-                    UNIVERSALPORTAL
-                </span>
-                <span class="text-[10px] tracking-[0.25em] text-slate-500 uppercase block mt-0.5">
-                    ЯНГИЛИКЛАР БЎЛИМИ
+            <img src="logo1.jpg" alt="logo" class="w-12 h-12 object-cover border border-gray-300" onerror="this.style.display='none'">
+            <div class="notranslate">
+                <div class="text-2xl sm:text-3xl font-black tracking-tight leading-none">
+                    <span class="text-gray-900">Universal</span><span class="text-purple-700 font-light">Portal</span>
+                </div>
+                <span class="text-[10px] uppercase tracking-[0.22em] text-gray-500 block mt-1">
+                    Information &amp; Digital Media
                 </span>
             </div>
         </a>
 
-        <nav class="flex items-center gap-2 sm:gap-3 text-xs font-bold">
-            <a href="post.html" class="px-3.5 py-2 rounded-full bg-sky-600 text-white">Янгиликлар</a>
-            <a href="cinema.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Кинотеатр</a>
-            <a href="klip.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Клиплар</a>
-            <a href="index.html" class="px-3.5 py-2 rounded-full bg-slate-900 border border-slate-700 hover:border-sky-500 text-sky-400 transition">
-                <i class="fas fa-home"></i> Асосий
-            </a>
-        </nav>
-    </div>
-</header>
+        <div class="w-full md:w-80 flex items-center bg-gray-100 border border-gray-300 p-1">
+            <input type="text" id="sidebarSearch" oninput="renderSidebarList()" placeholder="Янгиликлардан излаш..." class="w-full bg-transparent px-3 py-1 text-xs text-gray-800 outline-none">
+            <span class="text-gray-400 px-2 text-xs"><i class="fas fa-search"></i></span>
+        </div>
+    </header>
 
-<main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <!-- 2. НАВИГАЦИЯ ПАНЕЛИ -->
+    <nav class="bg-[#222222] text-white flex flex-wrap items-center justify-between">
+        <div class="flex flex-wrap items-center">
+            <a href="index.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 flex items-center gap-2 transition">
+                <i class="fas fa-home text-purple-400"></i> Асосий
+            </a>
+            <a href="post.html" class="bg-purple-700 px-4 py-3 text-xs font-bold uppercase tracking-wider border-r border-gray-800 transition">
+                Янгиликлар
+            </a>
+            <a href="cinema.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+                Кинотеатр
+            </a>
+            <a href="klip.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+                Клиплар
+            </a>
+            <a href="gallery.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+                Галерея
+            </a>
+            <a href="chat.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] transition">
+                Чат ва Мурожаат
+            </a>
+        </div>
+    </nav>
+
+    <!-- 3. АСОСИЙ КОНТЕНТ -->
+    <main class="flex-1 p-5 grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
 
         <!-- ЧАП ТОМОН: ТАНЛАНГАН ЯНГИЛИК -->
-        <section class="lg:col-span-8 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl">
-            <div id="loader" class="text-center py-16 text-sky-400">
+        <section class="lg:col-span-8 bg-white border border-gray-200 p-5 sm:p-7">
+            <div id="loader" class="text-center py-16 text-purple-700">
                 <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
-                <p class="text-xs text-slate-400 uppercase tracking-widest">Янгилик юкланмоқда...</p>
+                <p class="text-xs text-gray-500 uppercase tracking-widest">Янгилик юкланмоқда...</p>
             </div>
 
             <article id="mainPost" class="hidden">
-                <img id="postImg" class="w-full max-h-[480px] object-cover rounded-xl border border-slate-800 mb-6 hidden bg-slate-950" alt="Янгилик расми">
+                <img id="postImg" class="w-full max-h-[460px] object-cover border border-gray-200 mb-5 hidden bg-gray-100" alt="Янгилик расми">
 
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <div class="flex flex-wrap items-center gap-2">
-                        <span id="postCat" class="inline-block text-[11px] font-extrabold uppercase bg-sky-600/20 text-sky-400 border border-sky-500/30 px-3 py-1 rounded-md"></span>
-                        <span class="text-xs text-slate-400 flex items-center gap-1">
-                            <i class="far fa-calendar-alt text-sky-400"></i> <span id="postTime"></span>
+                        <span id="postCat" class="inline-block text-[10px] font-extrabold uppercase bg-purple-700 text-white px-2.5 py-1"></span>
+                        <span class="text-xs text-gray-500 flex items-center gap-1">
+                            <i class="far fa-calendar-alt text-purple-700"></i> <span id="postTime"></span>
                         </span>
                     </div>
 
-                    <button type="button" id="copyShareBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white text-xs font-bold transition flex items-center gap-1.5">
+                    <button type="button" id="copyShareBtn" class="px-3 py-1.5 bg-[#222222] hover:bg-purple-700 text-white text-xs font-bold transition flex items-center gap-1.5">
                         <i class="fab fa-telegram-plane"></i> <span id="copyShareText">Улашиш матнини нусхалаш</span>
                     </button>
                 </div>
 
-                <h1 id="postTitle" class="text-2xl sm:text-4xl font-black text-white leading-tight mb-6 pb-4 border-b border-slate-800"></h1>
+                <h1 id="postTitle" class="text-2xl sm:text-3xl font-black text-gray-900 leading-tight mb-5 pb-4 border-b-2 border-purple-700"></h1>
 
                 <div id="videoContainer" class="post-video-container hidden"></div>
 
-                <div id="postBody" class="text-base sm:text-lg text-slate-200 leading-relaxed whitespace-pre-line"></div>
+                <div id="postBody" class="text-base text-gray-800 leading-relaxed whitespace-pre-line"></div>
 
-                <div id="docContainer" class="mt-8 pt-6 border-t border-slate-800 flex flex-wrap gap-3 hidden"></div>
+                <div id="docContainer" class="mt-7 pt-5 border-t border-gray-200 flex flex-wrap gap-3 hidden"></div>
                 <div id="sourceContainer" class="mt-4 hidden"></div>
             </article>
         </section>
 
         <!-- ЎНГ ТОМОН: БАРЧА ЯНГИЛИКЛАР РЎЙХАТИ -->
-        <aside class="lg:col-span-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl lg:sticky lg:top-24">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                <h2 class="text-sm sm:text-base font-black uppercase tracking-wider metallic-text flex items-center gap-2">
-                    <i class="fas fa-newspaper text-sky-400"></i> Барча янгиликлар
+        <aside class="lg:col-span-4 bg-gray-50 border border-gray-200 p-4 lg:sticky lg:top-4">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-purple-700">
+                <h2 class="text-sm font-black uppercase tracking-wider text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-newspaper text-purple-700"></i> Барча янгиликлар
                 </h2>
-                <span id="sidebarCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30">0</span>
+                <span id="sidebarCount" class="text-[11px] font-bold px-2 py-0.5 bg-purple-700 text-white">0</span>
             </div>
 
-            <div id="sidebarPosts" class="custom-scroll space-y-3 max-h-[75vh] overflow-y-auto pr-1">
-                <p class="text-center text-xs text-slate-500 py-8">Янгиликлар юкланмоқда...</p>
+            <div id="sidebarPosts" class="custom-scroll space-y-2.5 max-h-[72vh] overflow-y-auto pr-1">
+                <p class="text-center text-xs text-gray-500 py-8">Янгиликлар юкланмоқда...</p>
             </div>
         </aside>
 
-    </div>
-</main>
+    </main>
 
-<footer class="bg-slate-950 border-t border-slate-800/80 py-5 text-center text-xs text-slate-500">
-    UNIVERSALPORTAL &copy; 2026 — Барча ҳуқуқлар ҳимояланган
-</footer>
+    <!-- 4. FOOTER -->
+    <footer class="bg-[#222222] text-gray-300 text-xs px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>© 2026 <strong>Universalportal</strong>. Барча ҳуқуқлар ҳимояланган.</p>
+        <div class="flex gap-4">
+            <a href="index.html" class="hover:text-white">Асосий</a>
+            <a href="cinema.html" class="hover:text-white">Кинотеатр</a>
+            <a href="klip.html" class="hover:text-white">Клиплар</a>
+            <a href="chat.html" class="hover:text-white">Мурожаат</a>
+        </div>
+    </footer>
+
+</div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -142,8 +170,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     let selectedId = urlParams.get('id');
     let currentPostData = null;
+    let cachedNewsKeys = [];
+    let cachedAllData = null;
 
-    // Фақат янгиликларни ажратиб олувчи фильтр (фильм ва клипларни чиқариб ташлайди)
     function isNewsItem(item) {
         if (!item) return false;
         const raw = `${item.type || ''} ${item.category || ''} ${item.section || ''}`.toLowerCase();
@@ -164,7 +193,7 @@
         if (!p) {
             loader.classList.remove('hidden');
             mainPost.classList.add('hidden');
-            loader.innerHTML = `<p class="text-slate-400 text-sm">Янгилик топилмади.</p>`;
+            loader.innerHTML = `<p class="text-gray-500 text-sm">Янгилик топилмади.</p>`;
             return;
         }
 
@@ -195,14 +224,14 @@
         const docContainer = document.getElementById('docContainer');
         if (p.document && p.document.data && p.document.name) {
             docContainer.innerHTML = `
-                <a href="${p.document.data}" download="${p.document.name}" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg transition">
+                <a href="${p.document.data}" download="${p.document.name}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold uppercase tracking-wider transition">
                     <i class="fas fa-download"></i> Ҳужжатни юклаб олиш (${p.document.name})
                 </a>
             `;
             docContainer.classList.remove('hidden');
         } else if (p.docUrl) {
             docContainer.innerHTML = `
-                <a href="${p.docUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-lg transition">
+                <a href="${p.docUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 bg-[#222222] hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-wider transition">
                     <i class="fas fa-external-link-alt"></i> Ҳужжатни очиш
                 </a>
             `;
@@ -215,7 +244,7 @@
         const sourceContainer = document.getElementById('sourceContainer');
         if (p.source) {
             sourceContainer.innerHTML = `
-                <a href="${p.source}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 underline">
+                <a href="${p.source}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-700 hover:underline">
                     <i class="fas fa-link"></i> Манбага ўтиш
                 </a>
             `;
@@ -227,6 +256,63 @@
 
         document.title = (p.title || 'Янгилик') + ' - Universal Portal';
     }
+
+    window.renderSidebarList = function() {
+        const sidebar = document.getElementById('sidebarPosts');
+        const query = (document.getElementById('sidebarSearch')?.value || '').toLowerCase().trim();
+        sidebar.innerHTML = "";
+
+        if (!cachedAllData || !cachedNewsKeys.length) {
+            sidebar.innerHTML = `<p class="text-center text-xs text-gray-500 py-8">Ҳозирча янгиликлар йўқ.</p>`;
+            return;
+        }
+
+        const filtered = cachedNewsKeys.filter((id) => {
+            const item = cachedAllData[id];
+            if (!query) return true;
+            return (item.title || '').toLowerCase().includes(query) ||
+                   (item.category || '').toLowerCase().includes(query);
+        });
+
+        if (!filtered.length) {
+            sidebar.innerHTML = `<p class="text-center text-xs text-gray-500 py-6">Мос янгилик топилмади.</p>`;
+            return;
+        }
+
+        filtered.forEach((id) => {
+            const item = cachedAllData[id];
+            const isCurrent = (id === selectedId);
+            const cleanText = (item.content || '').replace(/\s+/g, ' ').trim();
+            const shortText = cleanText.length > 95 ? cleanText.slice(0, 95) + '...' : (cleanText || 'Батафсил маълумотни очиб кўринг.');
+
+            const cardLink = document.createElement('a');
+            cardLink.href = `post.html?id=${id}`;
+            cardLink.className = `block p-3 border transition group ${
+                isCurrent
+                    ? 'bg-white border-purple-700 shadow-sm'
+                    : 'bg-white border-gray-200 hover:border-purple-700'
+            }`;
+
+            cardLink.innerHTML = `
+                <div class="flex items-center justify-between gap-2 mb-1">
+                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 ${
+                        isCurrent ? 'bg-purple-700 text-white' : 'bg-gray-200 text-gray-700'
+                    }">
+                        ${item.category || 'Янгилик'}
+                    </span>
+                    <span class="text-[10px] text-gray-400">${item.time || ''}</span>
+                </div>
+                <h3 class="text-xs font-bold text-gray-900 group-hover:text-purple-700 transition line-clamp-2 mb-1">
+                    ${isCurrent ? '<i class="fas fa-caret-right text-purple-700 mr-1"></i>' : ''}${item.title || 'Сарлавҳасиз'}
+                </h3>
+                <p class="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                    ${shortText}
+                </p>
+            `;
+
+            sidebar.appendChild(cardLink);
+        });
+    };
 
     document.getElementById('copyShareBtn').onclick = async () => {
         if (!currentPostData) return;
@@ -246,68 +332,36 @@
     };
 
     onValue(ref(db, 'all_posts'), (snapshot) => {
-        const sidebar = document.getElementById('sidebarPosts');
         const countBadge = document.getElementById('sidebarCount');
         const allData = snapshot.val();
-
-        sidebar.innerHTML = "";
+        cachedAllData = allData;
 
         if (!allData) {
             countBadge.innerText = "0";
-            sidebar.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Янгиликлар мавжуд эмас.</p>`;
+            cachedNewsKeys = [];
+            renderSidebarList();
             renderMainNews(null);
             return;
         }
 
-        const newsKeys = Object.keys(allData)
+        cachedNewsKeys = Object.keys(allData)
             .filter((id) => isNewsItem(allData[id]))
             .reverse();
 
-        countBadge.innerText = newsKeys.length;
+        countBadge.innerText = cachedNewsKeys.length;
 
-        if (!newsKeys.length) {
-            sidebar.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Ҳозирча янгиликлар йўқ.</p>`;
+        if (!cachedNewsKeys.length) {
+            renderSidebarList();
             renderMainNews(null);
             return;
         }
 
         if (!selectedId || !allData[selectedId] || !isNewsItem(allData[selectedId])) {
-            selectedId = newsKeys[0];
+            selectedId = cachedNewsKeys[0];
         }
 
         renderMainNews(allData[selectedId]);
-
-        newsKeys.forEach((id) => {
-            const item = allData[id];
-            const isCurrent = (id === selectedId);
-            const cleanText = (item.content || '').replace(/\s+/g, ' ').trim();
-            const shortText = cleanText.length > 110 ? cleanText.slice(0, 110) + '...' : (cleanText || 'Батафсил маълумотни очиб кўринг.');
-
-            const cardLink = document.createElement('a');
-            cardLink.href = `post.html?id=${id}`;
-            cardLink.className = `block p-3.5 rounded-xl border transition group ${
-                isCurrent
-                    ? 'bg-sky-950/50 border-sky-500/70 shadow-md shadow-sky-900/20'
-                    : 'bg-slate-950/80 border-slate-800/90 hover:border-sky-500/50 hover:bg-slate-950'
-            }`;
-
-            cardLink.innerHTML = `
-                <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-sky-500/15 text-sky-400">
-                        ${item.category || 'Янгилик'}
-                    </span>
-                    <span class="text-[10px] text-slate-500">${item.time || ''}</span>
-                </div>
-                <h3 class="text-xs sm:text-sm font-bold text-slate-100 group-hover:text-sky-400 transition line-clamp-2 mb-1">
-                    ${isCurrent ? '<i class="fas fa-circle text-[7px] text-sky-400 mr-1 align-middle"></i>' : ''}${item.title || 'Сарлавҳасиз'}
-                </h3>
-                <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">
-                    ${shortText}
-                </p>
-            `;
-
-            sidebar.appendChild(cardLink);
-        });
+        renderSidebarList();
     });
 </script>
 </body>

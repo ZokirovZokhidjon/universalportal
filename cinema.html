@@ -7,10 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .metallic-text {
-            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
         }
         .movie-player iframe,
         .movie-player video {
@@ -18,90 +17,117 @@
             aspect-ratio: 16/9;
             border: none;
             display: block;
-            border-radius: 12px;
-            background: #000;
+            background: #111827;
         }
         .custom-scroll::-webkit-scrollbar { width: 6px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #020617; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f3f4f6; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #7e22ce; }
     </style>
 </head>
-<body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-sky-500 selection:text-black">
+<body class="font-sans min-h-screen flex flex-col">
 
-<header class="bg-slate-950/90 border-b border-slate-800/90 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+<!-- АСОСИЙ ПОРТАЛ КОНТЕЙНЕРИ -->
+<div class="max-w-6xl w-full mx-auto bg-white shadow-xl my-4 border border-gray-200 flex-1 flex flex-col">
+
+    <!-- 1. ЛОГОТИП ВА БРЕНД ҚАТОРИ -->
+    <header class="px-5 py-5 border-b border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
         <a href="index.html" class="flex items-center gap-3">
-            <img src="logo1.jpg" alt="logo" class="w-10 h-10 rounded-lg border border-slate-700 object-cover" onerror="this.style.display='none'">
-            <div>
-                <span class="text-xl sm:text-2xl font-black tracking-tighter metallic-text uppercase block leading-none">
-                    UNIVERSALPORTAL
-                </span>
-                <span class="text-[10px] tracking-[0.25em] text-slate-500 uppercase block mt-0.5">
-                    КИНОТЕАТР
+            <img src="logo1.jpg" alt="logo" class="w-12 h-12 object-cover border border-gray-300" onerror="this.style.display='none'">
+            <div class="notranslate">
+                <div class="text-2xl sm:text-3xl font-black tracking-tight leading-none">
+                    <span class="text-gray-900">Universal</span><span class="text-purple-700 font-light">Portal</span>
+                </div>
+                <span class="text-[10px] uppercase tracking-[0.22em] text-gray-500 block mt-1">
+                    Кинотеатр
                 </span>
             </div>
         </a>
 
-        <nav class="flex items-center gap-2 sm:gap-3 text-xs font-bold">
-            <a href="post.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Янгиликлар</a>
-            <a href="cinema.html" class="px-3.5 py-2 rounded-full bg-sky-600 text-white">Кинотеатр</a>
-            <a href="klip.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Клиплар</a>
-            <a href="index.html" class="px-3.5 py-2 rounded-full bg-slate-900 border border-slate-700 hover:border-sky-500 text-sky-400 transition">
-                <i class="fas fa-home"></i> Асосий
-            </a>
-        </nav>
-    </div>
-</header>
+        <div class="w-full md:w-80 flex items-center bg-gray-100 border border-gray-300 p-1">
+            <input type="text" id="movieSearch" oninput="renderMoviesList()" placeholder="Фильмлардан излаш..." class="w-full bg-transparent px-3 py-1 text-xs text-gray-800 outline-none">
+            <span class="text-gray-400 px-2 text-xs"><i class="fas fa-search"></i></span>
+        </div>
+    </header>
 
-<main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <!-- 2. НАВИГАЦИЯ ПАНЕЛИ -->
+    <nav class="bg-[#222222] text-white flex flex-wrap items-center">
+        <a href="index.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 flex items-center gap-2 transition">
+            <i class="fas fa-home text-purple-400"></i> Асосий
+        </a>
+        <a href="post.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+            Янгиликлар
+        </a>
+        <a href="cinema.html" class="bg-purple-700 px-4 py-3 text-xs font-bold uppercase tracking-wider border-r border-gray-800 transition">
+            Кинотеатр
+        </a>
+        <a href="klip.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+            Клиплар
+        </a>
+        <a href="gallery.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+            Галерея
+        </a>
+        <a href="chat.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] transition">
+            Чат ва Мурожаат
+        </a>
+    </nav>
+
+    <!-- 3. АСОСИЙ КОНТЕНТ -->
+    <main class="flex-1 p-5 grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
 
         <!-- ЧАП ТОМОН: ФИЛЬМ ПЛЕЕРИ ВА ТАВСИФИ -->
-        <section class="lg:col-span-8 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl">
-            <div id="movieLoader" class="text-center py-16 text-sky-400">
+        <section class="lg:col-span-8 bg-white border border-gray-200 p-5 sm:p-7">
+            <div id="movieLoader" class="text-center py-16 text-purple-700">
                 <i class="fas fa-film fa-spin fa-2x mb-3"></i>
-                <p class="text-xs text-slate-400 uppercase tracking-widest">Фильм юкланмоқда...</p>
+                <p class="text-xs text-gray-500 uppercase tracking-widest">Фильм юкланмоқда...</p>
             </div>
 
             <article id="mainMovie" class="hidden">
-                <div id="moviePlayer" class="movie-player mb-6 border border-slate-800 rounded-xl overflow-hidden bg-black"></div>
+                <div id="moviePlayer" class="movie-player mb-5 border border-gray-300 overflow-hidden bg-gray-950"></div>
 
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <div class="flex flex-wrap items-center gap-2">
-                        <span id="movieCat" class="inline-block text-[11px] font-extrabold uppercase bg-amber-500/15 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-md"></span>
-                        <span class="text-xs text-slate-400 flex items-center gap-1">
-                            <i class="far fa-clock text-sky-400"></i> <span id="movieTime"></span>
+                        <span id="movieCat" class="inline-block text-[10px] font-extrabold uppercase bg-purple-700 text-white px-2.5 py-1"></span>
+                        <span class="text-xs text-gray-500 flex items-center gap-1">
+                            <i class="far fa-clock text-purple-700"></i> <span id="movieTime"></span>
                         </span>
                     </div>
                 </div>
 
-                <h1 id="movieTitle" class="text-2xl sm:text-4xl font-black text-white leading-tight mb-4 pb-4 border-b border-slate-800"></h1>
+                <h1 id="movieTitle" class="text-2xl sm:text-3xl font-black text-gray-900 leading-tight mb-4 pb-3 border-b-2 border-purple-700"></h1>
 
-                <div id="movieDesc" class="text-base text-slate-200 leading-relaxed whitespace-pre-line"></div>
+                <div id="movieDesc" class="text-base text-gray-800 leading-relaxed whitespace-pre-line"></div>
             </article>
         </section>
 
         <!-- ЎНГ ТОМОН: БАРЧА ФИЛЬМЛАР РЎЙХАТИ ВА РАСМЛАРИ -->
-        <aside class="lg:col-span-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl lg:sticky lg:top-24">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                <h2 class="text-sm sm:text-base font-black uppercase tracking-wider metallic-text flex items-center gap-2">
-                    <i class="fas fa-video text-sky-400"></i> Барча фильмлар
+        <aside class="lg:col-span-4 bg-gray-50 border border-gray-200 p-4 lg:sticky lg:top-4">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-purple-700">
+                <h2 class="text-sm font-black uppercase tracking-wider text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-video text-purple-700"></i> Барча фильмлар
                 </h2>
-                <span id="movieCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30">0</span>
+                <span id="movieCount" class="text-[11px] font-bold px-2 py-0.5 bg-purple-700 text-white">0</span>
             </div>
 
-            <div id="sidebarMovies" class="custom-scroll space-y-3 max-h-[75vh] overflow-y-auto pr-1">
-                <p class="text-center text-xs text-slate-500 py-8">Фильмлар юкланмоқда...</p>
+            <div id="sidebarMovies" class="custom-scroll space-y-2.5 max-h-[72vh] overflow-y-auto pr-1">
+                <p class="text-center text-xs text-gray-500 py-8">Фильмлар юкланмоқда...</p>
             </div>
         </aside>
 
-    </div>
-</main>
+    </main>
 
-<footer class="bg-slate-950 border-t border-slate-800/80 py-5 text-center text-xs text-slate-500">
-    UNIVERSALPORTAL &copy; 2026 — Барча ҳуқуқлар ҳимояланган
-</footer>
+    <!-- 4. FOOTER -->
+    <footer class="bg-[#222222] text-gray-300 text-xs px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>© 2026 <strong>Universalportal</strong>. Барча ҳуқуқлар ҳимояланган.</p>
+        <div class="flex gap-4">
+            <a href="index.html" class="hover:text-white">Асосий</a>
+            <a href="post.html" class="hover:text-white">Янгиликлар</a>
+            <a href="klip.html" class="hover:text-white">Клиплар</a>
+            <a href="chat.html" class="hover:text-white">Мурожаат</a>
+        </div>
+    </footer>
+
+</div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -118,6 +144,8 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     let selectedMovieId = urlParams.get('id');
+    let cachedAllData = null;
+    let cachedMovieKeys = [];
 
     function isMovieItem(item) {
         if (!item) return false;
@@ -136,7 +164,7 @@
         if (item.image) {
             return `<img src="${item.image}" alt="${item.title || 'Фильм'}" class="w-full max-h-[460px] object-cover">`;
         }
-        return `<div class="p-12 text-center text-slate-400 text-sm">Видео манбаси киритилмаган.</div>`;
+        return `<div class="p-12 text-center text-gray-400 text-sm">Видео манбаси киритилмаган.</div>`;
     }
 
     function renderMovie(m) {
@@ -146,7 +174,7 @@
         if (!m) {
             loader.classList.remove('hidden');
             mainMovie.classList.add('hidden');
-            loader.innerHTML = `<p class="text-slate-400 text-sm">Ҳозирча фильмлар йўқ.</p>`;
+            loader.innerHTML = `<p class="text-gray-500 text-sm">Ҳозирча фильмлар йўқ.</p>`;
             return;
         }
 
@@ -161,67 +189,93 @@
         document.title = (m.title || 'Кинотеатр') + ' - Universal Portal';
     }
 
-    onValue(ref(db, 'all_posts'), (snapshot) => {
+    window.renderMoviesList = function() {
         const sidebar = document.getElementById('sidebarMovies');
-        const countBadge = document.getElementById('movieCount');
-        const allData = snapshot.val();
-
+        const query = (document.getElementById('movieSearch')?.value || '').toLowerCase().trim();
         sidebar.innerHTML = "";
 
-        if (!allData) {
-            countBadge.innerText = "0";
-            renderMovie(null);
+        if (!cachedAllData || !cachedMovieKeys.length) {
+            sidebar.innerHTML = `<p class="text-center text-xs text-gray-500 py-8">Фильмлар топилмади.</p>`;
             return;
         }
 
-        const movieKeys = Object.keys(allData)
-            .filter((id) => isMovieItem(allData[id]))
-            .reverse();
+        const filtered = cachedMovieKeys.filter((id) => {
+            const item = cachedAllData[id];
+            if (!query) return true;
+            return (item.title || '').toLowerCase().includes(query) ||
+                   (item.category || '').toLowerCase().includes(query);
+        });
 
-        countBadge.innerText = movieKeys.length;
-
-        if (!movieKeys.length) {
-            sidebar.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Фильмлар топилмади.</p>`;
-            renderMovie(null);
+        if (!filtered.length) {
+            sidebar.innerHTML = `<p class="text-center text-xs text-gray-500 py-6">Мос фильм топилмади.</p>`;
             return;
         }
 
-        if (!selectedMovieId || !allData[selectedMovieId] || !isMovieItem(allData[selectedMovieId])) {
-            selectedMovieId = movieKeys[0];
-        }
-
-        renderMovie(allData[selectedMovieId]);
-
-        movieKeys.forEach((id) => {
-            const item = allData[id];
+        filtered.forEach((id) => {
+            const item = cachedAllData[id];
             const isCurrent = (id === selectedMovieId);
             const poster = item.image || 'logo1.jpg';
 
             const card = document.createElement('a');
             card.href = `cinema.html?id=${id}`;
-            card.className = `flex items-center gap-3 p-2.5 rounded-xl border transition group ${
+            card.className = `flex items-center gap-3 p-2.5 border transition group ${
                 isCurrent
-                    ? 'bg-sky-950/50 border-sky-500/70 shadow-md shadow-sky-900/20'
-                    : 'bg-slate-950/80 border-slate-800/90 hover:border-sky-500/50 hover:bg-slate-950'
+                    ? 'bg-white border-purple-700 shadow-sm'
+                    : 'bg-white border-gray-200 hover:border-purple-700'
             }`;
 
             card.innerHTML = `
                 <img src="${poster}" alt="${item.title || 'Фильм'}"
-                     class="w-16 h-20 object-cover rounded-lg border border-slate-800 shrink-0 bg-slate-900"
+                     class="w-16 h-20 object-cover border border-gray-200 shrink-0 bg-gray-100"
                      onerror="this.src='logo1.jpg'">
                 <div class="min-w-0 flex-1">
-                    <span class="inline-block text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 mb-1">
+                    <span class="inline-block text-[10px] font-bold uppercase px-2 py-0.5 mb-1 ${
+                        isCurrent ? 'bg-purple-700 text-white' : 'bg-gray-200 text-gray-700'
+                    }">
                         ${item.category || 'Фильм'}
                     </span>
-                    <h3 class="text-xs sm:text-sm font-bold text-slate-100 group-hover:text-sky-400 transition line-clamp-2">
+                    <h3 class="text-xs font-bold text-gray-900 group-hover:text-purple-700 transition line-clamp-2">
                         ${item.title || 'Сарлавҳасиз фильм'}
                     </h3>
-                    <p class="text-[11px] text-slate-500 mt-1">${item.time || ''}</p>
+                    <p class="text-[10px] text-gray-400 mt-1">${item.time || ''}</p>
                 </div>
             `;
 
             sidebar.appendChild(card);
         });
+    };
+
+    onValue(ref(db, 'all_posts'), (snapshot) => {
+        const countBadge = document.getElementById('movieCount');
+        const allData = snapshot.val();
+        cachedAllData = allData;
+
+        if (!allData) {
+            countBadge.innerText = "0";
+            cachedMovieKeys = [];
+            renderMoviesList();
+            renderMovie(null);
+            return;
+        }
+
+        cachedMovieKeys = Object.keys(allData)
+            .filter((id) => isMovieItem(allData[id]))
+            .reverse();
+
+        countBadge.innerText = cachedMovieKeys.length;
+
+        if (!cachedMovieKeys.length) {
+            renderMoviesList();
+            renderMovie(null);
+            return;
+        }
+
+        if (!selectedMovieId || !allData[selectedMovieId] || !isMovieItem(allData[selectedMovieId])) {
+            selectedMovieId = cachedMovieKeys[0];
+        }
+
+        renderMovie(allData[selectedMovieId]);
+        renderMoviesList();
     });
 </script>
 </body>

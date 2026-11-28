@@ -7,119 +7,144 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .metallic-text {
-            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 50%, #475569 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
         }
         .indicator-dot {
             width: 8px;
             height: 8px;
             border-radius: 9999px;
-            background-color: rgba(255, 255, 255, 0.35);
+            background-color: rgba(255, 255, 255, 0.45);
             cursor: pointer;
             transition: all 0.25s ease;
         }
         .indicator-dot.active {
             width: 24px;
-            background-color: #10b981;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.75);
+            background-color: #7e22ce;
+            box-shadow: 0 0 10px rgba(126, 34, 206, 0.75);
         }
     </style>
 </head>
-<body class="bg-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
+<body class="font-sans min-h-screen flex flex-col">
 
-<header class="bg-slate-950/90 border-b border-slate-800/90 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+<!-- АСОСИЙ ПОРТАЛ КОНТЕЙНЕРИ -->
+<div class="max-w-6xl w-full mx-auto bg-white shadow-xl my-4 border border-gray-200 flex-1 flex flex-col">
+
+    <!-- 1. ЛОГОТИП ВА БРЕНД ҚАТОРИ -->
+    <header class="px-5 py-5 border-b border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
         <a href="index.html" class="flex items-center gap-3">
-            <img src="logo1.jpg" alt="logo" class="w-10 h-10 rounded-lg border border-slate-700 object-cover" onerror="this.style.display='none'">
-            <div>
-                <span class="text-xl sm:text-2xl font-black tracking-tighter metallic-text uppercase block leading-none">
-                    UNIVERSALPORTAL
-                </span>
-                <span class="text-[10px] tracking-[0.25em] text-emerald-400 uppercase block mt-0.5">
-                    ФОТО ГАЛЕРЕЯ
+            <img src="logo1.jpg" alt="logo" class="w-12 h-12 object-cover border border-gray-300" onerror="this.style.display='none'">
+            <div class="notranslate">
+                <div class="text-2xl sm:text-3xl font-black tracking-tight leading-none">
+                    <span class="text-gray-900">Universal</span><span class="text-purple-700 font-light">Portal</span>
+                </div>
+                <span class="text-[10px] uppercase tracking-[0.22em] text-gray-500 block mt-1">
+                    Фото галерея
                 </span>
             </div>
         </a>
 
-        <nav class="flex flex-wrap items-center gap-2 text-xs font-bold">
-            <a href="post.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Янгиликлар</a>
-            <a href="cinema.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Кинотеатр</a>
-            <a href="klip.html" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Клиплар</a>
-            <a href="gallery.html" class="px-3.5 py-2 rounded-full bg-emerald-600 text-white">Галерея</a>
-            <a href="index.html" class="px-3.5 py-2 rounded-full bg-slate-900 border border-slate-700 hover:border-sky-500 text-sky-400 transition">
-                <i class="fas fa-home"></i> Асосий
-            </a>
-        </nav>
-    </div>
-</header>
+        <span id="totalGalleryCount" class="text-xs font-bold px-3 py-1.5 bg-purple-700 text-white uppercase tracking-wider">
+            0 та расм
+        </span>
+    </header>
 
-<main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 sm:py-8 space-y-8">
+    <!-- 2. НАВИГАЦИЯ ПАНЕЛИ -->
+    <nav class="bg-[#222222] text-white flex flex-wrap items-center">
+        <a href="index.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 flex items-center gap-2 transition">
+            <i class="fas fa-home text-purple-400"></i> Асосий
+        </a>
+        <a href="post.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+            Янгиликлар
+        </a>
+        <a href="cinema.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+            Кинотеатр
+        </a>
+        <a href="klip.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] border-r border-gray-800 transition">
+            Клиплар
+        </a>
+        <a href="gallery.html" class="bg-purple-700 px-4 py-3 text-xs font-bold uppercase tracking-wider border-r border-gray-800 transition">
+            Галерея
+        </a>
+        <a href="chat.html" class="px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#333333] transition">
+            Чат ва Мурожаат
+        </a>
+    </nav>
 
-    <!-- ИХЧАМ КАРУСЕЛЬ (СЛАЙДЕР) -->
-    <section class="relative w-full h-52 sm:h-64 md:h-72 rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-xl group">
-        <div id="compactCarouselTrack" class="flex w-full h-full transition-transform duration-500 ease-in-out">
-            <div class="min-w-full h-full relative">
-                <img src="logo1.jpg" alt="Universal Portal" class="w-full h-full object-cover" onerror="this.style.display='none'">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex items-end p-4 sm:p-6">
-                    <p class="text-xs sm:text-sm font-bold text-slate-100 line-clamp-2">
-                        Universal Portal — Фото галерея ва танланган лаҳзалар
-                    </p>
+    <!-- 3. АСОСИЙ КОНТЕНТ -->
+    <main class="flex-1 p-5 space-y-8">
+
+        <!-- ИХЧАМ КАРУСЕЛЬ (СЛАЙДЕР) -->
+        <section class="relative w-full h-56 sm:h-68 md:h-80 overflow-hidden border border-gray-300 bg-gray-900 group">
+            <div id="compactCarouselTrack" class="flex w-full h-full transition-transform duration-500 ease-in-out">
+                <div class="min-w-full h-full relative">
+                    <img src="logo1.jpg" alt="Universal Portal" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex items-end p-4 sm:p-6">
+                        <p class="text-xs sm:text-sm font-bold text-white line-clamp-2">
+                            Universal Portal — Фото галерея ва танланган лаҳзалар
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button id="compactPrevBtn" type="button" aria-label="Олдинги расм"
-                class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/75 hover:bg-emerald-500 text-white hover:text-black border border-slate-700 flex items-center justify-center transition opacity-85 group-hover:opacity-100">
-            <i class="fas fa-chevron-left text-xs"></i>
-        </button>
+            <button id="compactPrevBtn" type="button" aria-label="Олдинги расм"
+                    class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/70 hover:bg-purple-700 text-white border border-gray-600 flex items-center justify-center transition opacity-85 group-hover:opacity-100">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </button>
 
-        <button id="compactNextBtn" type="button" aria-label="Кейинги расм"
-                class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/75 hover:bg-emerald-500 text-white hover:text-black border border-slate-700 flex items-center justify-center transition opacity-85 group-hover:opacity-100">
-            <i class="fas fa-chevron-right text-xs"></i>
-        </button>
+            <button id="compactNextBtn" type="button" aria-label="Кейинги расм"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/70 hover:bg-purple-700 text-white border border-gray-600 flex items-center justify-center transition opacity-85 group-hover:opacity-100">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </button>
 
-        <div id="compactIndicators" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-slate-950/65 backdrop-blur-sm px-3 py-1.5 rounded-full border border-slate-800/80"></div>
-    </section>
+            <div id="compactIndicators" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/70 px-3 py-1.5 border border-gray-700"></div>
+        </section>
 
-    <!-- ГАЛЕРЕЯ СЕТКАСИ -->
-    <section>
-        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
-            <h1 class="text-xl sm:text-3xl font-black uppercase tracking-tight metallic-text flex items-center gap-2.5">
-                <i class="fas fa-camera text-emerald-400"></i> Фото галерея
-            </h1>
-            <span id="totalGalleryCount" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                0 та расм
-            </span>
-        </div>
-
-        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="col-span-full text-center text-slate-500 py-16">
-                <i class="fas fa-spinner fa-spin fa-2x text-emerald-400 mb-3"></i>
-                <p class="text-xs uppercase tracking-widest">Галерея юкланмоқда...</p>
+        <!-- ГАЛЕРЕЯ СЕТКАСИ -->
+        <section>
+            <div class="flex items-center justify-between mb-5 pb-2 border-b-2 border-purple-700">
+                <h1 class="text-lg sm:text-xl font-black uppercase tracking-wide text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-camera text-purple-700"></i> Фото галерея
+                </h1>
             </div>
+
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="col-span-full text-center text-gray-500 py-14">
+                    <i class="fas fa-spinner fa-spin fa-2x text-purple-700 mb-3"></i>
+                    <p class="text-xs uppercase tracking-widest">Галерея юкланмоқда...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer class="bg-[#222222] text-gray-300 text-xs px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>© 2026 <strong>Universalportal</strong>. Барча ҳуқуқлар ҳимояланган.</p>
+        <div class="flex gap-4">
+            <a href="index.html" class="hover:text-white">Асосий</a>
+            <a href="post.html" class="hover:text-white">Янгиликлар</a>
+            <a href="cinema.html" class="hover:text-white">Кинотеатр</a>
+            <a href="klip.html" class="hover:text-white">Клиплар</a>
         </div>
-    </section>
-</main>
+    </footer>
+
+</div>
 
 <!-- РАСМНИ КАТТАЛАШТИРИБ КЎРИШ ОЙНАСИ (LIGHTBOX) -->
-<div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="relative max-w-4xl w-full bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
-        <button id="closeLightbox" class="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/70 hover:bg-rose-600 text-white flex items-center justify-center transition z-10">
+<div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full bg-white border border-gray-300 overflow-hidden shadow-2xl">
+        <button id="closeLightbox" class="absolute top-3 right-3 w-9 h-9 bg-black/75 hover:bg-purple-700 text-white flex items-center justify-center transition z-10">
             <i class="fas fa-times"></i>
         </button>
-        <img id="lightboxImg" src="" alt="Катта расм" class="w-full max-h-[75vh] object-contain bg-black">
-        <div class="p-4 sm:p-5 border-t border-slate-800">
-            <p id="lightboxText" class="text-sm sm:text-base text-slate-200 leading-relaxed whitespace-pre-line"></p>
-            <p id="lightboxTime" class="text-[11px] text-slate-500 mt-2"></p>
+        <img id="lightboxImg" src="" alt="Катта расм" class="w-full max-h-[75vh] object-contain bg-gray-950">
+        <div class="p-4 sm:p-5 border-t border-gray-200 bg-gray-50">
+            <p id="lightboxText" class="text-sm text-gray-800 leading-relaxed whitespace-pre-line"></p>
+            <p id="lightboxTime" class="text-[11px] text-gray-500 mt-2"></p>
         </div>
     </div>
 </div>
-
-<footer class="bg-slate-950 border-t border-slate-800/80 py-5 text-center text-xs text-slate-500">
-    UNIVERSALPORTAL &copy; 2026 — Барча ҳуқуқлар ҳимояланган
-</footer>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -193,10 +218,10 @@
             slide.innerHTML = `
                 <img src="${item.image}" alt="Слайд расми" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end justify-between gap-4 p-4 sm:p-6">
-                    <p class="text-xs sm:text-sm font-bold text-slate-100 line-clamp-2">
+                    <p class="text-xs sm:text-sm font-bold text-white line-clamp-2">
                         ${item.text || 'Галерея расми'}
                     </p>
-                    <span class="text-[11px] text-emerald-400 font-semibold shrink-0 hidden sm:inline">
+                    <span class="text-[11px] text-purple-300 font-semibold shrink-0 hidden sm:inline">
                         Катталаштириш <i class="fas fa-expand-alt ml-1"></i>
                     </span>
                 </div>
@@ -228,7 +253,7 @@
 
         if (!data) {
             countBadge.innerText = "0 та расм";
-            grid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-16">Галереяда ҳозирча расмлар мавжуд эмас.</p>`;
+            grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-14">Галереяда ҳозирча расмлар мавжуд эмас.</p>`;
             return;
         }
 
@@ -241,25 +266,25 @@
         renderCompactCarousel(items);
 
         if (!items.length) {
-            grid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-16">Галереяда ҳозирча расмлар мавжуд эмас.</p>`;
+            grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-14">Галереяда ҳозирча расмлар мавжуд эмас.</p>`;
             return;
         }
 
         items.forEach((item) => {
             const card = document.createElement('div');
-            card.className = 'bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-emerald-500/50 transition group flex flex-col justify-between cursor-pointer';
+            card.className = 'border border-gray-200 bg-white overflow-hidden hover:border-purple-700 transition group flex flex-col justify-between cursor-pointer';
             card.innerHTML = `
-                <div class="overflow-hidden bg-slate-950">
+                <div class="overflow-hidden bg-gray-100 border-b border-gray-200">
                     <img src="${item.image}" alt="Галерея расми"
-                         class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+                         class="w-full h-60 object-cover group-hover:scale-105 transition duration-500">
                 </div>
                 <div class="p-4 flex-1 flex flex-col justify-between">
-                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">
+                    <p class="text-xs sm:text-sm text-gray-800 leading-relaxed whitespace-pre-line">
                         ${item.text || ''}
                     </p>
-                    <div class="flex items-center justify-between text-[11px] text-slate-500 mt-3 pt-2.5 border-t border-slate-800/80">
-                        <span><i class="far fa-clock text-emerald-400 mr-1"></i> ${item.time || ''}</span>
-                        <span class="text-emerald-400 font-semibold group-hover:underline">Катталаштириш</span>
+                    <div class="flex items-center justify-between text-[11px] text-gray-500 mt-3 pt-2.5 border-t border-gray-100">
+                        <span><i class="far fa-clock text-purple-700 mr-1"></i> ${item.time || ''}</span>
+                        <span class="text-purple-700 font-bold group-hover:underline">Катталаштириш</span>
                     </div>
                 </div>
             `;
@@ -270,4 +295,4 @@
     });
 </script>
 </body>
-</html><script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_Am5GVDZPGUK93S1sBy9VqZoeFjVW" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
+</html>
